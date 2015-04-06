@@ -1,0 +1,26 @@
+{
+  "name": "doc-amd",
+  "version": "1.0.0",
+  "homepage": "https://github.com/elo7/doc-amd",
+  "description": "A small DOM manipulation library",
+  "main": "doc.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "DOM",
+    "js",
+    "querySelector"
+  ],
+  "authors": [
+    "Elo7"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
