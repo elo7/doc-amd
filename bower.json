@@ -22,5 +22,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "async-define": "elo7/async-define",
+    "events-amd": "elo7/event-amd"
+  }
 }

@@ -89,6 +89,32 @@ define('doc', ['event'], function(event) {
 				return "";
 			},
 
+			'append' : function(value) {
+				var appendElement;
+				this.each(function(el) {
+					appendElement = el.appendChild(value);
+				});
+				return query(appendElement);
+			},
+
+			'text' : function(val) {
+				var hasInnerText = (document.getElementsByTagName("body")[0].innerText != undefined) ? true : false;
+
+				var currentValue = "";
+				this.each(function(el) {
+					if (typeof val === 'undefined') {
+						currentValue = el.textContent || el.innerText;
+					} else {
+						if (!hasInnerText) {
+							el.textContent = val;
+						} else {
+							el.innerText = val;
+						}
+					}
+				});
+				return currentValue.trim();
+			},
+
 			'attr' : function(key, newValue) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if(newValue !== undefined) {
@@ -98,25 +124,6 @@ define('doc', ['event'], function(event) {
 					return this;
 				}
 				return this.first().getAttribute(key);
-			},
-
-			'parent' : function() {
-				var parents = [];
-				for(var i = 0; i < this.size; i++) {
-					parents.push(this.els[i].parentElement);
-				}
-				return query(parents);
-			},
-
-			'find' : function(selector) {
-				var list = [];
-				this.each(function(el) {
-					var newElement = search(el, selector);
-					if(list.indexOf(newElement) === -1) {
-						list = list.concat(search(el, selector));
-					}
-				});
-				return query(list);
 			},
 
 			'hasClass' : function(clazz) {
@@ -157,19 +164,6 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'removeItem' : function() {
-				this.each(function(el, i){
-					if(!el.remove){
-						el.parentNode.removeChild(el);
-					}else{
-						el.remove();
-					}
-				});
-				this.els = [];
-				this.size = 0;
-				return this;
-			},
-
 			'toggleClass' : function(clazz) {
 				this.each(function(el) {
 					if(!el.classList) {
@@ -186,16 +180,28 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'first' : function() {
-				return this.els[0];
+			'removeItem' : function() {
+				this.each(function(el, i){
+					if(!el.remove){
+						el.parentNode.removeChild(el);
+					}else{
+						el.remove();
+					}
+				});
+				this.els = [];
+				this.size = 0;
+				return this;
 			},
 
-			'last' : function() {
-				return this.els[this.size - 1];
-			},
-
-			'isEmpty' : function() {
-				return this.els === undefined || !this.els.length;
+			'find' : function(selector) {
+				var list = [];
+				this.each(function(el) {
+					var newElement = search(el, selector);
+					if(list.indexOf(newElement) === -1) {
+						list = list.concat(search(el, selector));
+					}
+				});
+				return query(list);
 			},
 
 			'filter': function(filter) {
@@ -209,6 +215,14 @@ define('doc', ['event'], function(event) {
 					}
 				}
 				return query(result);
+			},
+
+			'first' : function() {
+				return this.els[0];
+			},
+
+			'last' : function() {
+				return this.els[this.size - 1];
 			},
 
 			'previous' : function() {
@@ -231,6 +245,18 @@ define('doc', ['event'], function(event) {
 						if(el.nodeType === 1) return query(el);
 					}
 				}
+			},
+
+			'parent' : function() {
+				var parents = [];
+				for(var i = 0; i < this.size; i++) {
+					parents.push(this.els[i].parentElement);
+				}
+				return query(parents);
+			},
+
+			'isEmpty' : function() {
+				return this.els === undefined || !this.els.length;
 			},
 
 			'on' : function(eventName, command, named) {
@@ -260,32 +286,6 @@ define('doc', ['event'], function(event) {
 					event.removeEvent(el, eventName, named);
 				});
 				return this;
-			},
-
-			'append' : function(value) {
-				var appendElement;
-				this.each(function(el) {
-					appendElement = el.appendChild(value);
-				});
-				return query(appendElement);
-			},
-
-			'text' : function(val) {
-				var hasInnerText = (document.getElementsByTagName("body")[0].innerText != undefined) ? true : false;
-
-				var currentValue = "";
-				this.each(function(el) {
-					if (typeof val === 'undefined') {
-						currentValue = el.textContent || el.innerText;
-					} else {
-						if (!hasInnerText) {
-							el.textContent = val;
-						} else {
-							el.innerText = val;
-						}
-					}
-				});
-				return currentValue.trim();
 			},
 
 			'selectedText' : function() {
