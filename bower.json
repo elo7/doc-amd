@@ -23,8 +23,10 @@
     "test",
     "tests"
   ],
+  "dependencies": {
+    "events-amd": "elo7/events-amd"
+  },
   "devDependencies": {
-    "async-define": "elo7/async-define",
-    "events-amd": "elo7/event-amd"
+    "async-define": "elo7/async-define"
   }
 }

@@ -185,7 +185,7 @@ Get or set the value of the attribute
 ``` js
 define(['doc'], function(doc) {
 	doc('input[name=email]').attr('disabled'); //Get the value of attribute
-	doc('input[name=email]').val('type','password'); //Set the value of attribute
+	doc('input[name=email]').attr('type','password'); //Set the value of attribute
 });
 ```
 
@@ -336,7 +336,7 @@ Returns the first element from the DOM.
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('div').first(); //Return the first div (DOM element) found
+	doc('div').first(); //Return the first DOM element from the query list
 });
 ```
 
@@ -349,7 +349,7 @@ Returns the last element from the DOM.
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('div').last(); //Return the last div (DOM element) found
+	doc('div').last(); //Return the last DOM element from the query list
 });
 ```
 
