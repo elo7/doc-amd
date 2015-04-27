@@ -331,12 +331,12 @@ define(['doc'], function(doc) {
 `.first()`
 
 ###### Description:
-Returns the first element from the DOM.
+Returns the first DOM element from the query list.
 
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('div').first(); //Return the first DOM element from the query list
+	doc('div').first(); //Returns the first DOM element from the query list
 });
 ```
 
@@ -344,12 +344,12 @@ define(['doc'], function(doc) {
 `.last()`
 
 ###### Description:
-Returns the last element from the DOM.
+Returns the last DOM element from the query list.
 
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('div').last(); //Return the last DOM element from the query list
+	doc('div').last(); //Returns the last DOM element from the query list
 });
 ```
 
