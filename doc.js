@@ -59,7 +59,10 @@ define('doc', ['event'], function(event) {
 					});
 					return this;
 				}
-				return this.first().getAttribute("data-" + key);
+				if(this.first()) {
+					return this.first().getAttribute("data-" + key);
+				}
+				return "";
 			},
 
 			'val' : function(newValue) {
