@@ -234,6 +234,7 @@ define('doc', ['event'], function(event) {
 
 			'closest' : function(selector) {
 				var elements = [];
+
 				var selectorType;
 
 				if (matcher.isTag(selector)) {
@@ -281,6 +282,17 @@ define('doc', ['event'], function(event) {
 					var closestParent = checkForClosestParent(el);
 					if (closestParent) {
 						elements.push(closestParent);
+					}
+				}
+
+				for (var i = elements.length - 1; i > 0; i--) {
+					var elementToBeChecked = elements[i];
+					for (var j = i-1; j >= 0; j--) {
+						var elementToBeCheckedWith = elements[j];
+						if (elementToBeChecked == elementToBeCheckedWith) {
+							elements.pop();
+							break;
+						}
 					}
 				}
 
