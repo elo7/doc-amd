@@ -4,6 +4,8 @@ _Doc-amd library_
 
 doc.js is a small library to manipulate the DOM in any browser. We focused on the most used and common use cases to create this. This library uses [amd](http://en.wikipedia.org/wiki/Asynchronous_module_definition) structure.
 
+[![Build Status](https://travis-ci.org/elo7/doc-amd.svg?branch=master)](https://travis-ci.org/elo7/doc-amd)
+
 #### Why?
 
 We needed a small footprint alternative for jquery and still have the ease-of-use for the most commonly used methods on it.

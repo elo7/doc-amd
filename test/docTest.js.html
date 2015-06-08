@@ -1,0 +1,328 @@
+<html>
+  <head>
+    <title>Tests doc.js</title>
+    <meta charset="utf-8">
+    <link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <div id="test-suite">
+      <div id="parent-element">
+        <div id="first-el">Primeiro Elemento</div>
+        <div id="prev-test">Elemento anterior</div>
+        <div id="test" data-test="value">Teste <span>com texto</span></div>
+        <div id="next-test">Próximo elemento</div>
+        <div id="last-el">Ultimo Elemento</div>
+      </div>
+
+      <div id="find-element">
+        <div class="find find-1">
+          Elemento para ser encontrado
+          <div class="sub-find">Elemento filho para ser encontrado</div>
+        </div>
+        <div class="find find-2">
+          <div class="sub-find">Elemento filho para ser encontrado</div>
+          <div id="sub-find-2">Segundo elemento filho para ser encontrado</div>
+        </div>
+      </div>
+
+      <div id="append-div"></div>
+
+      <input class="checked" type="checkbox" checked>
+      <input class="checked" type="checkbox">
+      <input class="checked" type="checkbox">
+
+      <input type="button" id="throttle-button">
+      <input type="hidden" id="throttle-count" value="0">
+
+      <input type="button" id="off-button">
+      <input type="hidden" id="off-count" value="0">
+
+      <div id="search-id-test">Teste seletor #ID</div>
+      <div class="search-class-test">Teste seletor .class</div>
+      <div class="search-class-test">Teste seletor .class</div>
+      <center>Teste seletor tag</center>
+      <div id="fire-event-test">PING</div>
+      <p id="selected-text-test">Super texto amigo da maravilha</p>
+      <p id="has-class-test" class="simple-class-for-test">Super texto amigo da maravilha</p>
+      <p id="add-remove-class-test" class="to-remove-class-for-test">Super texto amigo da maravilha</p>
+      <p id="toggle-class-test">Super texto amigo da maravilha</p>
+      <p id="get-html-test">My Html</p>
+      <input id="hiddenInput" type="hidden" value="value" />
+
+      <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
+    </div>
+
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/proclaim/lib/proclaim.js"></script>
+    <script src="/test/helpers.js"></script>
+
+    <script src="/bower_components/async-define/async-define.js"></script>
+    <script src="/bower_components/events-amd/events-amd.js"></script>
+    <script src="/doc.js"></script>
+    <script>
+
+      var assert = window.proclaim;
+
+      mocha.ui("bdd");
+
+      define(['doc'], function($) {
+        describe('Doc', function(){
+          it("should contains all known methods", function(){
+            var current = [];
+            for(var methodName in $("body")) current.push(methodName);
+            assert.equal(arrayEquals(knownMethods(), current), true);
+          });
+
+          it('should return the element text', function(){
+            assert.equal( $('#test').text(), "Teste com texto");
+          });
+
+          it('should insert text in the element', function(){
+            $('#test').text('Inserindo texto de teste');
+            assert.equal( $('#test').text(), "Inserindo texto de teste");
+          });
+
+          it('should return the element parent', function(){
+            assert.equal($('#test').parent().attr('id'),"parent-element");
+          });
+
+          it('should return the element parent of a parent', function(){
+            assert.equal($('#test').parent().parent().attr('id'),"test-suite");
+          });
+
+          it('should return the element the next element', function(){
+            assert.equal($('#test').next().attr('id'),"next-test");
+          });
+
+          it('should return the element the previous element', function(){
+            assert.equal($('#test').previous().attr('id'),"prev-test");
+          });
+
+          it('should return the first element', function(){
+            assert.equal($('#parent-element div').first(),$('#first-el').first());
+          });
+
+          it('should return the last element', function(){
+            assert.equal($('#parent-element div').last().innerHTML , $('#last-el').first().innerHTML);
+          });
+
+          it('should return the data attribute from element', function(){
+            assert.equal($('#test').data('test'),"value");
+          });
+
+          it('should insert value in the data attribute element', function(){
+            $('#test').data('value-test','text-test');
+            assert.equal($('#test').data('value-test'),"text-test");
+          });
+
+          it('should return the value from element', function(){
+            assert.equal( $('#hiddenInput').val(),"value");
+          });
+
+          it('should insert value in the element', function(){
+            $('#hiddenInput').val('valor inserido');
+            assert.equal( $('#hiddenInput').val(),"valor inserido");
+          });
+
+          it("should find the correct elements", function(){
+            assert.equal($('#find-element').find('.find').size, 2);
+            assert.equal($('#find-element').find('.find-1').size, 1);
+            assert.equal($('#find-element').find('.sub-find').size, 2);
+            assert.equal($('#find-element').find('.find').find('.sub-find').size, 2);
+            assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
+            assert.equal($('#find-element').find('#sub-find-2').size, 1);
+          });
+
+          it("should filter the checkbox checked", function() {
+            assert.equal($('#test-suite .checked').filter('checked').size, 1);
+            var count = 0;
+            $('#test-suite .checked').filter(function(field){
+              if($(field).attr('type') === 'checkbox') {
+                count++;
+              }
+            });
+            assert.equal(count, 3);
+          });
+
+          it('should return the correct elements according to selector type and the correct number of elements on list', function(){
+            var template = "Teste seletor ";
+            assert.equal( $('#search-id-test').size,1);
+            assert.equal( $('#search-id-test').first().innerHTML, template + "#ID");
+
+            assert.equal( $('.search-class-test').size,2);
+            assert.equal( $('.search-class-test').first().innerHTML, template + ".class");
+
+            assert.equal( $('div.search-class-test').size,2);
+            assert.equal( $('div.search-class-test').first().innerHTML, template + ".class");
+
+            assert.equal( $('center').size,1);
+            assert.equal( $('center').first().innerHTML, template + "tag");
+
+            assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
+            assert.equal($('#find-element').find('.find').find('#sub-find-2').text(), "Segundo elemento filho para ser encontrado");
+          });
+
+          it('should have els and size on returned elements', function(){
+            var returnedObject = $("center");
+            assert.equal( typeof returnedObject.els,"object");
+            assert.equal( returnedObject.size,1);
+          });
+
+          it('should fire event correctly when attach element with function *on*', function(){
+            assert.equal( $("#fire-event-test").first().innerHTML,"PING");
+
+            $("#fire-event-test").on('click', function(){
+              this.innerHTML = "PONG";
+            });
+
+            fireEvent($("#fire-event-test").first(), "click");
+            assert.equal( $("#fire-event-test").first().innerHTML,"PONG");
+          });
+
+          it("should remove event with function *off*", function() {
+            var count = 0;
+            $("#off-button").on('click', function(){
+              $("#off-count").val(++count);
+            });
+
+            fireEvent($("#off-button").first(), "click");
+            assert.equal( $("#off-count").val(), 1);
+
+            $("#off-button").off('click');
+            fireEvent($("#off-button").first(), "click");
+            assert.equal( $("#off-count").val(), 1);
+          });
+
+          it("should remove event with function *off* using a named", function() {
+            var count = 0;
+            $("#off-button").on('click', function(){
+              $("#off-count").val(++count);
+            }, "named-1");
+
+            $("#off-button").on('click', function(){
+              $("#off-count").val(++count);
+            }, "named-2");
+
+            fireEvent($("#off-button").first(), "click");
+            assert.equal( $("#off-count").val(), 2);
+
+            $("#off-button").off('click', "named-1");
+            fireEvent($("#off-button").first(), "click");
+            assert.equal( $("#off-count").val(), 3);
+          });
+
+          it('should select text correctly', function(){
+            selectText('selected-text-test');
+            assert.equal( $('body').selectedText(),$("#selected-text-test").first().innerHTML);
+          });
+
+          it("should return object with isEmpty true when not find any element with given selector", function(){
+            var element = $("#this-element-should-not-exists");
+            assert.equal( typeof element,"object");
+            assert.equal( element.isEmpty(), true);
+          });
+
+          it("should remove element from DOM tree", function(){
+            var element = $("#this-element-should-be-removed").removeItem();
+            assert.equal( typeof element,"object");
+            assert.equal( element.isEmpty(),true);
+            assert.equal( element.size,0);
+          });
+
+          it("should verify if the element has the given class", function(){
+            var element = $("#has-class-test");
+            assert.equal( element.size, 1);
+            assert.equal( $("#has-class-test").hasClass("simple-class-for-test"), true);
+          });
+
+          it("should add class to the given element", function(){
+            var element = $("#add-remove-class-test").addClass("added-class-for-test");
+            assert.equal( element.size, 1);
+            assert.equal( element.hasClass("added-class-for-test"), true);
+          });
+
+          it("should remove class to the given element", function(){
+            var element = $("#add-remove-class-test").removeClass("to-remove-class-for-test");
+            assert.equal( element.hasClass("to-remove-class-for-test"), false);
+          });
+
+          it("should toggle class to the given element", function(){
+            var element = $("#toggle-class-test").toggleClass("toggle-class-for-test");
+            assert.equal( element.hasClass("toggle-class-for-test"), true);
+            element = $("#toggle-class-test").toggleClass("toggle-class-for-test");
+            assert.equal( element.hasClass("toggle-class-for-test"), false);
+          });
+
+          it("should return html of given element", function(){
+            assert.equal($("#get-html-test").html(), 'My Html');
+          });
+
+          it("should set html of given element", function(){
+            $("#get-html-test").html('My Html2');
+            assert.equal($("#get-html-test").html(), 'My Html2');
+          });
+
+          it("should append a new element and return the new element", function() {
+            var element = document.createElement("div");
+            element.id = "append-element";
+            var append = $("#append-div").append(element);
+            assert.equal($("#append-div").find("#append-element").size, 1);
+            assert.equal(append.attr('id'), 'append-element');
+          });
+
+          it("should throttle click event", function() {
+            $("#throttle-button").throttle("click",function(){
+              var value = parseInt($("#throttle-count").val());
+              $("#throttle-count").val(++value);
+            }, 5000);
+            fireEvent($("#throttle-button").first(), "click");
+            fireEvent($("#throttle-button").first(), "click");
+            fireEvent($("#throttle-button").first(), "click");
+            assert.equal(parseInt($("#throttle-count").val()), 1);
+          });
+        });
+      });
+    </script>
+    <script>
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
+
+
+      function knownMethods(){
+        return [
+          'els',
+          'size',
+          'each',
+          'data',
+          'val',
+          'html',
+          'append',
+          'text',
+          'attr',
+          'hasClass',
+          'addClass',
+          'removeClass',
+          'toggleClass',
+          'removeItem',
+          'find',
+          'filter',
+          'first',
+          'last',
+          'previous',
+          'next',
+          'parent',
+          'isEmpty',
+          'on',
+          'throttle',
+          'off',
+          'selectedText'
+        ];
+      }
+    </script>
+  </body>
+</html>

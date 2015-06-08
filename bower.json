@@ -21,7 +21,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "css"
   ],
   "dependencies": {
     "events-amd": "elo7/events-amd"
