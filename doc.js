@@ -265,7 +265,7 @@ define('doc', ['event'], function(event) {
 										: checkForClosestParent(element.parentElement);
 								break;
 							case 'class':
-								return ($(element).hasClass(replacedSelector))
+								return (query(element).hasClass(replacedSelector))
 									? element
 									: checkForClosestParent(element.parentElement);
 								break;

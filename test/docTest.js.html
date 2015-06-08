@@ -135,6 +135,12 @@
             assert.equal($('#find-element').find('#sub-find-2').size, 1);
           });
 
+          it("should find the closest elements", function() {
+            assert.equal($('.sub-find').closest('.find').size, 2);
+            assert.equal($('#sub-find-2').closest('#find-element').size, 1);
+            assert.equal($('.find').closest('#find-element').size, 1);
+          });
+
           it("should filter the checkbox checked", function() {
             assert.equal($('#test-suite .checked').filter('checked').size, 1);
             var count = 0;
@@ -311,6 +317,7 @@
           'removeItem',
           'find',
           'filter',
+          'closest',
           'first',
           'last',
           'previous',
