@@ -1,12 +1,24 @@
 define('doc', ['event'], function(event) {
+	var matcher = {
+		isTag : function(selector) {
+			return selector.match(/^\w+$/);
+		},
+		isClass : function(selector) {
+			return selector.match(/^\.[\w-]+$/);
+		},
+		isId : function(selector) {
+			return selector.match(/^#[\w-]+$/);
+		}
+	};
+
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
-		if(selector.match(/^\w+$/)) {
+		if(matcher.isTag(selector)) {
 			return convertToArray(namespace.getElementsByTagName(selector));
-		} else if(selector.match(/^#[\w-]+$/)) {
+		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
 			return document.getElementById(selector);
-		} else if ( selector.match(/^\.[\w-]+$/) && namespace.getElementsByClassName) {
+		} else if (matcher.isClass(selector) && namespace.getElementsByClassName) {
 			selector = selector.replace('.', '');
 			return convertToArray(namespace.getElementsByClassName(selector));
 		}
@@ -33,10 +45,10 @@ define('doc', ['event'], function(event) {
 	var query = function(elements) {
 		var selectedElements = [];
 
-		if(elements){
-			if(elements instanceof Array) {
+		if (elements){
+			if (elements instanceof Array) {
 				selectedElements = elements;
-			}else {
+			} else {
 				selectedElements.push(elements);
 			}
 		}
@@ -218,6 +230,72 @@ define('doc', ['event'], function(event) {
 					}
 				}
 				return query(result);
+			},
+
+			'closest' : function(selector) {
+				var elements = [];
+				var selectorType;
+
+				if (matcher.isTag(selector)) {
+					selectorType = 'tag';
+				} else if (matcher.isClass(selector)) {
+					selector = selector.replace('.', '');
+					selectorType = 'class';
+				} else if (matcher.isId(selector)) {
+					selector = selector.replace('#', '');
+					selectorType = 'id';
+				}
+
+				if (!selectorType) {
+					return null;
+				}
+
+				var checkForClosestParent = function(element) {
+					if (element) {
+						switch (selectorType) {
+							case 'tag':
+								return (selector.toUpperCase() === element.tagName)
+									? element
+									: checkForClosestParent(element.parentElement);
+								break;
+							case 'class':
+								return ($(element).hasClass(selector))
+									? element
+									: checkForClosestParent(element.parentElement);
+								break;
+							case 'id':
+								return (element.id === selector)
+									? element
+									: checkForClosestParent(element.parentElement);
+								break;
+							default:
+								break;
+						}
+					}
+					return null;
+				};
+
+				for (var i = 0; i < this.size; i++) {
+					var el = this.els[i].parentElement;
+
+					var closestParent = checkForClosestParent(el);
+					if (closestParent) {
+						elements.push(closestParent);
+					}
+				}
+
+				return elements;
+			},
+
+			'find' : function(selector) {
+				var list = [];
+				this.each(function(el) {
+					var newElement = search(el, selector);
+					if(list.indexOf(newElement) === -1) {
+						list = list.concat(search(el, selector));
+					}
+				});
+				return query(list);
 			},
 
 			'first' : function() {
