@@ -240,41 +240,42 @@ define('doc', ['event'], function(event) {
 				// this implementation is lighter for general selectors like 'div'.
 				var elements = [];
 				var selectorType;
+				var replacedSelector = selector;
 
 				if (matcher.isTag(selector)) {
 					selectorType = 'tag';
 				} else if (matcher.isClass(selector)) {
-					selector = selector.replace('.', '');
+					replacedSelector = selector.replace('.', '');
 					selectorType = 'class';
 				} else if (matcher.isId(selector)) {
-					selector = selector.replace('#', '');
+					replacedSelector = selector.replace('#', '');
 					selectorType = 'id';
 				}
 
 				if (!selectorType) {
-					throw "You cannot use composite selector. e.g. 'tag.class' or '#id tag.class tag'. Use simple selectors like '#id', '.class' or 'tag'";
-					return null;
+					console.warn('You are using composite selectors. e.g. "#id .class" or "tag.class". This selector will only work on Chrome 41+, Firefox 35+ or Opera 28+');
 				}
 
 				var checkForClosestParent = function(element) {
 					if (element) {
 						switch (selectorType) {
 							case 'tag':
-								return (selector.toUpperCase() === element.tagName)
+								return (replacedSelector.toUpperCase() === element.tagName)
 								? element
 										: checkForClosestParent(element.parentElement);
 								break;
 							case 'class':
-								return ($(element).hasClass(selector))
+								return ($(element).hasClass(replacedSelector))
 									? element
 									: checkForClosestParent(element.parentElement);
 								break;
 							case 'id':
-								return (element.id === selector)
+								return (element.id === replacedSelector)
 									? element
 									: checkForClosestParent(element.parentElement);
 								break;
 							default:
+								throw new SyntaxError("You cannot use composite selector. e.g. 'tag.class' or '#id tag.class tag'. Use simple selectors like '#id', '.class' or 'tag'");
 								break;
 						}
 					}
@@ -282,11 +283,18 @@ define('doc', ['event'], function(event) {
 				};
 
 				for (var i = 0; i < this.size; i++) {
-					var el = this.els[i].parentElement;
+					if (typeof this.els[i].closest === 'function') {
+						var el = this.els[i].closest(selector);
+						if (el) {
+							elements.push(el);
+						}
+					} else {
+						var el = this.els[i].parentElement;
 
-					var closestParent = checkForClosestParent(el);
-					if (closestParent) {
-						elements.push(closestParent);
+						var closestParent = checkForClosestParent(el);
+						if (closestParent) {
+							elements.push(closestParent);
+						}
 					}
 				}
 
@@ -302,17 +310,6 @@ define('doc', ['event'], function(event) {
 				}
 
 				return query(elements);
-			},
-
-			'find' : function(selector) {
-				var list = [];
-				this.each(function(el) {
-					var newElement = search(el, selector);
-					if(list.indexOf(newElement) === -1) {
-						list = list.concat(search(el, selector));
-					}
-				});
-				return query(list);
 			},
 
 			'first' : function() {
