@@ -297,6 +297,31 @@ define(['doc'], function(doc) {
 });
 ```
 
+### closest
+`.closest(querySelector)`
+
+###### Description:
+Get the first ascendant of the Doc object, filtered by querySelector.
+
+###### Parameters:
+> querySelector: String //Should not be a composite. e.g. "#id .class" or "tag.class" due to compatibility issues. Prefer simple selectors. e.g. '.class'. Returns the query's matched elements.
+
+###### Sample:
+``` html
+<form>
+	<fieldset>
+			<input name='name' />
+			<input name='email' />
+	</fieldset>
+</form>
+```
+
+``` js
+define(['doc'], function(doc) {
+	doc('input').closest('form'); //Returns the Doc object form.
+});
+```
+
 #### filter
 `.filter(attribute || callback)`
 
