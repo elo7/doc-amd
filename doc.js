@@ -8,6 +8,9 @@ define('doc', ['event'], function(event) {
 		},
 		isId : function(selector) {
 			return selector.match(/^#[\w-]+$/);
+		},
+		isTagWithClass : function(selector) {
+			return selector.match(/[\w+\.\w+]+/)
 		}
 	};
 
@@ -234,6 +237,7 @@ define('doc', ['event'], function(event) {
 
 			'closest' : function(selector) {
 				// only works with non-composite selectors. e.g. '.class' or '#id' or 'div', but not: '#id .class' or 'ul.class'
+				// this implementation is lighter for general selectors like 'div'.
 				var elements = [];
 				var selectorType;
 
@@ -248,6 +252,7 @@ define('doc', ['event'], function(event) {
 				}
 
 				if (!selectorType) {
+					throw "You cannot use composite selector. e.g. 'tag.class' or '#id tag.class tag'. Use simple selectors like '#id', '.class' or 'tag'";
 					return null;
 				}
 
@@ -256,8 +261,8 @@ define('doc', ['event'], function(event) {
 						switch (selectorType) {
 							case 'tag':
 								return (selector.toUpperCase() === element.tagName)
-									? element
-									: checkForClosestParent(element.parentElement);
+								? element
+										: checkForClosestParent(element.parentElement);
 								break;
 							case 'class':
 								return ($(element).hasClass(selector))
