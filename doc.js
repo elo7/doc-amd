@@ -233,8 +233,8 @@ define('doc', ['event'], function(event) {
 			},
 
 			'closest' : function(selector) {
+				// only works with non-composite selectors. e.g. '.class' or '#id' or 'div', but not: '#id .class' or 'ul.class'
 				var elements = [];
-
 				var selectorType;
 
 				if (matcher.isTag(selector)) {
