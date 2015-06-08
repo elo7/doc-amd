@@ -296,7 +296,7 @@ define('doc', ['event'], function(event) {
 					}
 				}
 
-				return elements;
+				return query(elements);
 			},
 
 			'find' : function(selector) {
