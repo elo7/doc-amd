@@ -249,9 +249,7 @@ define('doc', ['event'], function(event) {
 				} else if (matcher.isId(selector)) {
 					replacedSelector = selector.replace('#', '');
 					selectorType = 'id';
-				}
-
-				if (!selectorType) {
+				} else {
 					console.warn('You are using composite selectors. e.g. "#id .class" or "tag.class". This selector will only work on Chrome 41+, Firefox 35+ or Opera 28+');
 				}
 
@@ -260,8 +258,8 @@ define('doc', ['event'], function(event) {
 						switch (selectorType) {
 							case 'tag':
 								return (replacedSelector.toUpperCase() === element.tagName)
-								? element
-										: checkForClosestParent(element.parentElement);
+									? element
+									: checkForClosestParent(element.parentElement);
 								break;
 							case 'class':
 								return (query(element).hasClass(replacedSelector))
@@ -288,9 +286,7 @@ define('doc', ['event'], function(event) {
 							elements.push(el);
 						}
 					} else {
-						var el = this.els[i].parentElement;
-
-						var closestParent = checkForClosestParent(el);
+						var closestParent = checkForClosestParent(this.els[i].parentElement);
 						if (closestParent) {
 							elements.push(closestParent);
 						}
@@ -298,10 +294,8 @@ define('doc', ['event'], function(event) {
 				}
 
 				for (var i = elements.length - 1; i > 0; i--) {
-					var elementToBeChecked = elements[i];
 					for (var j = i-1; j >= 0; j--) {
-						var elementToBeCheckedWith = elements[j];
-						if (elementToBeChecked == elementToBeCheckedWith) {
+						if (elements[i] === elements[j]) {
 							elements.pop();
 							break;
 						}
