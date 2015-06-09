@@ -237,7 +237,6 @@ define('doc', ['event'], function(event) {
 
 			'closest' : function(selector) {
 				// only works with non-composite selectors. e.g. '.class' or '#id' or 'div', but not: '#id .class' or 'ul.class'
-				// this implementation is lighter for general selectors like 'div'.
 				var elements = [];
 				var selectorType;
 				var replacedSelector = selector;
