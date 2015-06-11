@@ -253,23 +253,24 @@ define('doc', ['event'], function(event) {
 					console.warn('You are using composite selectors. e.g. "#id .class" or "tag.class". This selector will only work on Chrome 41+, Firefox 35+ or Opera 28+');
 				}
 
-				var checkForClosestParent = function(element) {
+				var checkForClosestParent = function(el) {
+					var element = el.first();
 					if (element) {
 						switch (selectorType) {
 							case 'tag':
 								return (replacedSelector.toUpperCase() === element.tagName)
 									? element
-									: checkForClosestParent(element.parentElement);
+									: checkForClosestParent(el.parent());
 								break;
 							case 'class':
-								return (query(element).hasClass(replacedSelector))
+								return (el.hasClass(replacedSelector))
 									? element
-									: checkForClosestParent(element.parentElement);
+									: checkForClosestParent(el.parent());
 								break;
 							case 'id':
 								return (element.id === replacedSelector)
 									? element
-									: checkForClosestParent(element.parentElement);
+									: checkForClosestParent(el.parent());
 								break;
 							default:
 								throw new SyntaxError("You cannot use composite selector. e.g. 'tag.class' or '#id tag.class tag'. Use simple selectors like '#id', '.class' or 'tag'");
@@ -279,19 +280,20 @@ define('doc', ['event'], function(event) {
 					return null;
 				};
 
-				for (var i = 0; i < this.size; i++) {
-					if (typeof this.els[i].closest === 'function') {
-						var el = this.els[i].closest(selector);
-						if (el) {
-							elements.push(el);
+				this.each(function(el) {
+					if (el.closest === 'function') {
+						var element = el.first();
+						var closestElement = element.closest(selector);
+						if (closestElement) {
+							elemenets.push(el);
 						}
 					} else {
-						var closestParent = checkForClosestParent(this.els[i].parentElement);
-						if (closestParent) {
-							elements.push(closestParent);
+						var closestElement = checkForClosestParent(query(el).parent());
+						if (closestElement) {
+							elements.push(closestElement);
 						}
 					}
-				}
+				});
 
 				for (var i = elements.length - 1; i > 0; i--) {
 					for (var j = i-1; j >= 0; j--) {

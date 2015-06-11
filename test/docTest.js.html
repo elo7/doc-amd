@@ -27,6 +27,15 @@
         </div>
       </div>
 
+      <div class='not-this-one'>
+        Elemento a não ser escolhido
+        <div class='this-one'>
+          Elemento a ser encontrado pelo closest
+          <div class='child-div'>
+          </div>
+        </div>
+      </div>
+
       <div id="append-div"></div>
 
       <input class="checked" type="checkbox" checked>
@@ -139,6 +148,8 @@
             assert.equal($('.sub-find').closest('.find').size, 2);
             assert.equal($('#sub-find-2').closest('#find-element').size, 1);
             assert.equal($('.find').closest('#find-element').size, 1);
+            assert.equal($('.child-div').closest('div').hasClass('this-one'), true);
+            assert.equal($('.child-div').closest('div').hasClass('not-this-one'), false);
           });
 
           it("should filter the checkbox checked", function() {
