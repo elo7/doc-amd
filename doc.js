@@ -249,8 +249,6 @@ define('doc', ['event'], function(event) {
 				} else if (matcher.isId(selector)) {
 					replacedSelector = selector.replace('#', '');
 					selectorType = 'id';
-				} else {
-					console.warn('You are using composite selectors. e.g. "#id .class" or "tag.class". This selector will only work on Chrome 41+, Firefox 35+ or Opera 28+');
 				}
 
 				var checkForClosestParent = function(el) {
@@ -296,7 +294,7 @@ define('doc', ['event'], function(event) {
 				});
 
 				for (var i = elements.length - 1; i > 0; i--) {
-					for (var j = i-1; j >= 0; j--) {
+					for (var j = i - 1; j >= 0; j--) {
 						if (elements[i] === elements[j]) {
 							elements.pop();
 							break;

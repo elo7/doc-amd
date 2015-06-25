@@ -78,7 +78,7 @@
 
       define(['doc'], function($) {
         describe('Doc', function(){
-          it("should contains all known methods", function(){
+          it('should contains all known methods', function(){
             var current = [];
             for(var methodName in $("body")) current.push(methodName);
             assert.equal(arrayEquals(knownMethods(), current), true);
@@ -135,7 +135,7 @@
             assert.equal( $('#hiddenInput').val(),"valor inserido");
           });
 
-          it("should find the correct elements", function(){
+          it('should find the correct elements', function(){
             assert.equal($('#find-element').find('.find').size, 2);
             assert.equal($('#find-element').find('.find-1').size, 1);
             assert.equal($('#find-element').find('.sub-find').size, 2);
@@ -144,7 +144,7 @@
             assert.equal($('#find-element').find('#sub-find-2').size, 1);
           });
 
-          it("should find the closest elements", function() {
+          it('should find the closest elements', function() {
             assert.equal($('.sub-find').closest('.find').size, 2);
             assert.equal($('#sub-find-2').closest('#find-element').size, 1);
             assert.equal($('.find').closest('#find-element').size, 1);
@@ -152,7 +152,7 @@
             assert.equal($('.child-div').closest('div').hasClass('not-this-one'), false);
           });
 
-          it("should filter the checkbox checked", function() {
+          it('should filter the checkbox checked', function() {
             assert.equal($('#test-suite .checked').filter('checked').size, 1);
             var count = 0;
             $('#test-suite .checked').filter(function(field){
@@ -198,7 +198,7 @@
             assert.equal( $("#fire-event-test").first().innerHTML,"PONG");
           });
 
-          it("should remove event with function *off*", function() {
+          it('should remove event with function *off*', function() {
             var count = 0;
             $("#off-button").on('click', function(){
               $("#off-count").val(++count);
@@ -207,20 +207,20 @@
             fireEvent($("#off-button").first(), "click");
             assert.equal( $("#off-count").val(), 1);
 
-            $("#off-button").off('click');
+            $('#off-button').off('click');
             fireEvent($("#off-button").first(), "click");
             assert.equal( $("#off-count").val(), 1);
           });
 
-          it("should remove event with function *off* using a named", function() {
+          it('should remove event with function *off* using a named', function() {
             var count = 0;
-            $("#off-button").on('click', function(){
-              $("#off-count").val(++count);
-            }, "named-1");
+            $('#off-button').on('click', function(){
+              $('#off-count').val(++count);
+            }, 'named-1');
 
-            $("#off-button").on('click', function(){
-              $("#off-count").val(++count);
-            }, "named-2");
+            $('#off-button').on('click', function(){
+              $('#off-count').val(++count);
+            }, 'named-2');
 
             fireEvent($("#off-button").first(), "click");
             assert.equal( $("#off-count").val(), 2);
