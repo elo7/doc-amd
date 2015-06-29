@@ -77,6 +77,7 @@
       mocha.ui("bdd");
 
       define(['doc'], function($) {
+        window.$ = $;
         describe('Doc', function(){
           it('should contains all known methods', function(){
             var current = [];

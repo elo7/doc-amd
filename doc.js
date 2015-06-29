@@ -235,72 +235,36 @@ define('doc', ['event'], function(event) {
 				return query(result);
 			},
 
-			'closest' : function(selector) {
-				// only works with non-composite selectors. e.g. '.class' or '#id' or 'div', but not: '#id .class' or 'ul.class'
+			'closest': function(selector) {
 				var elements = [];
-				var selectorType;
-				var replacedSelector = selector;
+				var $selector = query(search(document, selector));
+				var possibleParents = $selector.els;
 
-				if (matcher.isTag(selector)) {
-					selectorType = 'tag';
-				} else if (matcher.isClass(selector)) {
-					replacedSelector = selector.replace('.', '');
-					selectorType = 'class';
-				} else if (matcher.isId(selector)) {
-					replacedSelector = selector.replace('#', '');
-					selectorType = 'id';
+				if ($selector.size === 0) {
+					return $selector;
 				}
 
-				var checkForClosestParent = function(el) {
-					var element = el.first();
-					if (element) {
-						switch (selectorType) {
-							case 'tag':
-								return (replacedSelector.toUpperCase() === element.tagName)
-									? element
-									: checkForClosestParent(el.parent());
-								break;
-							case 'class':
-								return (el.hasClass(replacedSelector))
-									? element
-									: checkForClosestParent(el.parent());
-								break;
-							case 'id':
-								return (element.id === replacedSelector)
-									? element
-									: checkForClosestParent(el.parent());
-								break;
-							default:
-								throw new SyntaxError("You cannot use composite selector. e.g. 'tag.class' or '#id tag.class tag'. Use simple selectors like '#id', '.class' or 'tag'");
-								break;
+				var checkIfParentIsTheOne = function($parent) {
+					var parent = $parent.first();
+					if (!parent) {
+						return null;
+					}
+					for (var ppi = possibleParents.length - 1; ppi >= 0; ppi--) {
+						var pp = possibleParents[ppi];
+						if (pp === parent) {
+							possibleParents.splice(ppi, 1);
+							return pp;
 						}
 					}
-					return null;
+					return checkIfParentIsTheOne($parent.parent());
 				};
 
 				this.each(function(el) {
-					if (el.closest === 'function') {
-						var element = el.first();
-						var closestElement = element.closest(selector);
-						if (closestElement) {
-							elemenets.push(el);
-						}
-					} else {
-						var closestElement = checkForClosestParent(query(el).parent());
-						if (closestElement) {
-							elements.push(closestElement);
-						}
+					var closestParent = checkIfParentIsTheOne(query(el).parent());
+					if (closestParent) {
+						elements.push(closestParent);
 					}
 				});
-
-				for (var i = elements.length - 1; i > 0; i--) {
-					for (var j = i - 1; j >= 0; j--) {
-						if (elements[i] === elements[j]) {
-							elements.pop();
-							break;
-						}
-					}
-				}
 
 				return query(elements);
 			},
