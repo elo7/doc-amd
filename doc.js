@@ -1,12 +1,27 @@
 define('doc', ['event'], function(event) {
+	var matcher = {
+		isTag : function(selector) {
+			return selector.match(/^\w+$/);
+		},
+		isClass : function(selector) {
+			return selector.match(/^\.[\w-]+$/);
+		},
+		isId : function(selector) {
+			return selector.match(/^#[\w-]+$/);
+		},
+		isTagWithClass : function(selector) {
+			return selector.match(/[\w+\.\w+]+/)
+		}
+	};
+
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
-		if(selector.match(/^\w+$/)) {
+		if(matcher.isTag(selector)) {
 			return convertToArray(namespace.getElementsByTagName(selector));
-		} else if(selector.match(/^#[\w-]+$/)) {
+		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
 			return document.getElementById(selector);
-		} else if ( selector.match(/^\.[\w-]+$/) && namespace.getElementsByClassName) {
+		} else if (matcher.isClass(selector) && namespace.getElementsByClassName) {
 			selector = selector.replace('.', '');
 			return convertToArray(namespace.getElementsByClassName(selector));
 		}
@@ -33,10 +48,10 @@ define('doc', ['event'], function(event) {
 	var query = function(elements) {
 		var selectedElements = [];
 
-		if(elements){
-			if(elements instanceof Array) {
+		if (elements){
+			if (elements instanceof Array) {
 				selectedElements = elements;
-			}else {
+			} else {
 				selectedElements.push(elements);
 			}
 		}
@@ -218,6 +233,40 @@ define('doc', ['event'], function(event) {
 					}
 				}
 				return query(result);
+			},
+
+			'closest': function(selector) {
+				var elements = [];
+				var $selector = query(search(document, selector));
+				var possibleParents = $selector.els;
+
+				if ($selector.size === 0) {
+					return $selector;
+				}
+
+				var checkIfParentIsTheOne = function($parent) {
+					var parent = $parent.first();
+					if (!parent) {
+						return null;
+					}
+					for (var ppi = possibleParents.length - 1; ppi >= 0; ppi--) {
+						var pp = possibleParents[ppi];
+						if (pp === parent) {
+							possibleParents.splice(ppi, 1);
+							return pp;
+						}
+					}
+					return checkIfParentIsTheOne($parent.parent());
+				};
+
+				this.each(function(el) {
+					var closestParent = checkIfParentIsTheOne(query(el).parent());
+					if (closestParent) {
+						elements.push(closestParent);
+					}
+				});
+
+				return query(elements);
 			},
 
 			'first' : function() {
