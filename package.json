@@ -14,7 +14,7 @@
   "author": "Elo7",
   "devDependencies": {
     "mocha": "2.0.1",
-    "phantomjs": "1.9.12",
+    "phantomjs": "1.9.19",
     "mocha-phantomjs": "3.5.1",
     "proclaim": "2.0.0",
     "http-server": "0.7.4",

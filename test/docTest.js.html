@@ -61,6 +61,8 @@
       <input id="hiddenInput" type="hidden" value="value" />
 
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
+
+      <form id="form-test"></form>
     </div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
@@ -299,6 +301,18 @@
             fireEvent($("#throttle-button").first(), "click");
             assert.equal(parseInt($("#throttle-count").val()), 1);
           });
+
+          it("bla", function() {
+            var expect = false;
+            $("#form-test").on('submit', function(e){
+              e.preventDefault();
+
+              expect = true;
+            });
+
+            $('#form-test').trigger('submit');
+            assert.equal(expect, true);
+          })
         });
       });
     </script>
@@ -338,6 +352,7 @@
           'on',
           'throttle',
           'off',
+          'trigger',
           'selectedText'
         ];
       }

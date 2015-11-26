@@ -340,6 +340,13 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
+			'trigger' : function(event) {
+				var event = new Event(event);
+				this.each(function(el) {
+					el.dispatchEvent(event);
+				});
+			},
+
 			'selectedText' : function() {
 				var input = this.els[0];
 				var type = this.attr('type');
