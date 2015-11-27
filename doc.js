@@ -14,6 +14,10 @@ define('doc', ['event'], function(event) {
 		}
 	};
 
+	var isFunction = function(obj) {
+	  return !!(obj && obj.call && obj.apply);
+	};
+
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
 		if (matcher.isTag(selector)) {
@@ -343,14 +347,14 @@ define('doc', ['event'], function(event) {
 			'trigger' : function(event) {
 				this.each(function(el) {
 					var hasNotBeenPrevented;
-					if (!window.addEventListener) {
-						isDefualtPrevented = el.fireEvent("on" + event);
+					if (!document.createEvent) {
+						hasNotBeenPrevented = el.fireEvent("on" + event);
 					} else {
 						var htmlEvents = document.createEvent("Event");
 						htmlEvents.initEvent(event, false, true);
 						hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
 					}
-					if (hasNotBeenPrevented && typeof el[event] === 'function') {
+					if (hasNotBeenPrevented && isFunction(el[event])) {
 						el[event]();
 					}
 				});
