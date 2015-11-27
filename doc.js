@@ -16,7 +16,7 @@ define('doc', ['event'], function(event) {
 
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
-		if(matcher.isTag(selector)) {
+		if (matcher.isTag(selector)) {
 			return convertToArray(namespace.getElementsByTagName(selector));
 		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
@@ -341,9 +341,14 @@ define('doc', ['event'], function(event) {
 			},
 
 			'trigger' : function(event) {
-				var event = new Event(event);
 				this.each(function(el) {
-					el.dispatchEvent(event);
+					if (!window.addEventListener) {
+						el.fireEvent("on" + event);
+						return;
+					}
+					var htmlEvents = document.createEvent("HTMLEvents");
+					htmlEvents.initEvent(event, false, true);
+					el.dispatchEvent(htmlEvents);
 				});
 			},
 

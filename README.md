@@ -527,6 +527,22 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### trigger
+`.trigger(event)`
+
+###### Description:
+Dispatches an event that can be listened using `on()`.
+
+###### Parameters:
+> event: String //The event you want to remove from your selector
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('button').trigger('click'); //Triggers the event click for button.
+});
+```
+
 #### selectedText
 `.selectedText()`
 

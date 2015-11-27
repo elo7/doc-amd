@@ -62,7 +62,7 @@
 
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
 
-      <form id="form-test"></form>
+      <form id="form-test" action="#"></form>
     </div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
@@ -302,17 +302,15 @@
             assert.equal(parseInt($("#throttle-count").val()), 1);
           });
 
-          it("bla", function() {
-            var expect = false;
-            $("#form-test").on('submit', function(e){
-              e.preventDefault();
-
-              expect = true;
+          it("should call on submit when dispatch the event", function() {
+            var expected = false;
+            $("#form-test").on('submit', function(event) {
+              (event.preventDefault) ? event.preventDefault() : event.returnValue = false;
+              expected = true;
             });
-
             $('#form-test').trigger('submit');
-            assert.equal(expect, true);
-          })
+            assert.equal(expected, true);
+          });
         });
       });
     </script>
