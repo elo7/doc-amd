@@ -63,6 +63,7 @@
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
 
       <form id="form-test" action="#"></form>
+      <a href='#not-prevented' id='clickme'>click</a>
     </div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
@@ -310,6 +311,11 @@
             });
             $('#form-test').trigger('submit');
             assert.equal(expected, true);
+          });
+
+          it("should call on click and append hash to url", function() {
+            $('#clickme').trigger('click');
+            assert.notEqual(document.location.hash, '');
           });
         });
       });

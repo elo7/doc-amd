@@ -342,13 +342,17 @@ define('doc', ['event'], function(event) {
 
 			'trigger' : function(event) {
 				this.each(function(el) {
+					var hasNotBeenPrevented;
 					if (!window.addEventListener) {
-						el.fireEvent("on" + event);
-						return;
+						isDefualtPrevented = el.fireEvent("on" + event);
+					} else {
+						var htmlEvents = document.createEvent("Event");
+						htmlEvents.initEvent(event, false, true);
+						hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
 					}
-					var htmlEvents = document.createEvent("HTMLEvents");
-					htmlEvents.initEvent(event, false, true);
-					el.dispatchEvent(htmlEvents);
+					if (hasNotBeenPrevented && typeof el[event] === 'function') {
+						el[event]();
+					}
 				});
 			},
 
