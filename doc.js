@@ -14,9 +14,13 @@ define('doc', ['event'], function(event) {
 		}
 	};
 
+	var isFunction = function(obj) {
+	  return !!(obj && obj.call && obj.apply);
+	};
+
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
-		if(matcher.isTag(selector)) {
+		if (matcher.isTag(selector)) {
 			return convertToArray(namespace.getElementsByTagName(selector));
 		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
@@ -338,6 +342,22 @@ define('doc', ['event'], function(event) {
 					event.removeEvent(el, eventName, named);
 				});
 				return this;
+			},
+
+			'trigger' : function(event) {
+				this.each(function(el) {
+					var hasNotBeenPrevented;
+					if (!document.createEvent) {
+						hasNotBeenPrevented = el.fireEvent("on" + event);
+					} else {
+						var htmlEvents = document.createEvent("Event");
+						htmlEvents.initEvent(event, false, true);
+						hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
+					}
+					if (hasNotBeenPrevented && isFunction(el[event])) {
+						el[event]();
+					}
+				});
 			},
 
 			'selectedText' : function() {
