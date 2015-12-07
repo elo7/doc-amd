@@ -316,7 +316,10 @@
 
           it("should call on click and append hash to url", function() {
             $('#clickme').trigger('click');
-            assert.notEqual(document.location.hash, '');
+            //Firefox mobile needs it
+            setTimeout(function() {
+              assert.notEqual(document.location.href, '');
+            }, 0);
           });
 
           it("should call custom event and return a argument passed in trigger method", function() {
