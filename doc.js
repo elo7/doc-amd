@@ -344,14 +344,28 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'trigger' : function(event) {
+			'trigger' : function(event, data) {
 				this.each(function(el) {
 					var hasNotBeenPrevented;
 					if (!document.createEvent) {
-						hasNotBeenPrevented = el.fireEvent("on" + event);
+						if(!data) {
+							hasNotBeenPrevented = el.fireEvent("on" + event);
+						} else {
+							// IE8 Pollyfill for custom events
+							var htmlEvents = document.createEventObject();
+							htmlEvents.detail = data;
+
+							var registeredEvents = el["_event"][event];
+							for(var namedEvents in registeredEvents) {
+								for(var i = 0; i < registeredEvents[namedEvents].length; i++) {
+									registeredEvents[namedEvents][i](htmlEvents);
+								}
+							}
+						}
 					} else {
 						var htmlEvents = document.createEvent("Event");
 						htmlEvents.initEvent(event, false, true);
+						htmlEvents.detail = data;
 						hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
 					}
 					if (hasNotBeenPrevented && isFunction(el[event])) {

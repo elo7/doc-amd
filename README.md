@@ -528,18 +528,28 @@ define(['doc'], function(doc) {
 ```
 
 #### trigger
-`.trigger(event)`
+`.trigger(event [, data])`
 
 ###### Description:
 Dispatches an event that can be listened using `on()`.
 
 ###### Parameters:
 > event: String //The event you want to remove from your selector
+> data: Additional data for custom triggered events
 
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
 	doc('button').trigger('click'); //Triggers the event click for button.
+});
+```
+
+``` js
+define(['doc'], function(doc) {
+	doc('button').on('customEvent', function(e) {
+		console.log(e.detail.additionalData);
+	});
+	doc('button').trigger('customEvent', { additionalData: "data"}); //Triggers the event click for button.
 });
 ```
 

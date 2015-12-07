@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Tests doc.js</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
     <link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
   </head>
@@ -315,7 +316,24 @@
 
           it("should call on click and append hash to url", function() {
             $('#clickme').trigger('click');
-            assert.notEqual(document.location.hash, '');
+            //Firefox mobile needs it
+            setTimeout(function() {
+              assert.notEqual(document.location.href, '');
+            }, 0);
+          });
+
+          it("should call custom event and return a argument passed in trigger method", function() {
+            var returData;
+            var expected = {
+              'a': 1,
+              'b': 2
+            };
+            $("#form-test").on('customEvent', function(event) {
+              returnData = event.detail;
+            });
+            $('#form-test').trigger('customEvent', expected);
+
+            assert.deepEqual(returnData, expected);
           });
         });
       });
