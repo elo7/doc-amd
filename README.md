@@ -558,9 +558,8 @@ define(['doc'], function(doc) {
 
 ## License
 
-Doc-amd is released under the [BSD](https://github.com/elo7/event-amd/blob/master/LICENSE). Have at it.
+Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.
 
 * * *
 
 Copyright :copyright: 2015 Elo7# doc-amd
-
