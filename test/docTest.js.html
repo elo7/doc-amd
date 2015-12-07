@@ -328,7 +328,7 @@
               'a': 1,
               'b': 2
             };
-            $("#form-test").on('customEvent', function(event) {
+            $('#form-test').on('customEvent', function(event) {
               returnData = event.detail;
             });
             $('#form-test').trigger('customEvent', expected);
