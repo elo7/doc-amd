@@ -534,8 +534,7 @@ define(['doc'], function(doc) {
 Dispatches an event that can be listened using `on()`.
 
 ###### Parameters:
-> event: String //The event you want to trigger for your selector
-
+> event: String //The event you want to remove from your selector
 > data: Additional data for custom triggered events
 
 ###### Sample:
@@ -564,37 +563,6 @@ Returns the selected text on a given input field.
 ``` js
 define(['doc'], function(doc) {
 	doc('input[name=name]').selectedText() //Returns the selected text of the element.
-});
-```
-
-#### broadcast
-`doc.broadcast(event [, data])`
-> note: WITHOUT selector
-
-###### Description:
-Dispatches a global event that can be listened using `on()` by multiple elements.
-
-###### Important note:
-If you wish to use this function in IE8, you need to use the `indexOf` polyfill for arrays before usage.
-``` js
-Array.prototype.indexOf||(Array.prototype.indexOf=function(r,t){var n;if(null==this)throw new TypeError('"this" is null or not defined');var e=Object(this),i=e.length>>>0;if(0===i)return-1;var a=+t||0;if(Math.abs(a)===1/0&&(a=0),a>=i)return-1;for(n=Math.max(a>=0?a:i-Math.abs(a),0);i>n;){if(n in e&&e[n]===r)return n;n++}return-1});
-```
-
-###### Parameters:
-> event: String //The event you want to trigger globally
-
-> data: Additional data for custom triggered events
-
-###### Sample:
-``` js
-define(['doc'], function(doc) {
-	doc('button').on('click', function(e) {
-		console.log(e.detail.param);
-	});
-	doc('body').on('click', function(e) {
-		console.log(e.detail.param);
-	});
-	doc.broadcast('click', { param: "I am listening"}); //Triggers the event click for everybody that listens for the 'onclick' event.
 });
 ```
 
