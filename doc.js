@@ -316,8 +316,14 @@ define('doc', ['event'], function(event) {
 			},
 
 			'on' : function(eventName, command, named) {
+				event.boundEvents = event.boundEvents || {},
+					event.boundEvents[eventName] = event.boundEvents[eventName] || [],
+					boundElements = event.boundEvents[eventName];
 				this.each(function(el) {
 					event.addEvent(el, eventName, command, named);
+					if (boundElements.indexOf(el) === -1) {
+						boundElements.push(el);
+					}
 				});
 				return this;
 			},
@@ -338,8 +344,15 @@ define('doc', ['event'], function(event) {
 			},
 
 			'off' : function(eventName, named) {
+				event.boundEvents = event.boundEvents || {},
+					event.boundEvents[eventName] = event.boundEvents[eventName] || [],
+					boundElements = event.boundEvents[eventName],
+					elementIndex = -1;
 				this.each(function(el) {
 					event.removeEvent(el, eventName, named);
+					if ((elementIndex = boundElements.indexOf(el)) !== -1) {
+						boundElements.splice(elementIndex, 1);
+					}
 				});
 				return this;
 			},
