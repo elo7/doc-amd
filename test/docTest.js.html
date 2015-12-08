@@ -65,6 +65,9 @@
 
       <form id="form-test" action="#"></form>
       <a href='#not-prevented' id='clickme'>click</a>
+      <div id='first-broadcast-listener'></div>
+      <div id='second-broadcast-listener'></div>
+      <div id='third-broadcast-listener'></div>
     </div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
@@ -328,12 +331,28 @@
               'a': 1,
               'b': 2
             };
-            $("#form-test").on('customEvent', function(event) {
+            $('#form-test').on('customEvent', function(event) {
               returnData = event.detail;
             });
             $('#form-test').trigger('customEvent', expected);
 
             assert.deepEqual(returnData, expected);
+          });
+
+          it('should broadcast event to all listeners', function() {
+            var counter = 0;
+            var data = 1;
+            $('#first-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += event.detail;
+            });
+            $('#second-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += (event.detail * 2);
+            });
+            $('#third-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += (event.detail * 3);
+            });
+            $.broadcast('say hello to my little friend', data);
+            assert.equal(counter, 6);
           });
         });
       });
