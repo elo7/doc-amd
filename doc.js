@@ -428,6 +428,26 @@ define('doc', ['event'], function(event) {
 				var scrollIntoViewOptions = (typeof scrollIntoViewOptions === "boolean") ? scrollIntoViewOptions : scrollIntoViewOptions || true;
 				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
+			},
+
+			'insertBefore' : function(elements) {
+				if(typeof elements == 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					el.insertAdjacentHTML('beforebegin', this.els[0].outerHTML);
+				}.bind(this));
+			},
+
+			'insertAfter' : function(elements) {
+				if(typeof elements == 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					el.insertAdjacentHTML('afterend', this.els[0].outerHTML);
+				}.bind(this));
 			}
 		}
 	}

@@ -649,6 +649,33 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### insertBefore
+`.insertBefore()`
+
+###### Description:
+Inserts an element before each matched element
+
+###### Sample:
+```js
+define(['doc'], function(doc) {
+	doc('#some-element').insertBefore("a") //Inserts the element with id some-element before each <a> element
+});
+```
+
+#### insertAfter
+`.insertAfter()`
+
+###### Description:
+Inserts an element after each matched element
+>>>>>>> f4eebc8... Adds insertBefore and insertAfter functions
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('#some-element').insertAfter("a") //Inserts the element with id some-element after each <a> element
+});
+```
+
 ## License
 
 Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.

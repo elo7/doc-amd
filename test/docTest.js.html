@@ -71,6 +71,26 @@
 
     <div id="mocha"></div>
 
+    <div>
+      <p class="insert-selected-element-before-me"></p>
+    </div>
+
+    <div>
+      <p class="insert-selected-element-after-me"></p>
+    </div>
+
+    <div>
+      <p class="insert-matched-element-before-me"></p>
+    </div>
+
+    <div>
+      <p class="insert-matched-element-after-me"></p>
+    </div>
+
+    <div>
+      <a class="insert-filler"></a>
+    </div>
+
     <script src="/node_modules/mocha/mocha.js"></script>
     <script src="/node_modules/proclaim/lib/proclaim.js"></script>
     <script src="/test/helpers.js"></script>
@@ -383,6 +403,34 @@
             $.broadcast('say hello to my little friend', data);
             assert.equal(counter, 6);
           });
+
+          it("should insert element before all selected elements", function() {
+            var selector = ".insert-selected-element-before-me";
+            $(".insert-filler").insertBefore($(selector));
+            var expectedText = $(".insert-filler").els[0].outerHTML + $(selector).els[0].outerHTML;
+            assert.equal($(selector).parent().html().trim(), expectedText.trim());
+          });
+
+          it("should insert element after all selected elements", function() {
+            var selector = ".insert-selected-element-after-me";
+            $(".insert-filler").insertAfter($(selector));
+            var expectedText = $(selector).els[0].outerHTML + $(".insert-filler").els[0].outerHTML;
+            assert.equal($(selector).parent().html().trim(), expectedText.trim());
+          });
+
+          it("should insert element before all matched elements", function() {
+            var selector = ".insert-matched-element-before-me";
+            $(".insert-filler").insertBefore(selector);
+            var expectedText = $(".insert-filler").els[0].outerHTML + $(selector).els[0].outerHTML;
+            assert.equal($(selector).parent().html().trim(), expectedText.trim());
+          });
+
+          it("should insert element after all matched elements", function() {
+            var selector = ".insert-matched-element-after-me";
+            $(".insert-filler").insertAfter(selector);
+            var expectedText = $(selector).els[0].outerHTML + $(".insert-filler").els[0].outerHTML;
+            assert.equal($(selector).parent().html().trim(), expectedText.trim());
+          });
         });
       });
     </script>
@@ -426,7 +474,9 @@
           'selectedText',
           'focus',
           'removeAttr',
-          'scrollIntoView'
+          'scrollIntoView',
+          'insertBefore',
+          'insertAfter'
         ];
       }
     </script>
