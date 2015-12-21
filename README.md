@@ -595,6 +595,23 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### scrollIntoView
+`.scrollIntoView([options])`
+
+###### Description:
+Makes the first element matched by Doc visible at the top of the viewport.
+
+###### Parameters:
+> options: boolean //To indicate whether the element should be aligned to the top of the visible area (default) or to the bottom
+>          object //An object with the properties _block_ ("start" or "end", indicating the same as the boolean version above) and _behavior_ ("auto" or "instant" or "smooth")
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('div').scrollIntoView(); //Scroll until the first matched div appears at the top of the viewport
+});
+```
+
 ## License
 
 Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.
