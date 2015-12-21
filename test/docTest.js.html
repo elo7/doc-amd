@@ -393,6 +393,11 @@
             var element = $("#find-element").first();
             assert.equal($(element.childNodes).size, 2);
           });
+
+          it("should handle an array of elements as an array of elements", function() {
+            var elements = [document.head, document.body];
+            assert.equal($(elements).size, 2);
+          });
         });
       });
     </script>
