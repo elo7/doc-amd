@@ -29,6 +29,9 @@ Doc-amd also depends on [events-amd](https://github.com/elo7/event-amd).
 ###### Description:
 Returns a Doc object with all the methods below.
 
+###### Parameters:
+> querySelector: String //A CSS selector. Note that, if it is a class name with dots, the dots must be escaped. E.g.: doc(".my\\.class")
+
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
