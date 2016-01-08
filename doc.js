@@ -408,8 +408,9 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'scrollIntoView' : function() {
-				this.els[0].scrollIntoView();
+			'scrollIntoView' : function(scrollIntoViewOptions) {
+				var scrollIntoViewOptions = scrollIntoViewOptions || true;
+				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
 			}
 		}
