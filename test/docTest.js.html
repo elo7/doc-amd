@@ -65,6 +65,8 @@
 
       <form id="form-test" action="#"></form>
       <a href='#not-prevented' id='clickme'>click</a>
+
+      <a href='#not-removed' id='remove-my-href'>click</a>
     </div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
@@ -340,6 +342,17 @@
             $("a").focus();
             assert.deepEqual($("a").first(), document.activeElement);
           });
+
+          it("should remove an attribute from an element", function() {
+            var element = $("#remove-my-href");
+            element.removeAttr("href");
+            assert.notEqual(element.attr("href"), "#not-removed");
+          });
+
+          it("should not fail to remove a non-existent attribute from an element", function() {
+            var element = $("#remove-my-href");
+            assert.doesNotThrow(function() { element.removeAttr("style") });
+          });
         });
       });
     </script>
@@ -381,7 +394,8 @@
           'off',
           'trigger',
           'selectedText',
-          'focus'
+          'focus',
+          'removeAttr'
         ];
       }
     </script>

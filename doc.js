@@ -399,6 +399,13 @@ define('doc', ['event'], function(event) {
 			'focus' : function() {
 				this.els[0].focus();
 				return this;
+			},
+
+			'removeAttr' : function(attrName) {
+				this.each(function(el) {
+					el.removeAttribute(attrName);
+				});
+				return this;
 			}
 		}
 	}

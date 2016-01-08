@@ -579,6 +579,22 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### removeAttr
+`.removeAttr(attrName)`
+
+###### Description:
+Removes the attribute from the element.
+
+###### Parameters:
+> attrName: String //The name of the element's attribute.
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('div').removeAttr('style'); //Removes style attribute from all divs
+});
+```
+
 ## License
 
 Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.
