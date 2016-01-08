@@ -6,8 +6,6 @@
     <link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
   </head>
   <body>
-    <div id="mocha"></div>
-
     <div id="test-suite">
       <div id="parent-element">
         <div id="first-el">Primeiro Elemento</div>
@@ -68,6 +66,8 @@
 
       <a href='#not-removed' id='remove-my-href'>click</a>
     </div>
+
+    <div id="mocha"></div>
 
     <script src="/node_modules/mocha/mocha.js"></script>
     <script src="/node_modules/proclaim/lib/proclaim.js"></script>
@@ -353,6 +353,12 @@
             var element = $("#remove-my-href");
             assert.doesNotThrow(function() { element.removeAttr("style") });
           });
+
+          it('should scroll viewport until the first matched element is at the top of the viewport', function() {
+            var elements = $('.checked');
+            elements.scrollIntoView();
+            assert.equal(elements.first().getBoundingClientRect().top, 0);
+          });
         });
       });
     </script>
@@ -395,7 +401,8 @@
           'trigger',
           'selectedText',
           'focus',
-          'removeAttr'
+          'removeAttr',
+          'scrollIntoView'
         ];
       }
     </script>

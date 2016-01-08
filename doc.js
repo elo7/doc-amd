@@ -406,6 +406,12 @@ define('doc', ['event'], function(event) {
 					el.removeAttribute(attrName);
 				});
 				return this;
+			},
+
+			'scrollIntoView' : function(scrollIntoViewOptions) {
+				var scrollIntoViewOptions = scrollIntoViewOptions || true;
+				this.els[0].scrollIntoView(scrollIntoViewOptions);
+				return this;
 			}
 		}
 	}
