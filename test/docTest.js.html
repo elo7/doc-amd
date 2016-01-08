@@ -65,6 +65,9 @@
       <a href='#not-prevented' id='clickme'>click</a>
 
       <a href='#not-removed' id='remove-my-href'>click</a>
+
+      <div id="my" class="selector">Id without dot</div>
+      <div id="my.selector">Id with dot</div>
     </div>
 
     <div id="mocha"></div>
@@ -358,6 +361,11 @@
             var elements = $('.checked');
             elements.scrollIntoView();
             assert.equal(elements.first().getBoundingClientRect().top, 0);
+          });
+
+          it("should select an element with an id with dot", function() {
+            assert.equal($("#my\\.selector").text(), "Id with dot");
+            assert.equal($("#my.selector").text(), "Id without dot");
           });
         });
       });
