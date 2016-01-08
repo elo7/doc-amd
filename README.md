@@ -566,6 +566,19 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### focus
+`.focus()`
+
+###### Description:
+Focus the first matched element
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('input[name=name]').focus() //Focus the first input named "name"
+});
+```
+
 ## License
 
 Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.

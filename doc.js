@@ -394,6 +394,11 @@ define('doc', ['event'], function(event) {
 				} else {
 					return;
 				}
+			},
+
+			'focus' : function() {
+				this.els[0].focus();
+				return this;
 			}
 		}
 	}

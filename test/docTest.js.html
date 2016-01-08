@@ -335,6 +335,11 @@
 
             assert.deepEqual(returnData, expected);
           });
+
+          it("should focus on the first matched element", function() {
+            $("a").focus();
+            assert.deepEqual($("a").first(), document.activeElement);
+          });
         });
       });
     </script>
@@ -375,7 +380,8 @@
           'throttle',
           'off',
           'trigger',
-          'selectedText'
+          'selectedText',
+          'focus'
         ];
       }
     </script>
