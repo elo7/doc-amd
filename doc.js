@@ -209,6 +209,7 @@ define('doc', ['event'], function(event) {
 					}else{
 						el.remove();
 					}
+					el = null;
 				});
 				this.els = [];
 				this.size = 0;
