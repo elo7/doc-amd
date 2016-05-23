@@ -360,7 +360,7 @@
           it('should scroll viewport until the first matched element is at the top of the viewport', function() {
             var elements = $('.checked');
             elements.scrollIntoView();
-            assert.equal(elements.first().getBoundingClientRect().top, 0);
+            assert.lessThan(Math.abs(elements.first().getBoundingClientRect().top), 1);
           });
 
           it("should select an element with an id with dot", function() {
