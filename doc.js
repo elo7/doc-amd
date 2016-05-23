@@ -436,6 +436,9 @@ define('doc', ['event'], function(event) {
 				}
 
 				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element before element without parent");
+					}
 					el.insertAdjacentHTML('beforebegin', this.els[0].outerHTML);
 				}.bind(this));
 			},
@@ -446,6 +449,9 @@ define('doc', ['event'], function(event) {
 				}
 
 				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element after element without parent");
+					}
 					el.insertAdjacentHTML('afterend', this.els[0].outerHTML);
 				}.bind(this));
 			}

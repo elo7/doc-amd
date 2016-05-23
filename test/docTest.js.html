@@ -431,6 +431,20 @@
             var expectedText = $(selector).els[0].outerHTML + $(".insert-filler").els[0].outerHTML;
             assert.equal($(selector).parent().html().trim(), expectedText.trim());
           });
+
+          it("should throw an error if trying to insert before an element without parent", function() {
+            var reference = $(document.createElement("div"));
+            assert.throws(function() {
+              $(".insert-filter").insertBefore(reference);
+            }, /without parent/);
+          });
+
+          it("should throw an error if trying to insert after an element without parent", function() {
+            var reference = $(document.createElement("div"));
+            assert.throws(function() {
+              $(".insert-filter").insertAfter(reference);
+            }, /without parent/);
+          });
         });
       });
     </script>
