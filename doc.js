@@ -45,6 +45,34 @@ define('doc', ['event'], function(event) {
 		}
 	};
 
+	var triggerEvent = function(el, event, data) {
+		var hasNotBeenPrevented;
+		if (!document.createEvent) {
+			if(!data) {
+				hasNotBeenPrevented = el.fireEvent("on" + event);
+			} else {
+				// IE8 Pollyfill for custom events
+				var htmlEvents = document.createEventObject();
+				htmlEvents.detail = data;
+
+				var registeredEvents = el["_event"][event];
+				for(var namedEvents in registeredEvents) {
+					for(var i = 0; i < registeredEvents[namedEvents].length; i++) {
+						registeredEvents[namedEvents][i](htmlEvents);
+					}
+				}
+			}
+		} else {
+			var htmlEvents = document.createEvent("Event");
+			htmlEvents.initEvent(event, false, true);
+			htmlEvents.detail = data;
+			hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
+		}
+		if (hasNotBeenPrevented && isFunction(el[event])) {
+			el[event]();
+		}
+	};
+
 	var fallbackHasClass = function(el, clazz) {
 		return el.className.match(new RegExp('(^|\\s)' + clazz + '($|\\s)'));
 	};
@@ -319,6 +347,16 @@ define('doc', ['event'], function(event) {
 				this.each(function(el) {
 					event.addEvent(el, eventName, command, named);
 				});
+				event.boundEvents = event.boundEvents || {},
+					event.boundEvents[eventName] = event.boundEvents[eventName] || [],
+					boundElements = event.boundEvents[eventName];
+
+				this.each(function(el) {
+					if (boundElements.indexOf(el) === -1) {
+						boundElements.push(el);
+					}	
+				});
+
 				return this;
 			},
 
@@ -341,36 +379,23 @@ define('doc', ['event'], function(event) {
 				this.each(function(el) {
 					event.removeEvent(el, eventName, named);
 				});
+				event.boundEvents = event.boundEvents || {},
+					event.boundEvents[eventName] = event.boundEvents[eventName] || [],
+					boundElements = event.boundEvents[eventName],
+					elementIndex = -1;
+
+				this.each(function(el) {
+					if ((elementIndex = boundElements.indexOf(el)) !== -1) {
+						boundElements.splice(elementIndex, 1);
+					}	
+				});
+
 				return this;
 			},
 
 			'trigger' : function(event, data) {
 				this.each(function(el) {
-					var hasNotBeenPrevented;
-					if (!document.createEvent) {
-						if(!data) {
-							hasNotBeenPrevented = el.fireEvent("on" + event);
-						} else {
-							// IE8 Pollyfill for custom events
-							var htmlEvents = document.createEventObject();
-							htmlEvents.detail = data;
-
-							var registeredEvents = el["_event"][event];
-							for(var namedEvents in registeredEvents) {
-								for(var i = 0; i < registeredEvents[namedEvents].length; i++) {
-									registeredEvents[namedEvents][i](htmlEvents);
-								}
-							}
-						}
-					} else {
-						var htmlEvents = document.createEvent("Event");
-						htmlEvents.initEvent(event, false, true);
-						htmlEvents.detail = data;
-						hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
-					}
-					if (hasNotBeenPrevented && isFunction(el[event])) {
-						el[event]();
-					}
+					triggerEvent(el, event, data);
 				});
 			},
 
@@ -416,12 +441,22 @@ define('doc', ['event'], function(event) {
 		}
 	}
 
-	return function(selector) {
-		if(!selector) {
+	function DocSelector(selector) {
+		if (!selector) {
 			return selector;
-		} else if(typeof selector === "string") {
+		} else if (typeof selector === "string") {
 			return query(search(document, selector));
 		}
 		return query(selector);
+	}
+
+	DocSelector.broadcast = function(eventName, data) {
+		var boundElements = event.boundEvents[eventName] || [];
+		for (var elIndex = 0; elIndex < boundElements.length; elIndex++) {
+			var el = boundElements[elIndex];
+			triggerEvent(el, eventName, data);
+		}
 	};
+
+	return DocSelector;
 });

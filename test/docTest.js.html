@@ -58,16 +58,15 @@
       <p id="toggle-class-test">Super texto amigo da maravilha</p>
       <p id="get-html-test">My Html</p>
       <input id="hiddenInput" type="hidden" value="value" />
-
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
-
       <form id="form-test" action="#"></form>
       <a href='#not-prevented' id='clickme'>click</a>
-
       <a href='#not-removed' id='remove-my-href'>click</a>
-
       <div id="my" class="selector">Id without dot</div>
       <div id="my.selector">Id with dot</div>
+      <div id='first-broadcast-listener'></div>
+      <div id='second-broadcast-listener'></div>
+      <div id='third-broadcast-listener'></div>
     </div>
 
     <div id="mocha"></div>
@@ -333,7 +332,7 @@
               'a': 1,
               'b': 2
             };
-            $("#form-test").on('customEvent', function(event) {
+            $('#form-test').on('customEvent', function(event) {
               returnData = event.detail;
             });
             $('#form-test').trigger('customEvent', expected);
@@ -366,6 +365,22 @@
           it("should select an element with an id with dot", function() {
             assert.equal($("#my\\.selector").text(), "Id with dot");
             assert.equal($("#my.selector").text(), "Id without dot");
+          });
+
+          it('should broadcast event to all listeners', function() {
+            var counter = 0;
+            var data = 1;
+            $('#first-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += event.detail;
+            });
+            $('#second-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += (event.detail * 2);
+            });
+            $('#third-broadcast-listener').on('say hello to my little friend', function(event) {
+              counter += (event.detail * 3);
+            });
+            $.broadcast('say hello to my little friend', data);
+            assert.equal(counter, 6);
           });
         });
       });
