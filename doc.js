@@ -268,37 +268,27 @@ define('doc', ['event'], function(event) {
 			},
 
 			'closest': function(selector) {
-				var elements = [];
-				var $selector = query(search(document, selector));
-				var possibleParents = $selector.els;
+				var result = [],
+						matches = HTMLElement.prototype.matches
+							|| HTMLElement.prototype.webkitMatchesSelector
+							|| HTMLElement.prototype.mozMatchesSelector
+							|| HTMLElement.prototype.msMatchesSelector
+							|| HTMLElement.prototype.oMatchesSelector;
 
-				if ($selector.size === 0) {
-					return $selector;
+				function lookupParent(el) {
+					if (!el || matches.call(el, selector)) {
+						return el;
+					}
+					return lookupParent(el.parentNode);
 				}
 
-				var checkIfParentIsTheOne = function($parent) {
-					var parent = $parent.first();
-					if (!parent) {
-						return null;
-					}
-					for (var ppi = possibleParents.length - 1; ppi >= 0; ppi--) {
-						var pp = possibleParents[ppi];
-						if (pp === parent) {
-							possibleParents.splice(ppi, 1);
-							return pp;
-						}
-					}
-					return checkIfParentIsTheOne($parent.parent());
-				};
-
 				this.each(function(el) {
-					var closestParent = checkIfParentIsTheOne(query(el).parent());
-					if (closestParent) {
-						elements.push(closestParent);
+					var parentFound = lookupParent(el.parentNode);
+					if (parentFound && result.indexOf(parentFound) === -1) {
+						result.push(parentFound);
 					}
 				});
-
-				return query(elements);
+				return query(result);
 			},
 
 			'first' : function() {
