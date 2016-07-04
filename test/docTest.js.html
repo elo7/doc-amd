@@ -36,8 +36,9 @@
       </div>
 
       <div id="prepend-div">
-        <div class="this-one"></div>
+        <div class="first">first</div>
       </div>
+      <div class="prepend-doc-element third"></div>
 
       <div id="append-div"></div>
 
@@ -306,14 +307,37 @@
             assert.equal($('#get-html-test').html(), 'My Html2');
           });
 
+          it('should prepend a text return the given element', function() {
+            var prependDiv = $('#prepend-div');
+            prependDiv.prepend("Elo7");
+            assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g,""), 'Elo7<div class="first">first</div>');
+          });
+
           it('should prepend a new element and return the given element', function() {
             var element = document.createElement('div');
             element.id = 'prepend-element';
+            element.classList.add('second');
             var prepend = $('#prepend-div').prepend(element),
               prependElement = prepend.find('#prepend-element');
             assert.equal(prependElement.size, 1);
             assert.equal(prependElement.attr('id'), 'prepend-element');
-            assert.equal(prependElement.next().hasClass('this-one'), true);
+            assert.equal(prependElement.next().hasClass('first'), true);
+          });
+
+          it('should prepend a doc element and return the given element', function() {
+            var element = $('.prepend-doc-element'),
+              prepend = $('#prepend-div').prepend(element);
+            assert.equal(prepend.find('div').size, 3);
+            assert.equal(element.next().hasClass('second'), true);
+          });
+
+          it('should prepend html and return the given element', function() {
+            var element = '<div class="fourth"></div>',
+              prepend = $('#prepend-div').prepend(element),
+              fourth = $('.fourth');
+            assert.equal(prepend.find('div').size, 4);
+            assert.equal(fourth.size, 1);
+            assert.equal(fourth.next().hasClass('third'), true);
           });
 
           it('should append a new element and return the new element', function() {

@@ -143,11 +143,31 @@ define(['doc'], function(doc) {
 });
 ```
 
+
+#### prepend
+`.prepend(element)`
+
+###### Description:
+Prepend the DOM element as child of the Doc object
+
+###### Parameters:
+> element: Element //The element you want to prepend as a child of your selector.
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	var div = document.createElement('div');
+	doc('body').prepend(div); //Prepend the new DOM element as child of the Doc object
+	doc('body').prepend($('div.content').first()); //Prepend the exist DOM element as child of the Doc object
+	doc('body').prepend('<p>Text here</p>'); //Prepend text HTML as child of the Doc object
+});
+```
+
 #### append
 `.append(element)`
 
 ###### Description:
-Append the DOM element as child of the Doc object
+Append the DOM element, doc-amd element or text as child of the Doc object
 
 ###### Parameters:
 > element: Element //The element you want to append as a child of your selector.
@@ -155,9 +175,9 @@ Append the DOM element as child of the Doc object
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	var div = document.createElement('div')
-	$('body').append(div) //Append the new DOM element as child of the Doc object
-	$('body').append($('div.content').first()) //Append the exist DOM element as child of the Doc object
+	var div = document.createElement('div');
+	doc('body').append(div); //Append the new DOM element as child of the Doc object
+	doc('body').append($('div.content').first()); //Append the exist DOM element as child of the Doc object
 });
 ```
 
@@ -173,7 +193,7 @@ Set the inner text of the element
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('.content').text('Lorem ipsum') //Set the inner text of the element
+	doc('.content').text('Lorem ipsum'); //Set the inner text of the element
 });
 ```
 

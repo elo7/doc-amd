@@ -141,10 +141,17 @@ define('doc', ['event'], function(event) {
 
 			'prepend' : function(value) {
 				this.each(function(el) {
-					if(typeof value ==='string') {
-						el.insertAdjacentHTML('afterbegin', value);
-					} else {
+					if(typeof value === 'object') {
+						if(value.els) {
+							value.each(function(childElement) {
+								el.insertAdjacentElement('afterbegin', childElement);
+							});
+							return;
+						}
 						el.insertAdjacentElement('afterbegin', value);
+
+					} else {
+						el.insertAdjacentHTML('afterbegin', value);
 					}
 				});
 				return this;
