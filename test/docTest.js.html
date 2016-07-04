@@ -309,8 +309,8 @@
 
           it('should prepend a text return the given element', function() {
             var prependDiv = $('#prepend-div');
-            prependDiv.prepend("Elo7");
-            assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g,""), 'Elo7<div class="first">first</div>');
+            prependDiv.prepend('Elo7');
+            assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g,''), 'Elo7<div class="first">first</div>');
           });
 
           it('should prepend a new element and return the given element', function() {

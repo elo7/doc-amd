@@ -148,7 +148,7 @@ define(['doc'], function(doc) {
 `.prepend(element)`
 
 ###### Description:
-Prepend the DOM element as child of the Doc object
+Prepends the existing DOM element, doc-amd element or text as child of the Doc object
 
 ###### Parameters:
 > element: Element //The element you want to prepend as a child of your selector.
@@ -158,7 +158,7 @@ Prepend the DOM element as child of the Doc object
 define(['doc'], function(doc) {
 	var div = document.createElement('div');
 	doc('body').prepend(div); //Prepend the new DOM element as child of the Doc object
-	doc('body').prepend($('div.content').first()); //Prepend the exist DOM element as child of the Doc object
+	doc('body').prepend($('div.content')); //Prepend the exist DOM element as child of the Doc object
 	doc('body').prepend('<p>Text here</p>'); //Prepend text HTML as child of the Doc object
 });
 ```
@@ -167,7 +167,7 @@ define(['doc'], function(doc) {
 `.append(element)`
 
 ###### Description:
-Append the DOM element, doc-amd element or text as child of the Doc object
+Append the DOM element as child of the Doc object
 
 ###### Parameters:
 > element: Element //The element you want to append as a child of your selector.
