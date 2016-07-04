@@ -139,6 +139,17 @@ define('doc', ['event'], function(event) {
 				return "";
 			},
 
+			'prepend' : function(value) {
+				this.each(function(el) {
+					if(typeof value ==='string') {
+						el.insertAdjacentHTML('afterbegin', value);
+					} else {
+						el.insertAdjacentElement('afterbegin', value);
+					}
+				});
+				return this;
+			},
+
 			'append' : function(value) {
 				var appendElement;
 				this.each(function(el) {

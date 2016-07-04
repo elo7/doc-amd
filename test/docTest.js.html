@@ -35,6 +35,10 @@
         </div>
       </div>
 
+      <div id="prepend-div">
+        <div class="this-one"></div>
+      </div>
+
       <div id="append-div"></div>
 
       <input class="checked" type="checkbox" checked>
@@ -82,39 +86,39 @@
 
       var assert = window.proclaim;
 
-      mocha.ui("bdd");
+      mocha.ui('bdd');
 
       define(['doc'], function($) {
         describe('Doc', function(){
           it('should contains all known methods', function(){
             var current = [];
-            for(var methodName in $("body")) current.push(methodName);
+            for(var methodName in $('body')) current.push(methodName);
             assert.equal(arrayEquals(knownMethods(), current), true);
           });
 
           it('should return the element text', function(){
-            assert.equal( $('#test').text(), "Teste com texto");
+            assert.equal( $('#test').text(), 'Teste com texto');
           });
 
           it('should insert text in the element', function(){
             $('#test').text('Inserindo texto de teste');
-            assert.equal( $('#test').text(), "Inserindo texto de teste");
+            assert.equal( $('#test').text(), 'Inserindo texto de teste');
           });
 
           it('should return the element parent', function(){
-            assert.equal($('#test').parent().attr('id'),"parent-element");
+            assert.equal($('#test').parent().attr('id'),'parent-element');
           });
 
           it('should return the element parent of a parent', function(){
-            assert.equal($('#test').parent().parent().attr('id'),"test-suite");
+            assert.equal($('#test').parent().parent().attr('id'),'test-suite');
           });
 
           it('should return the element the next element', function(){
-            assert.equal($('#test').next().attr('id'),"next-test");
+            assert.equal($('#test').next().attr('id'),'next-test');
           });
 
           it('should return the element the previous element', function(){
-            assert.equal($('#test').previous().attr('id'),"prev-test");
+            assert.equal($('#test').previous().attr('id'),'prev-test');
           });
 
           it('should return the first element', function(){
@@ -126,21 +130,21 @@
           });
 
           it('should return the data attribute from element', function(){
-            assert.equal($('#test').data('test'),"value");
+            assert.equal($('#test').data('test'),'value');
           });
 
           it('should insert value in the data attribute element', function(){
             $('#test').data('value-test','text-test');
-            assert.equal($('#test').data('value-test'),"text-test");
+            assert.equal($('#test').data('value-test'),'text-test');
           });
 
           it('should return the value from element', function(){
-            assert.equal( $('#hiddenInput').val(),"value");
+            assert.equal( $('#hiddenInput').val(),'value');
           });
 
           it('should insert value in the element', function(){
             $('#hiddenInput').val('valor inserido');
-            assert.equal( $('#hiddenInput').val(),"valor inserido");
+            assert.equal( $('#hiddenInput').val(),'valor inserido');
           });
 
           it('should find the correct elements', function(){
@@ -173,52 +177,52 @@
           });
 
           it('should return the correct elements according to selector type and the correct number of elements on list', function(){
-            var template = "Teste seletor ";
+            var template = 'Teste seletor ';
             assert.equal( $('#search-id-test').size,1);
-            assert.equal( $('#search-id-test').first().innerHTML, template + "#ID");
+            assert.equal( $('#search-id-test').first().innerHTML, template + '#ID');
 
             assert.equal( $('.search-class-test').size,2);
-            assert.equal( $('.search-class-test').first().innerHTML, template + ".class");
+            assert.equal( $('.search-class-test').first().innerHTML, template + '.class');
 
             assert.equal( $('div.search-class-test').size,2);
-            assert.equal( $('div.search-class-test').first().innerHTML, template + ".class");
+            assert.equal( $('div.search-class-test').first().innerHTML, template + '.class');
 
             assert.equal( $('center').size,1);
-            assert.equal( $('center').first().innerHTML, template + "tag");
+            assert.equal( $('center').first().innerHTML, template + 'tag');
 
             assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
-            assert.equal($('#find-element').find('.find').find('#sub-find-2').text(), "Segundo elemento filho para ser encontrado");
+            assert.equal($('#find-element').find('.find').find('#sub-find-2').text(), 'Segundo elemento filho para ser encontrado');
           });
 
           it('should have els and size on returned elements', function(){
-            var returnedObject = $("center");
-            assert.equal( typeof returnedObject.els,"object");
+            var returnedObject = $('center');
+            assert.equal( typeof returnedObject.els,'object');
             assert.equal( returnedObject.size,1);
           });
 
           it('should fire event correctly when attach element with function *on*', function(){
-            assert.equal( $("#fire-event-test").first().innerHTML,"PING");
+            assert.equal( $('#fire-event-test').first().innerHTML,'PING');
 
-            $("#fire-event-test").on('click', function(){
-              this.innerHTML = "PONG";
+            $('#fire-event-test').on('click', function(){
+              this.innerHTML = 'PONG';
             });
 
-            fireEvent($("#fire-event-test").first(), "click");
-            assert.equal( $("#fire-event-test").first().innerHTML,"PONG");
+            fireEvent($('#fire-event-test').first(), 'click');
+            assert.equal( $('#fire-event-test').first().innerHTML,'PONG');
           });
 
           it('should remove event with function *off*', function() {
             var count = 0;
-            $("#off-button").on('click', function(){
-              $("#off-count").val(++count);
+            $('#off-button').on('click', function(){
+              $('#off-count').val(++count);
             });
 
-            fireEvent($("#off-button").first(), "click");
-            assert.equal( $("#off-count").val(), 1);
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal( $('#off-count').val(), 1);
 
             $('#off-button').off('click');
-            fireEvent($("#off-button").first(), "click");
-            assert.equal( $("#off-count").val(), 1);
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal( $('#off-count').val(), 1);
           });
 
           it('should remove event with function *off* using a named', function() {
@@ -231,17 +235,17 @@
               $('#off-count').val(++count);
             }, 'named-2');
 
-            fireEvent($("#off-button").first(), "click");
-            assert.equal( $("#off-count").val(), 2);
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal( $('#off-count').val(), 2);
 
-            $("#off-button").off('click', "named-1");
-            fireEvent($("#off-button").first(), "click");
-            assert.equal( $("#off-count").val(), 3);
+            $('#off-button').off('click', 'named-1');
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal( $('#off-count').val(), 3);
           });
 
           it('should select text correctly', function(){
             selectText('selected-text-test');
-            assert.equal( $('body').selectedText(),$("#selected-text-test").first().innerHTML);
+            assert.equal( $('body').selectedText(),$('#selected-text-test').first().innerHTML);
           });
 
           it('should return false if element is not present', function(){
@@ -256,74 +260,84 @@
             assert.equal($('.find').isPresent(), true);
           });
 
-          it("should return object with isEmpty true when not find any element with given selector", function(){
-            var element = $("#this-element-should-not-exists");
-            assert.equal( typeof element,"object");
+          it('should return object with isEmpty true when not find any element with given selector', function(){
+            var element = $('#this-element-should-not-exists');
+            assert.equal( typeof element,'object');
             assert.equal( element.isEmpty(), true);
           });
 
-          it("should remove element from DOM tree", function(){
-            var element = $("#this-element-should-be-removed").removeItem();
-            assert.equal( typeof element,"object");
+          it('should remove element from DOM tree', function(){
+            var element = $('#this-element-should-be-removed').removeItem();
+            assert.equal( typeof element,'object');
             assert.equal( element.isEmpty(),true);
             assert.equal( element.size,0);
           });
 
-          it("should verify if the element has the given class", function(){
-            var element = $("#has-class-test");
+          it('should verify if the element has the given class', function(){
+            var element = $('#has-class-test');
             assert.equal( element.size, 1);
-            assert.equal( $("#has-class-test").hasClass("simple-class-for-test"), true);
+            assert.equal( $('#has-class-test').hasClass('simple-class-for-test'), true);
           });
 
-          it("should add class to the given element", function(){
-            var element = $("#add-remove-class-test").addClass("added-class-for-test");
+          it('should add class to the given element', function(){
+            var element = $('#add-remove-class-test').addClass('added-class-for-test');
             assert.equal( element.size, 1);
-            assert.equal( element.hasClass("added-class-for-test"), true);
+            assert.equal( element.hasClass('added-class-for-test'), true);
           });
 
-          it("should remove class to the given element", function(){
-            var element = $("#add-remove-class-test").removeClass("to-remove-class-for-test");
-            assert.equal( element.hasClass("to-remove-class-for-test"), false);
+          it('should remove class to the given element', function(){
+            var element = $('#add-remove-class-test').removeClass('to-remove-class-for-test');
+            assert.equal( element.hasClass('to-remove-class-for-test'), false);
           });
 
-          it("should toggle class to the given element", function(){
-            var element = $("#toggle-class-test").toggleClass("toggle-class-for-test");
-            assert.equal( element.hasClass("toggle-class-for-test"), true);
-            element = $("#toggle-class-test").toggleClass("toggle-class-for-test");
-            assert.equal( element.hasClass("toggle-class-for-test"), false);
+          it('should toggle class to the given element', function(){
+            var element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
+            assert.equal( element.hasClass('toggle-class-for-test'), true);
+            element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
+            assert.equal( element.hasClass('toggle-class-for-test'), false);
           });
 
-          it("should return html of given element", function(){
-            assert.equal($("#get-html-test").html(), 'My Html');
+          it('should return html of given element', function(){
+            assert.equal($('#get-html-test').html(), 'My Html');
           });
 
-          it("should set html of given element", function(){
-            $("#get-html-test").html('My Html2');
-            assert.equal($("#get-html-test").html(), 'My Html2');
+          it('should set html of given element', function(){
+            $('#get-html-test').html('My Html2');
+            assert.equal($('#get-html-test').html(), 'My Html2');
           });
 
-          it("should append a new element and return the new element", function() {
-            var element = document.createElement("div");
-            element.id = "append-element";
-            var append = $("#append-div").append(element);
-            assert.equal($("#append-div").find("#append-element").size, 1);
+          it('should prepend a new element and return the given element', function() {
+            var element = document.createElement('div');
+            element.id = 'prepend-element';
+            var prepend = $('#prepend-div').prepend(element),
+              prependElement = prepend.find('#prepend-element');
+            assert.equal(prependElement.size, 1);
+            assert.equal(prependElement.attr('id'), 'prepend-element');
+            assert.equal(prependElement.next().hasClass('this-one'), true);
+          });
+
+          it('should append a new element and return the new element', function() {
+            var element = document.createElement('div');
+            element.id = 'append-element';
+            var append = $('#append-div').append(element);
+            assert.equal($('#append-div').find('#append-element').size, 1);
             assert.equal(append.attr('id'), 'append-element');
           });
 
-          it("should throttle click event", function() {
-            $("#throttle-button").throttle("click",function(){
-              var value = parseInt($("#throttle-count").val());
-              $("#throttle-count").val(++value);
+          it('should throttle click event', function() {
+            $('#throttle-button').throttle('click',function(){
+              var value = parseInt($('#throttle-count').val());
+              $('#throttle-count').val(++value);
             }, 5000);
-            fireEvent($("#throttle-button").first(), "click");
-            fireEvent($("#throttle-button").first(), "click");
-            fireEvent($("#throttle-button").first(), "click");
-            assert.equal(parseInt($("#throttle-count").val()), 1);
+            fireEvent($('#throttle-button').first(), 'click');
+            fireEvent($('#throttle-button').first(), 'click');
+            fireEvent($('#throttle-button').first(), 'click');
+            assert.equal(parseInt($('#throttle-count').val()), 1);
           });
 
-          it("should call on submit when dispatch the event", function() {
+          it('should call on submit when dispatch the event', function() {
             var expected = false;
-            $("#form-test").on('submit', function(event) {
+            $('#form-test').on('submit', function(event) {
               (event.preventDefault) ? event.preventDefault() : event.returnValue = false;
               expected = true;
             });
@@ -331,7 +345,7 @@
             assert.equal(expected, true);
           });
 
-          it("should call on click and append hash to url", function() {
+          it('should call on click and append hash to url', function() {
             $('#clickme').trigger('click');
             //Firefox mobile needs it
             setTimeout(function() {
@@ -339,7 +353,7 @@
             }, 0);
           });
 
-          it("should call custom event and return a argument passed in trigger method", function() {
+          it('should call custom event and return a argument passed in trigger method', function() {
             var returData;
             var expected = {
               'a': 1,
@@ -353,20 +367,20 @@
             assert.deepEqual(returnData, expected);
           });
 
-          it("should focus on the first matched element", function() {
-            $("a").focus();
-            assert.deepEqual($("a").first(), document.activeElement);
+          it('should focus on the first matched element', function() {
+            $('a').focus();
+            assert.deepEqual($('a').first(), document.activeElement);
           });
 
-          it("should remove an attribute from an element", function() {
-            var element = $("#remove-my-href");
-            element.removeAttr("href");
-            assert.notEqual(element.attr("href"), "#not-removed");
+          it('should remove an attribute from an element', function() {
+            var element = $('#remove-my-href');
+            element.removeAttr('href');
+            assert.notEqual(element.attr('href'), '#not-removed');
           });
 
-          it("should not fail to remove a non-existent attribute from an element", function() {
-            var element = $("#remove-my-href");
-            assert.doesNotThrow(function() { element.removeAttr("style") });
+          it('should not fail to remove a non-existent attribute from an element', function() {
+            var element = $('#remove-my-href');
+            assert.doesNotThrow(function() { element.removeAttr('style') });
           });
 
           it('should scroll viewport until the first matched element is at the top of the viewport', function() {
@@ -375,9 +389,9 @@
             assert.lessThan(Math.abs(elements.first().getBoundingClientRect().top), 1);
           });
 
-          it("should select an element with an id with dot", function() {
-            assert.equal($("#my\\.selector").text(), "Id with dot");
-            assert.equal($("#my.selector").text(), "Id without dot");
+          it('should select an element with an id with dot', function() {
+            assert.equal($('#my\\.selector').text(), 'Id with dot');
+            assert.equal($('#my.selector').text(), 'Id without dot');
           });
 
           it('should broadcast event to all listeners', function() {
@@ -414,6 +428,7 @@
           'data',
           'val',
           'html',
+          'prepend',
           'append',
           'text',
           'attr',
