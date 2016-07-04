@@ -57,7 +57,7 @@ define(['doc'], function(doc) {
 ```
 
 #### size
-`.size()`
+`.size`
 
 ###### Description:
 Returns the length of elements.
@@ -65,7 +65,7 @@ Returns the length of elements.
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('a').size()
+	var numberOfElements = doc('a').size;
 });
 ```
 
