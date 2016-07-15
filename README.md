@@ -453,8 +453,13 @@ define(['doc'], function(doc) {
 });
 ```
 
-#### isEmpty
-`.isEmpty()`
+#### ~~isEmpty~~
+
+###### Description:
+
+This method is deprecated. Use the method `isPresent()` instead.
+
+#### isPresent
 
 ###### Description:
 Verifies if the element exists on the DOM. Returns boolean.
@@ -462,7 +467,7 @@ Verifies if the element exists on the DOM. Returns boolean.
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('artile#content').isEmpty(); //Return true/false if the element exist
+	doc('artile#content').isPresent(); //Return true/false if the element exist
 });
 ```
 

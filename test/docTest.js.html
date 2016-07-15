@@ -244,6 +244,18 @@
             assert.equal( $('body').selectedText(),$("#selected-text-test").first().innerHTML);
           });
 
+          it('should return false if element is not present', function(){
+            var element = $('.this-element-should-not-exists');
+            assert.equal(typeof element, "object");
+            assert.equal(element.isPresent(), false);
+          });
+
+          it('should return true if element is present', function(){
+            assert.equal($('input').isPresent(), true);
+            assert.equal($('#form-test').isPresent(), true);
+            assert.equal($('.find').isPresent(), true);
+          });
+
           it("should return object with isEmpty true when not find any element with given selector", function(){
             var element = $("#this-element-should-not-exists");
             assert.equal( typeof element,"object");
@@ -418,6 +430,7 @@
           'previous',
           'next',
           'parent',
+          'isPresent',
           'isEmpty',
           'on',
           'throttle',
