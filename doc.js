@@ -345,7 +345,7 @@ define('doc', ['event'], function(event) {
 				this.each(function(el) {
 					if (boundElements.indexOf(el) === -1) {
 						boundElements.push(el);
-					}	
+					}
 				});
 
 				return this;
@@ -378,7 +378,7 @@ define('doc', ['event'], function(event) {
 				this.each(function(el) {
 					if ((elementIndex = boundElements.indexOf(el)) !== -1) {
 						boundElements.splice(elementIndex, 1);
-					}	
+					}
 				});
 
 				return this;
@@ -425,7 +425,7 @@ define('doc', ['event'], function(event) {
 			},
 
 			'scrollIntoView' : function(scrollIntoViewOptions) {
-				var scrollIntoViewOptions = scrollIntoViewOptions || true;
+				var scrollIntoViewOptions = (typeof scrollIntoViewOptions === "boolean") ? scrollIntoViewOptions : scrollIntoViewOptions || true;
 				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
 			}
