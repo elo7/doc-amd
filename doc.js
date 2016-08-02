@@ -277,7 +277,7 @@ define('doc', ['event'], function(event) {
 							|| HTMLElement.prototype.oMatchesSelector;
 
 				function lookupParent(el) {
-					if (!el || matches.call(el, selector)) {
+					if (!el || el instanceof HTMLElement && el.matches.call(el, selector)) {
 						return el;
 					}
 					return lookupParent(el.parentNode);
