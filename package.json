@@ -1,10 +1,11 @@
 {
-  "name": "js-unit-tests",
+  "name": "doc-amd",
   "version": "1.0.11-SNAPSHOT",
-  "description": "Elo7 doc js unit tests",
+  "description": "A small DOM manipulation library",
   "keywords": [
+    "DOM",
     "JS",
-    "test"
+    "querySelector"
   ],
   "scripts": {
     "test": "bash test.sh",
@@ -13,11 +14,11 @@
   },
   "author": "Elo7",
   "devDependencies": {
-    "mocha": "2.0.1",
-    "phantomjs": "1.9.19",
-    "mocha-phantomjs": "3.5.1",
-    "proclaim": "2.0.0",
-    "http-server": "0.7.4",
-    "bower": "1.4.1"
+    "mocha": "3.0.1",
+    "phantomjs": "2.1.7",
+    "mocha-phantomjs": "4.1.0",
+    "proclaim": "3.4.1",
+    "http-server": "0.9.0",
+    "bower": "1.7.9"
   }
 }
