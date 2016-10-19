@@ -16,6 +16,8 @@ Then, we built it from scratch.
 
 Install with [Bower](http://bower.io): `bower install doc-amd`
 
+Install with [Npm](https://www.npmjs.com/): `npm install doc-amd`
+
 ## Dependencies
 
 Doc-amd depends on an [amd](http://en.wikipedia.org/wiki/Asynchronous_module_definition) implementation. We suggest [async-define](https://gist.github.com/sergiolopes/5778124) implementation for dependency lookup.
