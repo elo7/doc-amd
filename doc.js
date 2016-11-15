@@ -330,8 +330,13 @@ define('doc', ['event'], function(event) {
 				return query(parents);
 			},
 
+			'isPresent' : function() {
+				return this.els !== undefined && this.els.length > 0;
+			},
+
+			/* Deprecated */
 			'isEmpty' : function() {
-				return this.els === undefined || !this.els.length;
+				return !this.isPresent();
 			},
 
 			'on' : function(eventName, command, named) {
