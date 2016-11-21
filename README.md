@@ -670,7 +670,6 @@ define(['doc'], function(doc) {
 
 ###### Description:
 Inserts an element after each matched element
->>>>>>> f4eebc8... Adds insertBefore and insertAfter functions
 
 ###### Sample:
 ``` js
