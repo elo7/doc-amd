@@ -431,7 +431,7 @@ define('doc', ['event'], function(event) {
 			},
 
 			'insertBefore' : function(elements) {
-				if(typeof elements == 'string'){
+				if(typeof elements === 'string'){
 					elements = query(search(document, elements));
 				}
 
@@ -444,7 +444,7 @@ define('doc', ['event'], function(event) {
 			},
 
 			'insertAfter' : function(elements) {
-				if(typeof elements == 'string'){
+				if(typeof elements === 'string'){
 					elements = query(search(document, elements));
 				}
 
