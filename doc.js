@@ -451,6 +451,32 @@ define('doc', ['event'], function(event) {
 				var scrollIntoViewOptions = (typeof scrollIntoViewOptions === "boolean") ? scrollIntoViewOptions : scrollIntoViewOptions || true;
 				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
+			},
+
+			'insertBefore' : function(elements) {
+				if(typeof elements === 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element before element without parent");
+					}
+					el.insertAdjacentHTML('beforebegin', this.els[0].outerHTML);
+				}.bind(this));
+			},
+
+			'insertAfter' : function(elements) {
+				if(typeof elements === 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element after element without parent");
+					}
+					el.insertAdjacentHTML('afterend', this.els[0].outerHTML);
+				}.bind(this));
 			}
 		}
 	}
