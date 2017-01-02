@@ -454,6 +454,21 @@
             assert.equal(counter, 6);
           });
 
+          it("should handle HTMLCollection as an array of elements", function() {
+            var element = $("#find-element").first();
+            assert.equal($(element.children).size, 2);
+          });
+
+          it("should handle NodeList as an array of elements, filtering not elements", function() {
+            var element = $("#find-element").first();
+            assert.equal($(element.childNodes).size, 2);
+          });
+
+          it("should handle an array of elements as an array of elements", function() {
+            var elements = [document.head, document.body];
+            assert.equal($(elements).size, 2);
+          });
+
           it("should insert element before all selected elements", function() {
             var selector = ".insert-selected-element-before-me";
             $(".insert-filler").insertBefore($(selector));

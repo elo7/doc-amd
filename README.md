@@ -27,6 +27,10 @@ Doc-amd also depends on [events-amd](https://github.com/elo7/event-amd).
 
 #### doc
 `doc(querySelector)`
+`doc(HTMLCollection)`
+`doc(NodeList)`
+`doc(Array)`
+`doc(Node)`
 
 ###### Description:
 Returns a Doc object with all the methods below.
@@ -41,6 +45,10 @@ define(['doc'], function(doc) {
 	doc('#link')
 	doc('a')
 	doc('li > a')
+	doc(document.body.children)
+	doc(document.body.childNodes)
+	doc(document.body)
+	doc([document.head, document.body])
 });
 ```
 

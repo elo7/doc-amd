@@ -21,25 +21,25 @@ define('doc', ['event'], function(event) {
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
 		if (matcher.isTag(selector)) {
-			return convertToArray(namespace.getElementsByTagName(selector));
+			return convertHtmlCollectionToArray(namespace.getElementsByTagName(selector));
 		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
 			return document.getElementById(selector);
 		} else if (matcher.isClass(selector) && namespace.getElementsByClassName) {
 			selector = selector.replace('.', '');
-			return convertToArray(namespace.getElementsByClassName(selector));
+			return convertHtmlCollectionToArray(namespace.getElementsByClassName(selector));
 		}
-		return convertToArray(namespace.querySelectorAll(selector));
+		return convertHtmlCollectionToArray(namespace.querySelectorAll(selector));
 	};
 
-	var convertToArray = function(nodeList) {
+	var convertHtmlCollectionToArray = function(htmlCollection) {
 		try {
 			return Array.prototype.slice.call(namespace.getElementsByTagName(selector));
 		} catch(e) {
 			var array = [];
-			var length = nodeList.length;
+			var length = htmlCollection.length;
 			for(var i = 0; i < length; i++) {
-				array.push(nodeList[i]);
+				array.push(htmlCollection[i]);
 			}
 			return array;
 		}
@@ -77,12 +77,28 @@ define('doc', ['event'], function(event) {
 		return el.className.match(new RegExp('(^|\\s)' + clazz + '($|\\s)'));
 	};
 
+	var convertNodeListToArray = function(nodeList) {
+		var length = nodeList.length;
+		var list = [];
+		for (var i = 0; i < length ; i++) {
+			var element = nodeList[i];
+			if (element.nodeType === Node.ELEMENT_NODE) {
+				list.push(element);
+			}
+		}
+		return list;
+	}
+
 	var query = function(elements) {
 		var selectedElements = [];
 
-		if (elements){
+		if (elements) {
 			if (elements instanceof Array) {
 				selectedElements = elements;
+			} else if (elements instanceof HTMLCollection) {
+				selectedElements = convertHtmlCollectionToArray(elements);
+			} else if (elements instanceof NodeList) {
+				selectedElements = convertNodeListToArray(elements);
 			} else {
 				selectedElements.push(elements);
 			}
