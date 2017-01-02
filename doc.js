@@ -155,6 +155,24 @@ define('doc', ['event'], function(event) {
 				return "";
 			},
 
+			'prepend' : function(value) {
+				this.each(function(el) {
+					if(typeof value === 'object') {
+						if(value.els) {
+							value.each(function(childElement) {
+								el.insertAdjacentElement('afterbegin', childElement);
+							});
+							return;
+						}
+						el.insertAdjacentElement('afterbegin', value);
+
+					} else {
+						el.insertAdjacentHTML('afterbegin', value);
+					}
+				});
+				return this;
+			},
+
 			'append' : function(value) {
 				var appendElement;
 				this.each(function(el) {
@@ -346,8 +364,13 @@ define('doc', ['event'], function(event) {
 				return query(parents);
 			},
 
+			'isPresent' : function() {
+				return this.els !== undefined && this.els.length > 0;
+			},
+
+			/* Deprecated */
 			'isEmpty' : function() {
-				return this.els === undefined || !this.els.length;
+				return !this.isPresent();
 			},
 
 			'on' : function(eventName, command, named) {
@@ -444,6 +467,32 @@ define('doc', ['event'], function(event) {
 				var scrollIntoViewOptions = (typeof scrollIntoViewOptions === "boolean") ? scrollIntoViewOptions : scrollIntoViewOptions || true;
 				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
+			},
+
+			'insertBefore' : function(elements) {
+				if(typeof elements === 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element before element without parent");
+					}
+					el.insertAdjacentHTML('beforebegin', this.els[0].outerHTML);
+				}.bind(this));
+			},
+
+			'insertAfter' : function(elements) {
+				if(typeof elements === 'string'){
+					elements = query(search(document, elements));
+				}
+
+				elements.each(function(el) {
+					if (!el.parentNode) {
+						throw Error("Trying to insert element after element without parent");
+					}
+					el.insertAdjacentHTML('afterend', this.els[0].outerHTML);
+				}.bind(this));
 			}
 		}
 	}

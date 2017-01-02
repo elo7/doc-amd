@@ -151,6 +151,26 @@ define(['doc'], function(doc) {
 });
 ```
 
+
+#### prepend
+`.prepend(element)`
+
+###### Description:
+Prepends the existing DOM element, doc-amd element or text as child of the Doc object
+
+###### Parameters:
+> element: Element //The element you want to prepend as a child of your selector.
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	var div = document.createElement('div');
+	doc('body').prepend(div); //Prepend the new DOM element as child of the Doc object
+	doc('body').prepend($('div.content')); //Prepend the exist DOM element as child of the Doc object
+	doc('body').prepend('<p>Text here</p>'); //Prepend text HTML as child of the Doc object
+});
+```
+
 #### append
 `.append(element)`
 
@@ -163,9 +183,9 @@ Append the DOM element as child of the Doc object
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	var div = document.createElement('div')
-	$('body').append(div) //Append the new DOM element as child of the Doc object
-	$('body').append($('div.content').first()) //Append the exist DOM element as child of the Doc object
+	var div = document.createElement('div');
+	doc('body').append(div); //Append the new DOM element as child of the Doc object
+	doc('body').append($('div.content').first()); //Append the exist DOM element as child of the Doc object
 });
 ```
 
@@ -181,7 +201,7 @@ Set the inner text of the element
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('.content').text('Lorem ipsum') //Set the inner text of the element
+	doc('.content').text('Lorem ipsum'); //Set the inner text of the element
 });
 ```
 
@@ -461,8 +481,13 @@ define(['doc'], function(doc) {
 });
 ```
 
-#### isEmpty
-`.isEmpty()`
+#### ~~isEmpty~~
+
+###### Description:
+
+This method is deprecated. Use the method `isPresent()` instead.
+
+#### isPresent
 
 ###### Description:
 Verifies if the element exists on the DOM. Returns boolean.
@@ -470,7 +495,7 @@ Verifies if the element exists on the DOM. Returns boolean.
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
-	doc('artile#content').isEmpty(); //Return true/false if the element exist
+	doc('artile#content').isPresent(); //Return true/false if the element exist
 });
 ```
 
@@ -654,6 +679,38 @@ define(['doc'], function(doc) {
 		console.log(e.detail.param);
 	});
 	doc.broadcast('click', { param: "I am listening"}); //Triggers the event click for everybody that listens for the 'onclick' event.
+});
+```
+
+#### insertBefore
+`.insertBefore()`
+
+###### Description:
+Inserts an element before each matched element
+
+###### Sample:
+```js
+define(['doc'], function(doc) {
+	doc('#some-element').insertBefore('a'); //Inserts the element with id some-element before each <a> element
+
+	var elements = doc('.before-me');
+	doc('#some-element').insertBefore(elements); //Inserts the element with id some-element before elements previously selected with doc-amd
+});
+```
+
+#### insertAfter
+`.insertAfter()`
+
+###### Description:
+Inserts an element after each matched element
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('#some-element').insertAfter("a"); //Inserts the element with id some-element after each <a> element
+
+	var elements = doc('.after-me');
+	doc('#some-element').insertAfter(elements); //Inserts the element with id some-element after elements previously selected with doc-amd
 });
 ```
 
