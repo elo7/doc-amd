@@ -1,6 +1,6 @@
 {
   "name": "doc-amd",
-  "version": "1.0.14-SNAPSHOT",
+  "version": "1.0.14",
   "homepage": "https://github.com/elo7/doc-amd",
   "description": "A small DOM manipulation library",
   "main": "doc.js",
@@ -24,7 +24,7 @@
     "css"
   ],
   "dependencies": {
-    "events-amd": "elo7/events-amd"
+    "events-amd": "elo7/events-amd#f1dbe6e019ec91f4691037962c375623c84159b2"
   },
   "devDependencies": {
     "async-define": "elo7/async-define"
