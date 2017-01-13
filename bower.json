@@ -24,7 +24,7 @@
     "css"
   ],
   "dependencies": {
-    "events-amd": "1.1.0"
+    "events-amd": "elo7/events-amd#lenient-off"
   },
   "devDependencies": {
     "async-define": "elo7/async-define"

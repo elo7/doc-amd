@@ -262,6 +262,10 @@
             $('#off-button').off('click', 'named-1');
             fireEvent($('#off-button').first(), 'click');
             assert.equal( $('#off-count').val(), 3);
+
+            $('#off-button').off('click', 'named-2');
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal( $('#off-count').val(), 3);
           });
 
           it('should select text correctly', function(){
@@ -509,6 +513,22 @@
             assert.throws(function() {
               $(".insert-filter").insertAfter(reference);
             }, /without parent/);
+          });
+
+          it("should not throw error when off'ing an event that was not registered yet", function() {
+            var count = 0;
+            $('#off-count').val(count);
+
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal($('#off-count').val(), 0);
+
+            $('#off-button').off('click');
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal($('#off-count').val(), 0);
+
+            $('#off-button').off('click', 'someName');
+            fireEvent($('#off-button').first(), 'click');
+            assert.equal($('#off-count').val(), 0);
           });
         });
       });
