@@ -14,7 +14,7 @@ Then, we built it from scratch.
 
 ## Installation
 
-Install with [Npm](https://www.npmjs.com/): `npm install doc-amd`
+Install with [Npm](https://www.npmjs.com/): `npm install elo7-doc-amd`
 
 ## Dependencies
 
