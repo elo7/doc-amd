@@ -14,14 +14,12 @@ Then, we built it from scratch.
 
 ## Installation
 
-Install with [Bower](http://bower.io): `bower install doc-amd`
-
-Install with [Npm](https://www.npmjs.com/): `npm install doc-amd`
+Install with [Npm](https://www.npmjs.com/): `npm install elo7-doc-amd`
 
 ## Dependencies
 
-Doc-amd depends on an [amd](http://en.wikipedia.org/wiki/Asynchronous_module_definition) implementation. We suggest [async-define](https://gist.github.com/sergiolopes/5778124) implementation for dependency lookup.
-Doc-amd also depends on [events-amd](https://github.com/elo7/event-amd).
+Doc-amd depends on an [amd](http://en.wikipedia.org/wiki/Asynchronous_module_definition) implementation. We suggest [define-async](https://www.npmjs.com/package/define-async) implementation for dependency lookup.
+Doc-amd also depends on [events-amd](https://www.npmjs.com/package/elo7-events-amd).
 
 ## Methods
 
