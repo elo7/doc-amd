@@ -560,6 +560,7 @@
           });
           it("should debounce click event", function(done) {
             var time = 300;
+            $('#debounce-count').val('0');
             $('#debounce-button').debounce('click', function(){
               var value = parseInt($('#debounce-count').val());
               $('#debounce-count').val(++value);
@@ -573,6 +574,13 @@
               assert.equal(parseInt($('#debounce-count').val()), 1);
               done();
             }, time);
+          });
+          it("should preserve this inside debounce callback", function(done) {
+            $('#debounce-button').debounce('click', function(){
+              assert.equal(this, $('#debounce-button').first());
+              done();
+            }, 10);
+            fireEvent($('#debounce-button').first(), 'click');
           });
         });
       });

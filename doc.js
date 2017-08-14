@@ -406,10 +406,11 @@ define('doc', ['event'], function(event) {
 			},
 
 			'debounce' : function(eventName, command, debounceTime, named) {
+				debounceTime = debounceTime || 1000;
 				var timer = 0;
 				var commandWithDebounce = function() {
 					clearTimeout(timer);
-					timer = setTimeout(command, debounceTime);
+					timer = setTimeout(command.bind(this), debounceTime);
 				};
 				return this.on(eventName, commandWithDebounce, named);
 			},
