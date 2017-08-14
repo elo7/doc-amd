@@ -49,6 +49,9 @@
       <input type="button" id="throttle-button">
       <input type="hidden" id="throttle-count" value="0">
 
+      <input type="button" id="debounce-button">
+      <input type="hidden" id="debounce-count" value="0">
+
       <input type="button" id="off-button">
       <input type="hidden" id="off-count" value="0">
 
@@ -555,6 +558,22 @@
             fireEvent($('#off-button').first(), 'click');
             assert.equal($('#off-count').val(), 5);
           });
+          it("should debounce click event", function(done) {
+            var time = 300;
+            $('#debounce-button').debounce('click', function(){
+              var value = parseInt($('#debounce-count').val());
+              $('#debounce-count').val(++value);
+            }, time);
+
+            fireEvent($('#debounce-button').first(), 'click');
+            fireEvent($('#debounce-button').first(), 'click');
+            fireEvent($('#debounce-button').first(), 'click');
+            assert.equal(parseInt($('#debounce-count').val()), 0);
+            setTimeout(function() {
+              assert.equal(parseInt($('#debounce-count').val()), 1);
+              done();
+            }, time);
+          });
         });
       });
     </script>
@@ -595,6 +614,7 @@
           'isEmpty',
           'on',
           'throttle',
+          'debounce',
           'off',
           'trigger',
           'selectedText',

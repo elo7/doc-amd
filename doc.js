@@ -405,6 +405,15 @@ define('doc', ['event'], function(event) {
 				return this.on(eventName, commandWithThrottle, named);
 			},
 
+			'debounce' : function(eventName, command, debounceTime, named) {
+				var timer = 0;
+				var commandWithDebounce = function() {
+					clearTimeout(timer);
+					timer = setTimeout(command, debounceTime);
+				};
+				return this.on(eventName, commandWithDebounce, named);
+			},
+
 			'off' : function(eventName, named) {
 				this.each(function(el) {
 					event.removeEvent(el, eventName, named);
