@@ -408,9 +408,10 @@ define('doc', ['event'], function(event) {
 			'debounce' : function(eventName, command, debounceTime, named) {
 				debounceTime = debounceTime || 1000;
 				var timer = 0;
-				var commandWithDebounce = function() {
+				var commandWithDebounce = function(event) {
 					clearTimeout(timer);
 					timer = setTimeout(command.bind(this), debounceTime);
+					event.preventDefault();
 				};
 				return this.on(eventName, commandWithDebounce, named);
 			},
