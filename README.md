@@ -544,6 +544,30 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### debounce
+`.debounce(event, callback [,timeout] [,eventCategory])`
+
+###### Description:
+Prevents a function from being called multiple times before a defined amount of time. Useful to prevent multiple requests.
+
+###### Parameters
+> event: String //The event you want to
+
+> callback: Function() //The function to be called
+
+> timeout: Number //The time in ms you want the application to prevent multiple calls from being made. Default value is 1000.
+
+> eventCategory: You can add multiple '_events_' of the same type (e.g: _click_) and use the _eventCategory_ parameter to prevent one event from being called.
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('button').debounce('click', function(){ ... }); //Adds an event listener for the 'click' event.
+	doc('button').debounce('click', function(){ ... }, 5000); //Adds an event listener for the 'click' event, preventing 'click' events to fire before 5 seconds
+	doc('button').debounce('click', function(){ ... }, 1000, 'tracker'); //Adds an event listener for the 'click' event with 'tracker' category, preventing the listener to be called before 1 second.
+});
+```
+
 #### off
 `.off(event [,eventCategory])`
 
