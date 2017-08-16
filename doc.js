@@ -202,12 +202,29 @@ define('doc', ['event'], function(event) {
 			'attr' : function(key, newValue) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if(newValue !== undefined) {
-					this.each(function(el) {
-						el.setAttribute(key, newValue);
-					});
+					if(typeof key === "string") {
+						this.each(function(el) {
+							el.setAttribute(key, newValue);
+						});
+					}
+					return this;
+				}
+				if (typeof key === "object") {
+					for(k in key) {
+							this.each(function(el) {
+								el.setAttribute(k, key[k]);
+							});
+					}
 					return this;
 				}
 				return this.first().getAttribute(key);
+			},
+
+			'removeAttr' : function(attrName) {
+				this.each(function(el) {
+					el.removeAttribute(attrName);
+				});
+				return this;
 			},
 
 			'hasClass' : function(clazz) {
@@ -464,13 +481,6 @@ define('doc', ['event'], function(event) {
 
 			'focus' : function() {
 				this.els[0].focus();
-				return this;
-			},
-
-			'removeAttr' : function(attrName) {
-				this.each(function(el) {
-					el.removeAttribute(attrName);
-				});
 				return this;
 			},
 

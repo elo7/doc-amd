@@ -69,6 +69,8 @@
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
       <form id="form-test" action="#"></form>
       <a href='#not-prevented' id='clickme'>click</a>
+      <a href='#attr-1' id='single-attr'>click</a>
+      <a href='#attr-2' id='multiple-attr'>click</a>
       <a href='#not-removed' id='remove-my-href'>click</a>
       <div id="my" class="selector">Id without dot</div>
       <div id="my.selector">Id with dot</div>
@@ -423,6 +425,21 @@
             assert.deepEqual($('a').first(), document.activeElement);
           });
 
+          it('should insert attribute into an element passing a key and value', function() {
+            var element = $('#single-attr');
+            var returnElement = element.attr('target', '_blank');
+            assert.equal(element.attr('target'), '_blank');
+            assert.equal(element, returnElement);
+          });
+
+          it('should insert multiple attributes into an element passing an object', function() {
+            var element = $('#multiple-attr');
+            var returnElement = element.attr({'href': '#test', 'target': '_blank'});
+            assert.equal(element.attr('href'), '#test');
+            assert.equal(element.attr('target'), '_blank');
+            assert.equal(element, returnElement);
+          });
+
           it('should remove an attribute from an element', function() {
             var element = $('#remove-my-href');
             element.removeAttr('href');
@@ -605,6 +622,7 @@
           'append',
           'text',
           'attr',
+          'removeAttr',
           'hasClass',
           'addClass',
           'removeClass',
@@ -627,7 +645,6 @@
           'trigger',
           'selectedText',
           'focus',
-          'removeAttr',
           'scrollIntoView',
           'insertBefore',
           'insertAfter'
