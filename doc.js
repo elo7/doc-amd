@@ -221,8 +221,11 @@ define('doc', ['event'], function(event) {
 			},
 
 			'removeAttr' : function(attrName) {
+				var attrList = attrName.split(' ');
 				this.each(function(el) {
-					el.removeAttribute(attrName);
+					attrList.forEach(function(attrName) {
+						el.removeAttribute(attrName);
+					});
 				});
 				return this;
 			},
@@ -242,41 +245,50 @@ define('doc', ['event'], function(event) {
 			},
 
 			'addClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						if(!fallbackHasClass(el, clazz)) {
-							el.className += ' ' + clazz + ' ';
+					clazzList.forEach(function(clazz) {
+						if(!el.classList) {
+							if(!fallbackHasClass(el, clazz)) {
+								el.className += ' ' + clazz + ' ';
+							}
+						} else {
+							el.classList.add(clazz);
 						}
-					} else {
-						el.classList.add(clazz);
-					}
+					});
 				});
 				return this;
 			},
 
 			'removeClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						el.className = el.className.replace(new RegExp('(^|\\s)' + clazz + '($|\\s)'), '');
-					} else {
-						el.classList.remove(clazz);
-					}
+					clazzList.forEach(function(clazz) {
+						if(!el.classList) {
+							el.className = el.className.replace(new RegExp('(^|\\s)' + clazz + '($|\\s)'), '');
+						} else {
+							el.classList.remove(clazz);
+						}
+					});
 				});
 				return this;
 			},
 
 			'toggleClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						var element = query(el);
-						if(element.hasClass(clazz)) {
-							element.removeClass(clazz);
+					clazzList.forEach(function(clazz) {
+						if(!el.classList) {
+							var element = query(el);
+							if(element.hasClass(clazz)) {
+								element.removeClass(clazz);
+							} else {
+								element.addClass(clazz);
+							}
 						} else {
-							element.addClass(clazz);
+							el.classList.toggle(clazz);
 						}
-					} else {
-						el.classList.toggle(clazz);
-					}
+					});
 				});
 				return this;
 			},
