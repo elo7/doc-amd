@@ -211,9 +211,9 @@ define('doc', ['event'], function(event) {
 				}
 				if (typeof key === "object") {
 					for(k in key) {
-							this.each(function(el) {
-								el.setAttribute(k, key[k]);
-							});
+						this.each(function(el) {
+							el.setAttribute(k, key[k]);
+						});
 					}
 					return this;
 				}
@@ -233,11 +233,7 @@ define('doc', ['event'], function(event) {
 			'hasClass' : function(clazz) {
 				var containsClass = false;
 				this.each(function(el){
-					if(!el.classList) {
-						if(fallbackHasClass(el, clazz)) {
-							containsClass = true;
-						}
-					} else if(el.classList.contains(clazz)){
+					if(el.classList.contains(clazz)){
 						containsClass = true;
 					}
 				});
@@ -248,13 +244,7 @@ define('doc', ['event'], function(event) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
-						if(!el.classList) {
-							if(!fallbackHasClass(el, clazz)) {
-								el.className += ' ' + clazz + ' ';
-							}
-						} else {
-							el.classList.add(clazz);
-						}
+						el.classList.add(clazz);
 					});
 				});
 				return this;
@@ -264,11 +254,7 @@ define('doc', ['event'], function(event) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
-						if(!el.classList) {
-							el.className = el.className.replace(new RegExp('(^|\\s)' + clazz + '($|\\s)'), '');
-						} else {
-							el.classList.remove(clazz);
-						}
+						el.classList.remove(clazz);
 					});
 				});
 				return this;
@@ -278,16 +264,7 @@ define('doc', ['event'], function(event) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
-						if(!el.classList) {
-							var element = query(el);
-							if(element.hasClass(clazz)) {
-								element.removeClass(clazz);
-							} else {
-								element.addClass(clazz);
-							}
-						} else {
-							el.classList.toggle(clazz);
-						}
+						el.classList.toggle(clazz);
 					});
 				});
 				return this;

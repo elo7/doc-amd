@@ -328,10 +328,11 @@
           });
 
           it('should remove class to the given element with multiple classes', function(){
-            var element = $('#add-remove-class-test').addClass('class-1 class-2');
+            var element = $('#add-remove-class-test').addClass('class-1 class-2 class-3');
             element.removeClass('class-1 class-2');
             assert.equal( element.hasClass('class-1'), false);
             assert.equal( element.hasClass('class-2'), false);
+            assert.equal( element.hasClass('class-3'), true);
           });
 
           it('should toggle class to the given element', function(){
@@ -471,10 +472,11 @@
 
           it('should remove an attribute from an element with multiple attributes', function() {
             var element = $('#multiple-attr');
-            var returnElement = element.attr({'href': '#test', 'target': '_blank'});
+            var returnElement = element.attr({'href': '#test', 'target': '_blank', 'download': true});
             element.removeAttr('href target');
             assert.notEqual(element.attr('href'), '#test');
             assert.notEqual(element.attr('target'), '_blank');
+            assert.equal(element.attr('download'), 'true');
           });
 
           it('should not fail to remove a non-existent attribute from an element', function() {
