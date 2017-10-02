@@ -69,6 +69,8 @@
       <div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
       <form id="form-test" action="#"></form>
       <a href='#not-prevented' id='clickme'>click</a>
+      <a href='#attr-1' id='single-attr'>click</a>
+      <a href='#attr-2' id='multiple-attr'>click</a>
       <a href='#not-removed' id='remove-my-href'>click</a>
       <div id="my" class="selector">Id without dot</div>
       <div id="my.selector">Id with dot</div>
@@ -105,7 +107,7 @@
 
     <script src="/node_modules/define-async/async-define.js"></script>
     <script src="/node_modules/elo7-events-amd/events-amd.js"></script>
-    <script src="/doc.js"></script>
+    <script src="/doc.min.js"></script>
     <script>
 
       var assert = window.proclaim;
@@ -313,9 +315,24 @@
             assert.equal( element.hasClass('added-class-for-test'), true);
           });
 
+          it('should add class to the given element with multiple classes', function(){
+            var element = $('#add-remove-class-test').addClass('class-1 class-2');
+            assert.equal( element.size, 1);
+            assert.equal( element.hasClass('class-1'), true);
+            assert.equal( element.hasClass('class-2'), true);
+          });
+
           it('should remove class to the given element', function(){
             var element = $('#add-remove-class-test').removeClass('to-remove-class-for-test');
             assert.equal( element.hasClass('to-remove-class-for-test'), false);
+          });
+
+          it('should remove class to the given element with multiple classes', function(){
+            var element = $('#add-remove-class-test').addClass('class-1 class-2 class-3');
+            element.removeClass('class-1 class-2');
+            assert.equal( element.hasClass('class-1'), false);
+            assert.equal( element.hasClass('class-2'), false);
+            assert.equal( element.hasClass('class-3'), true);
           });
 
           it('should toggle class to the given element', function(){
@@ -323,6 +340,15 @@
             assert.equal( element.hasClass('toggle-class-for-test'), true);
             element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
             assert.equal( element.hasClass('toggle-class-for-test'), false);
+          });
+
+          it('should toggle class to the given element with multiple classes', function(){
+            var element = $('#toggle-class-test').toggleClass('class-1 class-2');
+            assert.equal( element.hasClass('class-1'), true);
+            assert.equal( element.hasClass('class-2'), true);
+            element = $('#toggle-class-test').toggleClass('class-1 class-2');
+            assert.equal( element.hasClass('class-1'), false);
+            assert.equal( element.hasClass('class-2'), false);
           });
 
           it('should return html of given element', function(){
@@ -423,10 +449,34 @@
             assert.deepEqual($('a').first(), document.activeElement);
           });
 
+          it('should insert attribute into an element passing a key and value', function() {
+            var element = $('#single-attr');
+            var returnElement = element.attr('target', '_blank');
+            assert.equal(element.attr('target'), '_blank');
+            assert.equal(element, returnElement);
+          });
+
+          it('should insert multiple attributes into an element passing an object', function() {
+            var element = $('#multiple-attr');
+            var returnElement = element.attr({'href': '#test', 'target': '_blank'});
+            assert.equal(element.attr('href'), '#test');
+            assert.equal(element.attr('target'), '_blank');
+            assert.equal(element, returnElement);
+          });
+
           it('should remove an attribute from an element', function() {
             var element = $('#remove-my-href');
             element.removeAttr('href');
             assert.notEqual(element.attr('href'), '#not-removed');
+          });
+
+          it('should remove an attribute from an element with multiple attributes', function() {
+            var element = $('#multiple-attr');
+            var returnElement = element.attr({'href': '#test', 'target': '_blank', 'download': true});
+            element.removeAttr('href target');
+            assert.notEqual(element.attr('href'), '#test');
+            assert.notEqual(element.attr('target'), '_blank');
+            assert.equal(element.attr('download'), 'true');
           });
 
           it('should not fail to remove a non-existent attribute from an element', function() {
@@ -605,6 +655,7 @@
           'append',
           'text',
           'attr',
+          'removeAttr',
           'hasClass',
           'addClass',
           'removeClass',
@@ -627,7 +678,6 @@
           'trigger',
           'selectedText',
           'focus',
-          'removeAttr',
           'scrollIntoView',
           'insertBefore',
           'insertAfter'

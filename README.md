@@ -204,21 +204,25 @@ define(['doc'], function(doc) {
 ```
 
 #### attr
-`.attr(key [,value])`
+`.attr(key [,value])` or `.attr(object)`
 
 ###### Description:
 Get or set the value of the attribute
 
 ###### Parameters
 > key: String //A string naming the attribute to set or get.
-
 > value: String //The new value of the attribute.
+
+or
+
+> value: Object //A javascript object
 
 ###### Sample:
 ``` js
 define(['doc'], function(doc) {
 	doc('input[name=email]').attr('disabled'); //Get the value of attribute
 	doc('input[name=email]').attr('type','password'); //Set the value of attribute
+	doc('input[name=email]').attr({'required': true, 'maxlength': 5}); //Set each index and value from object
 });
 ```
 
@@ -256,6 +260,7 @@ Adds a CSS class to the element.
 ``` js
 define(['doc'], function(doc) {
 	doc('div').addClass('content'); //Adds .content class to all divs
+	doc('div').addClass('hide active'); //Adds .hide and .active class to all divs
 });
 ```
 
@@ -272,6 +277,7 @@ Removes the CSS class from the element.
 ``` js
 define(['doc'], function(doc) {
 	doc('div').removeClass('content'); //Removes .content class from all divs
+	doc('div').removeClass('hide active'); //Removes .hide and .active class from all divs
 });
 ```
 
@@ -288,6 +294,7 @@ Adds or removes the CSS class from the element.
 ``` js
 define(['doc'], function(doc) {
 	doc('div').toggleClass('content'); //Adds or remove .content class from all divs
+	doc('div').toggleClass('hide active'); //Adds or remove .hide and .active class from all divs
 });
 ```
 
@@ -653,6 +660,7 @@ Removes the attribute from the element.
 ``` js
 define(['doc'], function(doc) {
 	doc('div').removeAttr('style'); //Removes style attribute from all divs
+	doc('a').removeAttr('href target'); //Removes href and target attribute from all a elements
 });
 ```
 

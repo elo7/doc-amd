@@ -73,10 +73,6 @@ define('doc', ['event'], function(event) {
 		}
 	};
 
-	var fallbackHasClass = function(el, clazz) {
-		return el.className.match(new RegExp('(^|\\s)' + clazz + '($|\\s)'));
-	};
-
 	var convertNodeListToArray = function(nodeList) {
 		var length = nodeList.length;
 		var list = [];
@@ -202,22 +198,38 @@ define('doc', ['event'], function(event) {
 			'attr' : function(key, newValue) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if(newValue !== undefined) {
-					this.each(function(el) {
-						el.setAttribute(key, newValue);
-					});
+					if(typeof key === "string") {
+						this.each(function(el) {
+							el.setAttribute(key, newValue);
+						});
+					}
+					return this;
+				}
+				if (typeof key === "object") {
+					for(k in key) {
+						this.each(function(el) {
+							el.setAttribute(k, key[k]);
+						});
+					}
 					return this;
 				}
 				return this.first().getAttribute(key);
 			},
 
+			'removeAttr' : function(attrName) {
+				var attrList = attrName.split(' ');
+				this.each(function(el) {
+					attrList.forEach(function(attrName) {
+						el.removeAttribute(attrName);
+					});
+				});
+				return this;
+			},
+
 			'hasClass' : function(clazz) {
 				var containsClass = false;
 				this.each(function(el){
-					if(!el.classList) {
-						if(fallbackHasClass(el, clazz)) {
-							containsClass = true;
-						}
-					} else if(el.classList.contains(clazz)){
+					if(el.classList.contains(clazz)){
 						containsClass = true;
 					}
 				});
@@ -225,41 +237,31 @@ define('doc', ['event'], function(event) {
 			},
 
 			'addClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						if(!fallbackHasClass(el, clazz)) {
-							el.className += ' ' + clazz + ' ';
-						}
-					} else {
+					clazzList.forEach(function(clazz) {
 						el.classList.add(clazz);
-					}
+					});
 				});
 				return this;
 			},
 
 			'removeClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						el.className = el.className.replace(new RegExp('(^|\\s)' + clazz + '($|\\s)'), '');
-					} else {
+					clazzList.forEach(function(clazz) {
 						el.classList.remove(clazz);
-					}
+					});
 				});
 				return this;
 			},
 
 			'toggleClass' : function(clazz) {
+				var clazzList = clazz.split(' ');
 				this.each(function(el) {
-					if(!el.classList) {
-						var element = query(el);
-						if(element.hasClass(clazz)) {
-							element.removeClass(clazz);
-						} else {
-							element.addClass(clazz);
-						}
-					} else {
+					clazzList.forEach(function(clazz) {
 						el.classList.toggle(clazz);
-					}
+					});
 				});
 				return this;
 			},
@@ -464,13 +466,6 @@ define('doc', ['event'], function(event) {
 
 			'focus' : function() {
 				this.els[0].focus();
-				return this;
-			},
-
-			'removeAttr' : function(attrName) {
-				this.each(function(el) {
-					el.removeAttribute(attrName);
-				});
 				return this;
 			},
 
