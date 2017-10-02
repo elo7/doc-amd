@@ -73,10 +73,6 @@ define('doc', ['event'], function(event) {
 		}
 	};
 
-	var fallbackHasClass = function(el, clazz) {
-		return el.className.match(new RegExp('(^|\\s)' + clazz + '($|\\s)'));
-	};
-
 	var convertNodeListToArray = function(nodeList) {
 		var length = nodeList.length;
 		var list = [];
