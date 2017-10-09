@@ -77,6 +77,7 @@
       <div id='first-broadcast-listener'></div>
       <div id='second-broadcast-listener'></div>
       <div id='third-broadcast-listener'></div>
+      <div id='shadow-root-test'></div>
     </div>
 
     <div id="mocha"></div>
@@ -631,6 +632,33 @@
               done();
             }, 10);
             fireEvent($('#debounce-button').first(), 'click');
+          });
+          describe('with shadow DOM', function() {
+            before(function() {
+              if (!HTMLElement.prototype.createShadowRoot) {
+                this.skip();
+              }
+            });
+            it("should find elements inside shadow root by tag name", function() {
+              var $root = $($('#shadow-root-test').first().createShadowRoot()),
+                div = document.createElement('div');
+              $root.append(div);
+              assert.equal($root.find('div').first(), div);
+            });
+            it("should find elements inside shadow root by id", function() {
+              var $root = $($('#shadow-root-test').first().createShadowRoot()),
+                div = document.createElement('div');
+              div.id = 'mocha';
+              $root.append(div);
+              assert.equal($root.find('#mocha').first(), div);
+            });
+            it("should find elements inside shadow root by class name", function() {
+              var $root = $($('#shadow-root-test').first().createShadowRoot()),
+                div = document.createElement('div');
+              div.className = 'search-class-test';
+              $root.append(div);
+              assert.equal($root.find('.search-class-test').first(), div);
+            });
           });
         });
       });
