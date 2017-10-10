@@ -20,10 +20,13 @@ define('doc', ['event'], function(event) {
 
 	var search = function(namespace, selector) {
 		var selector = selector.replace(/^\s+|\s+$/g, '');
-		if (matcher.isTag(selector)) {
+		if (matcher.isTag(selector) && namespace.getElementsByTagName) {
 			return convertHtmlCollectionToArray(namespace.getElementsByTagName(selector));
 		} else if(matcher.isId(selector)) {
 			selector = selector.replace('#', '');
+			if (namespace.getElementById) {
+				return namespace.getElementById(selector);
+			}
 			return document.getElementById(selector);
 		} else if (matcher.isClass(selector) && namespace.getElementsByClassName) {
 			selector = selector.replace('.', '');
