@@ -380,15 +380,15 @@ define('doc', ['event'], function(event) {
 
 			'on' : function(eventsName, command, named) {
 				var eventName = eventsName.split(' ');
-				this.each(function(el) {
-					for (var i = 0; i < eventName.length; i++) {
-						event.addEvent(el, eventName[i], command, named)
-					}
-				});
-
 				event.boundEvents = event.boundEvents || {};
+
 				for (var i = 0; i < eventName.length; i++) {
 					var name = eventName[i];
+
+					this.each(function(el) {
+						event.addEvent(el, name, command, named)
+					});
+
 					event.boundEvents[name] = event.boundEvents[name] || [];
 					boundElements = event.boundEvents[name];
 
@@ -397,8 +397,7 @@ define('doc', ['event'], function(event) {
 							boundElements.push(el);
 						}
 					});
-				};
-
+				}
 				return this;
 			},
 

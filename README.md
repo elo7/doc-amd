@@ -511,7 +511,7 @@ define(['doc'], function(doc) {
 Adds an event listener on a Doc object.
 
 ###### Parameters:
-> event: String //The event you want to attach to your selector
+> event: String //One or more events that you want to attach to your selector
 
 > callback: Function() //A function to call when the _event_ is triggered
 
@@ -523,6 +523,7 @@ Please note that this method does not work like jquery's .on(). If you append ne
 ``` js
 define(['doc'], function(doc) {
 	doc('button').on('click', function(){ ... }); //Adds an event listener for the 'click' event
+	doc('button').on('click mousemove', function(){ ... }); //Adds event listeners for the 'click' and 'mousemove' event
 	doc('button').on('click', function() { ... }, 'tracker'); //Adds a 'click' event listener with the 'tracker' eventCategory
 });
 ```
