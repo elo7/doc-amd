@@ -379,21 +379,25 @@ define('doc', ['event'], function(event) {
 			},
 
 			'on' : function(eventsName, command, named) {
+				var eventName = eventsName.split(' ');
 				this.each(function(el) {
-					var eventName = eventsName.split(' ');
-					eventName.forEach(function(item) {
-						event.addEvent(el, item, command, named);
-					});
-				});
-				event.boundEvents = event.boundEvents || {},
-					event.boundEvents[eventsName] = event.boundEvents[eventsName] || [],
-					boundElements = event.boundEvents[eventsName];
-
-				this.each(function(el) {
-					if (boundElements.indexOf(el) === -1) {
-						boundElements.push(el);
+					for (var i = 0; i < eventName.length; i++) {
+						event.addEvent(el, eventName[i], command, named)
 					}
 				});
+
+				event.boundEvents = event.boundEvents || {};
+				for (var i = 0; i < eventName.length; i++) {
+					var name = eventName[i];
+					event.boundEvents[name] = event.boundEvents[name] || [];
+					boundElements = event.boundEvents[name];
+
+					this.each(function(el) {
+						if (boundElements.indexOf(el) === -1) {
+							boundElements.push(el);
+						}
+					});
+				};
 
 				return this;
 			},

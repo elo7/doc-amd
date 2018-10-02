@@ -499,17 +499,35 @@
           it('should broadcast event to all listeners', function() {
             var counter = 0;
             var data = 1;
-            $('#first-broadcast-listener').on('say hello to my little friend', function(event) {
+            $('#first-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
               counter += event.detail;
             });
-            $('#second-broadcast-listener').on('say hello to my little friend', function(event) {
+            $('#second-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
               counter += (event.detail * 2);
             });
-            $('#third-broadcast-listener').on('say hello to my little friend', function(event) {
+            $('#third-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
               counter += (event.detail * 3);
             });
-            $.broadcast('say hello to my little friend', data);
+            $.broadcast('say-hello-to-my-little-friend', data);
             assert.equal(counter, 6);
+          });
+
+          it('should add multiple event listeners using one method', function() {
+              var counter = 0;
+              var data = 1;
+              $('#first-broadcast-listener').on('click mousemove', function(event) {
+                counter += (event.detail);
+              });
+
+              $('#second-broadcast-listener').on('say-hello-to-my-little-friend say-hello-to-my-big-friend', function(event) {
+                counter += (event.detail);
+              });
+
+              $.broadcast('click', data);
+              $.broadcast('mousemove', data);
+              $.broadcast('say-hello-to-my-little-friend', data);
+              $.broadcast('say-hello-to-my-big-friend', data);
+              assert.equal(counter, 4);
           });
 
           it("should handle HTMLCollection as an array of elements", function() {
