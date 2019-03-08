@@ -505,7 +505,8 @@ define(['doc'], function(doc) {
 ```
 
 #### on
-`.on(event, callback [,eventCategory, passive])`
+`.on(event, callback [,eventCategory])` or
+`.on(event, callback [, { named: eventCategory, passive: passive } ])`
 
 ###### Description:
 Adds an event listener on a Doc object.
@@ -527,7 +528,7 @@ define(['doc'], function(doc) {
 	doc('button').on('click', function(){ ... }); //Adds an event listener for the 'click' event
 	doc('button').on('click mousemove', function(){ ... }); //Adds event listeners for the 'click' and 'mousemove' event
 	doc('button').on('click', function() { ... }, 'tracker'); //Adds a 'click' event listener with the 'tracker' eventCategory
-	doc('button').on('click', function() { ... }, 'tracker', true); //Adds a 'click' event listener with the 'tracker' eventCategory that never call preventDefault()
+	doc('button').on('click', function() { ... }, { named: 'tracker', passive: true }); //Adds a 'click' event listener with the 'tracker' eventCategory that never call preventDefault()
 });
 ```
 
