@@ -24,7 +24,7 @@
     "css"
   ],
   "dependencies": {
-    "events-amd": "1.1.3"
+    "events-amd": "https://github.com/elo7/events-amd.git#passive"
   },
   "devDependencies": {
     "events-amd": "elo7/events-amd",

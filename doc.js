@@ -382,22 +382,11 @@ define('doc', ['event'], function(event) {
 				var eventName = eventsName.split(' ');
 				event.boundEvents = event.boundEvents || {};
 
-				var named;
-				if (typeof namedOrConfigs === "string") {
-					named = namedOrConfigs;
-				} else if (typeof namedOrConfigs === "object") {
-					named = namedOrConfigs.named;
-				}
-
 				for (var i = 0; i < eventName.length; i++) {
 					var name = eventName[i];
 
 					this.each(function(el) {
-						if (namedOrConfigs && namedOrConfigs.passive) {
-							event.addEvent(el, name, command, { named: named, passive: namedOrConfigs.passive });
-						} else {
-							event.addEvent(el, name, command, named);
-						}
+						event.addEvent(el, name, command, namedOrConfigs);
 					});
 
 					event.boundEvents[name] = event.boundEvents[name] || [];
