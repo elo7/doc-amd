@@ -378,7 +378,7 @@ define('doc', ['event'], function(event) {
 				return !this.isPresent();
 			},
 
-			'on' : function(eventsName, command, named) {
+			'on': function (eventsName, command, namedOrConfigs) {
 				var eventName = eventsName.split(' ');
 				event.boundEvents = event.boundEvents || {};
 
@@ -386,7 +386,7 @@ define('doc', ['event'], function(event) {
 					var name = eventName[i];
 
 					this.each(function(el) {
-						event.addEvent(el, name, command, named)
+						event.addEvent(el, name, command, namedOrConfigs);
 					});
 
 					event.boundEvents[name] = event.boundEvents[name] || [];

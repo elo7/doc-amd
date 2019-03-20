@@ -24,10 +24,9 @@
     "css"
   ],
   "dependencies": {
-    "events-amd": "1.1.3"
+    "events-amd": "1.2.0"
   },
   "devDependencies": {
-    "events-amd": "elo7/events-amd",
     "async-define": "elo7/async-define"
   }
 }
