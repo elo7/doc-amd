@@ -24,10 +24,9 @@
     "css"
   ],
   "dependencies": {
-    "events-amd": "https://github.com/elo7/events-amd.git#passive"
+    "events-amd": "1.2.0"
   },
   "devDependencies": {
-    "events-amd": "elo7/events-amd",
     "async-define": "elo7/async-define"
   }
 }
