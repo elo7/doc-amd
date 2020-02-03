@@ -421,7 +421,7 @@ define('doc', ['event'], function(event) {
 				var timer = 0;
 				var commandWithDebounce = function(event) {
 					clearTimeout(timer);
-					timer = setTimeout(command.bind(this), debounceTime);
+					timer = setTimeout(command.bind(this, event), debounceTime);
 					event.preventDefault();
 				};
 				return this.on(eventName, commandWithDebounce, named);
