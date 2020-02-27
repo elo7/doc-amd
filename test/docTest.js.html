@@ -1,252 +1,256 @@
 <html>
-	<head>
-		<title>Tests doc.js</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta charset="utf-8">
-		<link href="/css/mocha.css" type="text/css" rel="stylesheet"/>
-	</head>
-	<body>
-		<div id="test-suite">
-			<div id="parent-element">
-				<div id="first-el">Primeiro Elemento</div>
-				<div id="prev-test">Elemento anterior</div>
-				<div id="test" data-test="value">Teste <span>com texto</span></div>
-				<div id="next-test">Próximo elemento</div>
-				<div id="last-el">Ultimo Elemento</div>
-			</div>
 
-			<div id="find-element">
-				<div class="find find-1">
-					Elemento para ser encontrado
-					<div class="sub-find">Elemento filho para ser encontrado</div>
+<head>
+	<title>Tests doc.js</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<link href="/css/mocha.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<div id="test-suite">
+		<div id="parent-element">
+			<div id="first-el">Primeiro Elemento</div>
+			<div id="prev-test">Elemento anterior</div>
+			<div id="test" data-test="value">Teste <span>com texto</span></div>
+			<div id="next-test">Próximo elemento</div>
+			<div id="last-el">Ultimo Elemento</div>
+		</div>
+
+		<div id="find-element">
+			<div class="find find-1">
+				Elemento para ser encontrado
+				<div class="sub-find">Elemento filho para ser encontrado</div>
+			</div>
+			<div class="find find-2">
+				<div class="sub-find">Elemento filho para ser encontrado</div>
+				<div id="sub-find-2">Segundo elemento filho para ser encontrado</div>
+			</div>
+		</div>
+
+		<div class='not-this-one'>
+			Elemento a não ser escolhido
+			<div class='this-one'>
+				Elemento a ser encontrado pelo closest
+				<div class='child-div'>
 				</div>
-				<div class="find find-2">
-					<div class="sub-find">Elemento filho para ser encontrado</div>
-					<div id="sub-find-2">Segundo elemento filho para ser encontrado</div>
-				</div>
 			</div>
-
-			<div class='not-this-one'>
-				Elemento a não ser escolhido
-				<div class='this-one'>
-					Elemento a ser encontrado pelo closest
-					<div class='child-div'>
-					</div>
-				</div>
-			</div>
-
-			<div id="prepend-div">
-				<div class="first">first</div>
-			</div>
-			<div class="prepend-doc-element third"></div>
-
-			<div id="append-div"></div>
-
-			<input class="checked" type="checkbox" checked>
-			<input class="checked" type="checkbox">
-			<input class="checked" type="checkbox">
-
-			<input type="button" id="throttle-button">
-			<input type="hidden" id="throttle-count" value="0">
-
-			<input type="button" id="debounce-button">
-			<input type="hidden" id="debounce-count" value="0">
-
-			<input type="button" id="off-button">
-			<input type="hidden" id="off-count" value="0">
-
-			<div id="search-id-test">Teste seletor #ID</div>
-			<div class="search-class-test">Teste seletor .class</div>
-			<div class="search-class-test">Teste seletor .class</div>
-			<center>Teste seletor tag</center>
-			<div id="fire-event-test">PING</div>
-			<p id="selected-text-test">Super texto amigo da maravilha</p>
-			<p id="has-class-test" class="simple-class-for-test">Super texto amigo da maravilha</p>
-			<p id="add-remove-class-test" class="to-remove-class-for-test">Super texto amigo da maravilha</p>
-			<p id="toggle-class-test">Super texto amigo da maravilha</p>
-			<p id="get-html-test">My Html</p>
-			<input id="hiddenInput" type="hidden" value="value" />
-			<div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
-			<form id="form-test" action="#"></form>
-			<a href='#not-prevented' id='clickme'>click</a>
-			<a href='#attr-1' id='single-attr'>click</a>
-			<a href='#attr-2' id='multiple-attr'>click</a>
-			<a href='#not-removed' id='remove-my-href'>click</a>
-			<div id="my" class="selector">Id without dot</div>
-			<div id="my.selector">Id with dot</div>
-			<div id='first-broadcast-listener'></div>
-			<div id='second-broadcast-listener'></div>
-			<div id='third-broadcast-listener'></div>
-			<div id='shadow-root-test'></div>
 		</div>
 
-		<div id="mocha"></div>
-
-		<div>
-			<p class="insert-selected-element-before-me"></p>
+		<div id="prepend-div">
+			<div class="first">first</div>
 		</div>
+		<div class="prepend-doc-element third"></div>
 
-		<div>
-			<p class="insert-selected-element-after-me"></p>
-		</div>
+		<div id="append-div"></div>
 
-		<div>
-			<p class="insert-matched-element-before-me"></p>
-		</div>
+		<input class="checked" type="checkbox" checked>
+		<input class="checked" type="checkbox">
+		<input class="checked" type="checkbox">
 
-		<div>
-			<p class="insert-matched-element-after-me"></p>
-		</div>
+		<input type="button" id="throttle-button">
+		<input type="hidden" id="throttle-count" value="0">
 
-		<div>
-			<a class="insert-filler"></a>
-		</div>
+		<input type="button" id="debounce-button">
+		<input type="hidden" id="debounce-count" value="0">
 
-		<script src="/node_modules/mocha/mocha.js"></script>
-		<script src="/node_modules/proclaim/lib/proclaim.js"></script>
-		<script src="/test/helpers.js"></script>
+		<input type="button" id="off-button">
+		<input type="hidden" id="off-count" value="0">
 
-		<script src="/node_modules/define-async/async-define.js"></script>
-		<script src="/node_modules/elo7-events-amd/events-amd.js"></script>
-		<script src="/doc.min.js"></script>
-		<script>
-			/* global mocha, describe, before, it, fireEvent, selectText, arrayEquals */
-			mocha.ui('bdd');
+		<div id="search-id-test">Teste seletor #ID</div>
+		<div class="search-class-test">Teste seletor .class</div>
+		<div class="search-class-test">Teste seletor .class</div>
+		<center>Teste seletor tag</center>
+		<div id="fire-event-test">PING</div>
+		<p id="selected-text-test">Super texto amigo da maravilha</p>
+		<p id="has-class-test" class="simple-class-for-test">Super texto amigo da maravilha</p>
+		<p id="add-remove-class-test" class="to-remove-class-for-test">Super texto amigo da maravilha</p>
+		<p id="toggle-class-test">Super texto amigo da maravilha</p>
+		<p id="get-html-test">My Html</p>
+		<input id="hiddenInput" type="hidden" value="value" />
+		<div id="this-element-should-be-removed">Esse elemento vai ser removido</div>
+		<form id="form-test" action="#"></form>
+		<a href='#not-prevented' id='clickme'>click</a>
+		<a href='#attr-1' id='single-attr'>click</a>
+		<a href='#attr-2' id='multiple-attr'>click</a>
+		<a href='#not-removed' id='remove-my-href'>click</a>
+		<div id="my" class="selector">Id without dot</div>
+		<div id="my.selector">Id with dot</div>
+		<div id='first-broadcast-listener'></div>
+		<div id='second-broadcast-listener'></div>
+		<div id='third-broadcast-listener'></div>
+		<div id='shadow-root-test'></div>
+	</div>
 
-			define(['doc'], function($) {
-				'use strict';
+	<div id="mocha"></div>
 
-				var assert = window.proclaim;
-				var knownMethods = [
-					'els',
-					'size',
-					'each',
-					'data',
-					'val',
-					'html',
-					'prepend',
-					'append',
-					'text',
-					'attr',
-					'removeAttr',
-					'hasClass',
-					'addClass',
-					'removeClass',
-					'toggleClass',
-					'removeItem',
-					'find',
-					'filter',
-					'closest',
-					'first',
-					'last',
-					'previous',
-					'next',
-					'parent',
-					'isPresent',
-					'isEmpty',
-					'on',
-					'throttle',
-					'debounce',
-					'off',
-					'trigger',
-					'selectedText',
-					'focus',
-					'scrollIntoView',
-					'insertBefore',
-					'insertAfter',
-				];
+	<div>
+		<p class="insert-selected-element-before-me"></p>
+	</div>
 
-				describe('Doc', function() {
-					it('should contains all known methods', function() {
-						var current = [];
-						for (var methodName in $('body')) {
-							current.push(methodName);
+	<div>
+		<p class="insert-selected-element-after-me"></p>
+	</div>
+
+	<div>
+		<p class="insert-matched-element-before-me"></p>
+	</div>
+
+	<div>
+		<p class="insert-matched-element-after-me"></p>
+	</div>
+
+	<div>
+		<a class="insert-filler"></a>
+	</div>
+
+	<script src="/node_modules/mocha/mocha.js"></script>
+	<script src="/node_modules/proclaim/lib/proclaim.js"></script>
+	<script src="/test/helpers.js"></script>
+
+	<script src="/node_modules/define-async/async-define.js"></script>
+	<script src="/node_modules/elo7-events-amd/events-amd.js"></script>
+	<script src="/doc.min.js"></script>
+	<script>
+		/* global mocha, describe, before, it, fireEvent, selectText, arrayEquals */
+		mocha.ui('bdd');
+
+		define(['doc'], function ($) {
+			'use strict';
+
+			var assert = window.proclaim;
+			var knownMethods = [
+				'els',
+				'size',
+				'each',
+				'data',
+				'val',
+				'html',
+				'prepend',
+				'append',
+				'text',
+				'attr',
+				'removeAttr',
+				'hasClass',
+				'addClass',
+				'removeClass',
+				'toggleClass',
+				'removeItem',
+				'find',
+				'filter',
+				'closest',
+				'first',
+				'last',
+				'previous',
+				'next',
+				'parent',
+				'isPresent',
+				'isEmpty',
+				'on',
+				'throttle',
+				'debounce',
+				'off',
+				'trigger',
+				'selectedText',
+				'focus',
+				'scrollIntoView',
+				'insertBefore',
+				'insertAfter',
+			];
+
+			describe('Doc', function () {
+				it('should contains all known methods', function () {
+					var current = [];
+					for (var methodName in $('body')) {
+						current.push(methodName);
+					}
+					assert.equal(arrayEquals(knownMethods, current), true);
+				});
+
+				it('should return the element text', function () {
+					assert.equal($('#test').text(), 'Teste com texto');
+				});
+
+				it('should insert text in the element', function () {
+					$('#test').text('Inserindo texto de teste');
+					assert.equal($('#test').text(), 'Inserindo texto de teste');
+				});
+
+				it('should return the element parent', function () {
+					assert.equal($('#test').parent().attr('id'), 'parent-element');
+				});
+
+				it('should return the element parent of a parent', function () {
+					assert.equal($('#test').parent().parent()
+						.attr('id'), 'test-suite');
+				});
+
+				it('should return the element the next element', function () {
+					assert.equal($('#test').next().attr('id'), 'next-test');
+				});
+
+				it('should return the element the previous element', function () {
+					assert.equal($('#test').previous().attr('id'), 'prev-test');
+				});
+
+				it('should return the first element', function () {
+					assert.equal($('#parent-element div').first(), $('#first-el').first());
+				});
+
+				it('should return the last element', function () {
+					assert.equal($('#parent-element div').last().innerHTML, $('#last-el').first()
+						.innerHTML);
+				});
+
+				it('should return the data attribute from element', function () {
+					assert.equal($('#test').data('test'), 'value');
+				});
+
+				it('should insert value in the data attribute element', function () {
+					$('#test').data('value-test', 'text-test');
+					assert.equal($('#test').data('value-test'), 'text-test');
+				});
+
+				it('should return the value from element', function () {
+					assert.equal($('#hiddenInput').val(), 'value');
+				});
+
+				it('should insert value in the element', function () {
+					$('#hiddenInput').val('valor inserido');
+					assert.equal($('#hiddenInput').val(), 'valor inserido');
+				});
+
+				it('should find the correct elements', function () {
+					assert.equal($('#find-element').find('.find').size, 2);
+					assert.equal($('#find-element').find('.find-1').size, 1);
+					assert.equal($('#find-element').find('.sub-find').size, 2);
+					assert.equal($('#find-element').find('.find').find('.sub-find').size, 2);
+					assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
+					assert.equal($('#find-element').find('#sub-find-2').size, 1);
+				});
+
+				it('should find the closest elements', function () {
+					assert.equal($('.sub-find').closest('.find').size, 2);
+					assert.equal($('#sub-find-2').closest('#find-element').size, 1);
+					assert.equal($('.find').closest('#find-element').size, 1);
+					assert.equal($('.child-div').closest('div').hasClass('this-one'), true);
+					assert.equal($('.child-div').closest('div').hasClass('not-this-one'), false);
+					assert.equal($('.sub-find').closest('.IdontExist').size, 0);
+				});
+
+				it('should filter the checkbox checked', function () {
+					assert.equal($('#test-suite .checked').filter('checked').size, 1);
+					var count = 0;
+					$('#test-suite .checked').each(function (field) {
+						if ($(field).attr('type') === 'checkbox') {
+							count++;
 						}
-						assert.equal(arrayEquals(knownMethods, current), true);
 					});
+					assert.equal(count, 3);
+				});
 
-					it('should return the element text', function() {
-						assert.equal($('#test').text(), 'Teste com texto');
-					});
-
-					it('should insert text in the element', function() {
-						$('#test').text('Inserindo texto de teste');
-						assert.equal($('#test').text(), 'Inserindo texto de teste');
-					});
-
-					it('should return the element parent', function() {
-						assert.equal($('#test').parent().attr('id'), 'parent-element');
-					});
-
-					it('should return the element parent of a parent', function() {
-						assert.equal($('#test').parent().parent()
-							.attr('id'), 'test-suite');
-					});
-
-					it('should return the element the next element', function() {
-						assert.equal($('#test').next().attr('id'), 'next-test');
-					});
-
-					it('should return the element the previous element', function() {
-						assert.equal($('#test').previous().attr('id'), 'prev-test');
-					});
-
-					it('should return the first element', function() {
-						assert.equal($('#parent-element div').first(), $('#first-el').first());
-					});
-
-					it('should return the last element', function() {
-						assert.equal($('#parent-element div').last().innerHTML, $('#last-el').first().innerHTML);
-					});
-
-					it('should return the data attribute from element', function() {
-						assert.equal($('#test').data('test'), 'value');
-					});
-
-					it('should insert value in the data attribute element', function() {
-						$('#test').data('value-test', 'text-test');
-						assert.equal($('#test').data('value-test'), 'text-test');
-					});
-
-					it('should return the value from element', function() {
-						assert.equal($('#hiddenInput').val(), 'value');
-					});
-
-					it('should insert value in the element', function() {
-						$('#hiddenInput').val('valor inserido');
-						assert.equal($('#hiddenInput').val(), 'valor inserido');
-					});
-
-					it('should find the correct elements', function() {
-						assert.equal($('#find-element').find('.find').size, 2);
-						assert.equal($('#find-element').find('.find-1').size, 1);
-						assert.equal($('#find-element').find('.sub-find').size, 2);
-						assert.equal($('#find-element').find('.find').find('.sub-find').size, 2);
-						assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
-						assert.equal($('#find-element').find('#sub-find-2').size, 1);
-					});
-
-					it('should find the closest elements', function() {
-						assert.equal($('.sub-find').closest('.find').size, 2);
-						assert.equal($('#sub-find-2').closest('#find-element').size, 1);
-						assert.equal($('.find').closest('#find-element').size, 1);
-						assert.equal($('.child-div').closest('div').hasClass('this-one'), true);
-						assert.equal($('.child-div').closest('div').hasClass('not-this-one'), false);
-						assert.equal($('.sub-find').closest('.IdontExist').size, 0);
-					});
-
-					it('should filter the checkbox checked', function() {
-						assert.equal($('#test-suite .checked').filter('checked').size, 1);
-						var count = 0;
-						$('#test-suite .checked').each(function(field) {
-							if ($(field).attr('type') === 'checkbox') {
-								count++;
-							}
-						});
-						assert.equal(count, 3);
-					});
-
-					it('should return the correct elements according to selector type and the correct number of elements on list', function() {
+				it('should return the correct elements according to selector type and the correct number of elements on list',
+					function () {
 						var template = 'Teste seletor ';
 						assert.equal($('#search-id-test').size, 1);
 						assert.equal($('#search-id-test').first().innerHTML, template + '#ID');
@@ -265,418 +269,503 @@
 							.text(), 'Segundo elemento filho para ser encontrado');
 					});
 
-					it('should have els and size on returned elements', function() {
-						var returnedObject = $('center');
-						assert.equal(typeof returnedObject.els, 'object');
-						assert.equal(returnedObject.size, 1);
+				it('should have els and size on returned elements', function () {
+					var returnedObject = $('center');
+					assert.equal(typeof returnedObject.els, 'object');
+					assert.equal(returnedObject.size, 1);
+				});
+
+				it('should fire event correctly when attach element with function *on*', function () {
+					assert.equal($('#fire-event-test').first().innerHTML, 'PING');
+
+					$('#fire-event-test').on('click', function () {
+						this.innerHTML = 'PONG';
 					});
 
-					it('should fire event correctly when attach element with function *on*', function() {
-						assert.equal($('#fire-event-test').first().innerHTML, 'PING');
+					fireEvent($('#fire-event-test').first(), 'click');
+					assert.equal($('#fire-event-test').first().innerHTML, 'PONG');
+				});
 
-						$('#fire-event-test').on('click', function() {
-							this.innerHTML = 'PONG';
-						});
-
-						fireEvent($('#fire-event-test').first(), 'click');
-						assert.equal($('#fire-event-test').first().innerHTML, 'PONG');
+				it('should remove event with function *off*', function () {
+					var count = 0;
+					$('#off-button').on('click', function () {
+						$('#off-count').val(++count);
 					});
 
-					it('should remove event with function *off*', function() {
-						var count = 0;
-						$('#off-button').on('click', function() {
-							$('#off-count').val(++count);
-						});
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 1);
 
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 1);
+					$('#off-button').off('click');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 1);
+				});
 
-						$('#off-button').off('click');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 1);
-					});
+				it('should remove event with function *off* using a named', function () {
+					var count = 0;
+					$('#off-button').on('click', function () {
+						$('#off-count').val(++count);
+					}, 'named-1');
 
-					it('should remove event with function *off* using a named', function() {
-						var count = 0;
-						$('#off-button').on('click', function() {
-							$('#off-count').val(++count);
-						}, 'named-1');
+					$('#off-button').on('click', function () {
+						$('#off-count').val(++count);
+					}, 'named-2');
 
-						$('#off-button').on('click', function() {
-							$('#off-count').val(++count);
-						}, 'named-2');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 2);
 
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 2);
+					$('#off-button').off('click', 'named-1');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 3);
 
-						$('#off-button').off('click', 'named-1');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 3);
+					$('#off-button').off('click', 'named-2');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 3);
+				});
 
-						$('#off-button').off('click', 'named-2');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 3);
-					});
+				it('should select text correctly', function () {
+					selectText('selected-text-test');
+					assert.equal($('body').selectedText(), $('#selected-text-test').first()
+					.innerHTML);
+				});
 
-					it('should select text correctly', function() {
-						selectText('selected-text-test');
-						assert.equal($('body').selectedText(), $('#selected-text-test').first().innerHTML);
-					});
+				it('should return false if element is not present', function () {
+					var element = $('.this-element-should-not-exists');
+					assert.equal(typeof element, 'object');
+					assert.equal(element.isPresent(), false);
+				});
 
-					it('should return false if element is not present', function() {
-						var element = $('.this-element-should-not-exists');
-						assert.equal(typeof element, 'object');
-						assert.equal(element.isPresent(), false);
-					});
+				it('should return true if element is present', function () {
+					assert.equal($('input').isPresent(), true);
+					assert.equal($('#form-test').isPresent(), true);
+					assert.equal($('.find').isPresent(), true);
+				});
 
-					it('should return true if element is present', function() {
-						assert.equal($('input').isPresent(), true);
-						assert.equal($('#form-test').isPresent(), true);
-						assert.equal($('.find').isPresent(), true);
-					});
+				it('should return true if input type checkbox is checked', function () {
+					var elementChecked = $('#input-checkbox-first');
+					var elementUnchecked = $('#input-checkbox-second');
 
-					it('should return object with isEmpty true when not find any element with given selector', function() {
+					assert.equal(elementChecked.checked(), true);
+					assert.equal(elementUnchecked.checked(), false);
+
+					elementChecked.checked(false);
+					assert.equal(elementChecked.checked(), false);
+
+					elementUnchecked.checked(true);
+					assert.equal(elementUnchecked.checked(), true);
+				});
+
+				it('should throw error if parameter value is not boolean', function () {
+					assert.throws(function () {
+						$('#input-checkbox-first').checked(null);
+					}, /type is not valid/);
+
+					assert.throws(function () {
+						$('#input-checkbox-first').checked('true');
+					}, /type is not valid/);
+				});
+
+				it('should throw error if element type is not checkbox or radio', function () {
+					assert.throws(function () {
+						$('#search-id-test').checked(true);
+					}, /is not checkbox or radio/);
+
+					assert.throws(function () {
+						$('#throttle-button').checked(true);
+					}, /is not checkbox or radio/);
+
+					assert.throws(function () {
+						$('#throttle-button, #search-id-test, #input-checkbox-first').checked(
+							true);
+					}, /is not checkbox or radio/);
+				});
+
+				it('should set checked state to all elements', function () {
+					assert.equal($('#input-checkbox-first').checked(), true);
+					assert.equal($('#input-checkbox-second').checked(), true);
+					assert.equal($('#input-checkbox-third').checked(), false);
+
+					$('.checked').checked(false);
+
+					assert.equal($('#input-checkbox-first').checked(), false);
+					assert.equal($('#input-checkbox-second').checked(), false);
+					assert.equal($('#input-checkbox-third').checked(), false);
+
+					$('.checked').checked(true);
+
+					assert.equal($('#input-checkbox-first').checked(), true);
+					assert.equal($('#input-checkbox-second').checked(), true);
+					assert.equal($('#input-checkbox-third').checked(), true);
+				});
+
+				it('should be able to make fluent calls with checked method', function () {
+					assert.equal($('#input-checkbox-first').checked(false).checked(true).checked(),
+						true);
+				});
+
+				it('should return object with isEmpty true when not find any element with given selector',
+					function () {
 						var element = $('#this-element-should-not-exists');
 						assert.equal(typeof element, 'object');
 						assert.equal(element.isEmpty(), true);
 					});
 
-					it('should remove element from DOM tree', function() {
-						var element = $('#this-element-should-be-removed').removeItem();
-						assert.equal(typeof element, 'object');
-						assert.equal(element.isEmpty(), true);
-						assert.equal(element.size, 0);
+				it('should remove element from DOM tree', function () {
+					var element = $('#this-element-should-be-removed').removeItem();
+					assert.equal(typeof element, 'object');
+					assert.equal(element.isEmpty(), true);
+					assert.equal(element.size, 0);
+				});
+
+				it('should verify if the element has the given class', function () {
+					var element = $('#has-class-test');
+					assert.equal(element.size, 1);
+					assert.equal($('#has-class-test').hasClass('simple-class-for-test'), true);
+				});
+
+				it('should add class to the given element', function () {
+					var element = $('#add-remove-class-test').addClass('added-class-for-test');
+					assert.equal(element.size, 1);
+					assert.equal(element.hasClass('added-class-for-test'), true);
+				});
+
+				it('should add class to the given element with multiple classes', function () {
+					var element = $('#add-remove-class-test').addClass('class-1 class-2');
+					assert.equal(element.size, 1);
+					assert.equal(element.hasClass('class-1'), true);
+					assert.equal(element.hasClass('class-2'), true);
+				});
+
+				it('should remove class to the given element', function () {
+					var element = $('#add-remove-class-test').removeClass('to-remove-class-for-test');
+					assert.equal(element.hasClass('to-remove-class-for-test'), false);
+				});
+
+				it('should remove class to the given element with multiple classes', function () {
+					var element = $('#add-remove-class-test').addClass('class-1 class-2 class-3');
+					element.removeClass('class-1 class-2');
+					assert.equal(element.hasClass('class-1'), false);
+					assert.equal(element.hasClass('class-2'), false);
+					assert.equal(element.hasClass('class-3'), true);
+				});
+
+				it('should toggle class to the given element', function () {
+					var element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
+					assert.equal(element.hasClass('toggle-class-for-test'), true);
+					element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
+					assert.equal(element.hasClass('toggle-class-for-test'), false);
+				});
+
+				it('should toggle class to the given element with multiple classes', function () {
+					var element = $('#toggle-class-test').toggleClass('class-1 class-2');
+					assert.equal(element.hasClass('class-1'), true);
+					assert.equal(element.hasClass('class-2'), true);
+					element = $('#toggle-class-test').toggleClass('class-1 class-2');
+					assert.equal(element.hasClass('class-1'), false);
+					assert.equal(element.hasClass('class-2'), false);
+				});
+
+				it('should return html of given element', function () {
+					assert.equal($('#get-html-test').html(), 'My Html');
+				});
+
+				it('should set html of given element', function () {
+					$('#get-html-test').html('My Html2');
+					assert.equal($('#get-html-test').html(), 'My Html2');
+				});
+
+				it('should prepend a text return the given element', function () {
+					var prependDiv = $('#prepend-div');
+					prependDiv.prepend('Elo7');
+					assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g, ''),
+						'Elo7<div class="first">first</div>');
+				});
+
+				it('should prepend a new element and return the given element', function () {
+					var element = document.createElement('div');
+					element.id = 'prepend-element';
+					element.classList.add('second');
+					var prepend = $('#prepend-div').prepend(element),
+						prependElement = prepend.find('#prepend-element');
+					assert.equal(prependElement.size, 1);
+					assert.equal(prependElement.attr('id'), 'prepend-element');
+					assert.equal(prependElement.next().hasClass('first'), true);
+				});
+
+				it('should prepend a doc element and return the given element', function () {
+					var element = $('.prepend-doc-element'),
+						prepend = $('#prepend-div').prepend(element);
+					assert.equal(prepend.find('div').size, 3);
+					assert.equal(element.next().hasClass('second'), true);
+				});
+
+				it('should prepend html and return the given element', function () {
+					var element = '<div class="fourth"></div>',
+						prepend = $('#prepend-div').prepend(element),
+						fourth = $('.fourth');
+					assert.equal(prepend.find('div').size, 4);
+					assert.equal(fourth.size, 1);
+					assert.equal(fourth.next().hasClass('third'), true);
+				});
+
+				it('should append a new element and return the new element', function () {
+					var element = document.createElement('div');
+					element.id = 'append-element';
+					var append = $('#append-div').append(element);
+					assert.equal($('#append-div').find('#append-element').size, 1);
+					assert.equal(append.attr('id'), 'append-element');
+				});
+
+				it('should throttle click event', function () {
+					$('#throttle-button').throttle('click', function () {
+						var value = parseInt($('#throttle-count').val());
+						$('#throttle-count').val(++value);
+					}, 5000);
+					fireEvent($('#throttle-button').first(), 'click');
+					fireEvent($('#throttle-button').first(), 'click');
+					fireEvent($('#throttle-button').first(), 'click');
+					assert.equal(parseInt($('#throttle-count').val()), 1);
+				});
+
+				it('should call on submit when dispatch the event', function () {
+					var expected = false;
+					$('#form-test').on('submit', function (event) {
+						if (event.preventDefault) {
+							event.preventDefault();
+						} else {
+							event.returnValue = false;
+						}
+						expected = true;
 					});
+					$('#form-test').trigger('submit');
+					assert.equal(expected, true);
+				});
 
-					it('should verify if the element has the given class', function() {
-						var element = $('#has-class-test');
-						assert.equal(element.size, 1);
-						assert.equal($('#has-class-test').hasClass('simple-class-for-test'), true);
+				it('should call on click and append hash to url', function () {
+					$('#clickme').trigger('click');
+					// Firefox mobile needs it
+					setTimeout(function () {
+						assert.notEqual(document.location.href, '');
+					}, 0);
+				});
+
+				it('should call custom event and return a argument passed in trigger method', function () {
+					var returnData;
+					var expected = {
+						'a': 1,
+						'b': 2,
+					};
+					$('#form-test').on('customEvent', function (event) {
+						returnData = event.detail;
 					});
+					$('#form-test').trigger('customEvent', expected);
 
-					it('should add class to the given element', function() {
-						var element = $('#add-remove-class-test').addClass('added-class-for-test');
-						assert.equal(element.size, 1);
-						assert.equal(element.hasClass('added-class-for-test'), true);
+					assert.deepEqual(returnData, expected);
+				});
+
+				it('should focus on the first matched element', function () {
+					$('a').focus();
+					assert.deepEqual($('a').first(), document.activeElement);
+				});
+
+				it('should insert attribute into an element passing a key and value', function () {
+					var element = $('#single-attr');
+					var returnElement = element.attr('target', '_blank');
+					assert.equal(element.attr('target'), '_blank');
+					assert.equal(element, returnElement);
+				});
+
+				it('should insert multiple attributes into an element passing an object', function () {
+					var element = $('#multiple-attr');
+					var returnElement = element.attr({
+						'href': '#test',
+						'target': '_blank'
 					});
+					assert.equal(element.attr('href'), '#test');
+					assert.equal(element.attr('target'), '_blank');
+					assert.equal(element, returnElement);
+				});
 
-					it('should add class to the given element with multiple classes', function() {
-						var element = $('#add-remove-class-test').addClass('class-1 class-2');
-						assert.equal(element.size, 1);
-						assert.equal(element.hasClass('class-1'), true);
-						assert.equal(element.hasClass('class-2'), true);
+				it('should remove an attribute from an element', function () {
+					var element = $('#remove-my-href');
+					element.removeAttr('href');
+					assert.notEqual(element.attr('href'), '#not-removed');
+				});
+
+				it('should remove an attribute from an element with multiple attributes', function () {
+					var element = $('#multiple-attr');
+					element.attr({
+						'href': '#test',
+						'target': '_blank',
+						'download': true
 					});
+					element.removeAttr('href target');
+					assert.notEqual(element.attr('href'), '#test');
+					assert.notEqual(element.attr('target'), '_blank');
+					assert.equal(element.attr('download'), 'true');
+				});
 
-					it('should remove class to the given element', function() {
-						var element = $('#add-remove-class-test').removeClass('to-remove-class-for-test');
-						assert.equal(element.hasClass('to-remove-class-for-test'), false);
+				it('should not fail to remove a non-existent attribute from an element', function () {
+					var element = $('#remove-my-href');
+					assert.doesNotThrow(function () {
+						element.removeAttr('style');
 					});
+				});
 
-					it('should remove class to the given element with multiple classes', function() {
-						var element = $('#add-remove-class-test').addClass('class-1 class-2 class-3');
-						element.removeClass('class-1 class-2');
-						assert.equal(element.hasClass('class-1'), false);
-						assert.equal(element.hasClass('class-2'), false);
-						assert.equal(element.hasClass('class-3'), true);
-					});
-
-					it('should toggle class to the given element', function() {
-						var element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
-						assert.equal(element.hasClass('toggle-class-for-test'), true);
-						element = $('#toggle-class-test').toggleClass('toggle-class-for-test');
-						assert.equal(element.hasClass('toggle-class-for-test'), false);
-					});
-
-					it('should toggle class to the given element with multiple classes', function() {
-						var element = $('#toggle-class-test').toggleClass('class-1 class-2');
-						assert.equal(element.hasClass('class-1'), true);
-						assert.equal(element.hasClass('class-2'), true);
-						element = $('#toggle-class-test').toggleClass('class-1 class-2');
-						assert.equal(element.hasClass('class-1'), false);
-						assert.equal(element.hasClass('class-2'), false);
-					});
-
-					it('should return html of given element', function() {
-						assert.equal($('#get-html-test').html(), 'My Html');
-					});
-
-					it('should set html of given element', function() {
-						$('#get-html-test').html('My Html2');
-						assert.equal($('#get-html-test').html(), 'My Html2');
-					});
-
-					it('should prepend a text return the given element', function() {
-						var prependDiv = $('#prepend-div');
-						prependDiv.prepend('Elo7');
-						assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g, ''), 'Elo7<div class="first">first</div>');
-					});
-
-					it('should prepend a new element and return the given element', function() {
-						var element = document.createElement('div');
-						element.id = 'prepend-element';
-						element.classList.add('second');
-						var prepend = $('#prepend-div').prepend(element),
-							prependElement = prepend.find('#prepend-element');
-						assert.equal(prependElement.size, 1);
-						assert.equal(prependElement.attr('id'), 'prepend-element');
-						assert.equal(prependElement.next().hasClass('first'), true);
-					});
-
-					it('should prepend a doc element and return the given element', function() {
-						var element = $('.prepend-doc-element'),
-							prepend = $('#prepend-div').prepend(element);
-						assert.equal(prepend.find('div').size, 3);
-						assert.equal(element.next().hasClass('second'), true);
-					});
-
-					it('should prepend html and return the given element', function() {
-						var element = '<div class="fourth"></div>',
-							prepend = $('#prepend-div').prepend(element),
-							fourth = $('.fourth');
-						assert.equal(prepend.find('div').size, 4);
-						assert.equal(fourth.size, 1);
-						assert.equal(fourth.next().hasClass('third'), true);
-					});
-
-					it('should append a new element and return the new element', function() {
-						var element = document.createElement('div');
-						element.id = 'append-element';
-						var append = $('#append-div').append(element);
-						assert.equal($('#append-div').find('#append-element').size, 1);
-						assert.equal(append.attr('id'), 'append-element');
-					});
-
-					it('should throttle click event', function() {
-						$('#throttle-button').throttle('click', function() {
-							var value = parseInt($('#throttle-count').val());
-							$('#throttle-count').val(++value);
-						}, 5000);
-						fireEvent($('#throttle-button').first(), 'click');
-						fireEvent($('#throttle-button').first(), 'click');
-						fireEvent($('#throttle-button').first(), 'click');
-						assert.equal(parseInt($('#throttle-count').val()), 1);
-					});
-
-					it('should call on submit when dispatch the event', function() {
-						var expected = false;
-						$('#form-test').on('submit', function(event) {
-							if (event.preventDefault) {
-								event.preventDefault();
-							} else {
-								event.returnValue = false;
-							}
-							expected = true;
-						});
-						$('#form-test').trigger('submit');
-						assert.equal(expected, true);
-					});
-
-					it('should call on click and append hash to url', function() {
-						$('#clickme').trigger('click');
-						// Firefox mobile needs it
-						setTimeout(function() {
-							assert.notEqual(document.location.href, '');
-						}, 0);
-					});
-
-					it('should call custom event and return a argument passed in trigger method', function() {
-						var returnData;
-						var expected = {
-							'a': 1,
-							'b': 2,
-						};
-						$('#form-test').on('customEvent', function(event) {
-							returnData = event.detail;
-						});
-						$('#form-test').trigger('customEvent', expected);
-
-						assert.deepEqual(returnData, expected);
-					});
-
-					it('should focus on the first matched element', function() {
-						$('a').focus();
-						assert.deepEqual($('a').first(), document.activeElement);
-					});
-
-					it('should insert attribute into an element passing a key and value', function() {
-						var element = $('#single-attr');
-						var returnElement = element.attr('target', '_blank');
-						assert.equal(element.attr('target'), '_blank');
-						assert.equal(element, returnElement);
-					});
-
-					it('should insert multiple attributes into an element passing an object', function() {
-						var element = $('#multiple-attr');
-						var returnElement = element.attr({ 'href': '#test', 'target': '_blank' });
-						assert.equal(element.attr('href'), '#test');
-						assert.equal(element.attr('target'), '_blank');
-						assert.equal(element, returnElement);
-					});
-
-					it('should remove an attribute from an element', function() {
-						var element = $('#remove-my-href');
-						element.removeAttr('href');
-						assert.notEqual(element.attr('href'), '#not-removed');
-					});
-
-					it('should remove an attribute from an element with multiple attributes', function() {
-						var element = $('#multiple-attr');
-						element.attr({ 'href': '#test', 'target': '_blank', 'download': true });
-						element.removeAttr('href target');
-						assert.notEqual(element.attr('href'), '#test');
-						assert.notEqual(element.attr('target'), '_blank');
-						assert.equal(element.attr('download'), 'true');
-					});
-
-					it('should not fail to remove a non-existent attribute from an element', function() {
-						var element = $('#remove-my-href');
-						assert.doesNotThrow(function() {
-							element.removeAttr('style');
-						});
-					});
-
-					it('should scroll viewport until the first matched element is at the top of the viewport', function() {
+				it('should scroll viewport until the first matched element is at the top of the viewport',
+					function () {
 						var elements = $('.checked');
 						elements.scrollIntoView();
 						assert.lessThan(Math.abs(elements.first().getBoundingClientRect().top), 1);
 					});
 
-					it('should select an element with an id with dot', function() {
-						assert.equal($('#my\\.selector').text(), 'Id with dot');
-						assert.equal($('#my.selector').text(), 'Id without dot');
+				it('should select an element with an id with dot', function () {
+					assert.equal($('#my\\.selector').text(), 'Id with dot');
+					assert.equal($('#my.selector').text(), 'Id without dot');
+				});
+
+				it('should broadcast event to all listeners', function () {
+					var counter = 0;
+					var data = 1;
+					$('#first-broadcast-listener').on('say-hello-to-my-little-friend', function (
+						event) {
+						counter += event.detail;
+					});
+					$('#second-broadcast-listener').on('say-hello-to-my-little-friend', function (
+						event) {
+						counter += (event.detail * 2);
+					});
+					$('#third-broadcast-listener').on('say-hello-to-my-little-friend', function (
+						event) {
+						counter += (event.detail * 3);
+					});
+					$.broadcast('say-hello-to-my-little-friend', data);
+					assert.equal(counter, 6);
+				});
+
+				it('should add multiple event listeners using one method', function () {
+					var counter = 0;
+					var data = 1;
+					$('#first-broadcast-listener').on('click mousemove', function (event) {
+						counter += (event.detail);
 					});
 
-					it('should broadcast event to all listeners', function() {
-						var counter = 0;
-						var data = 1;
-						$('#first-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
-							counter += event.detail;
-						});
-						$('#second-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
-							counter += (event.detail * 2);
-						});
-						$('#third-broadcast-listener').on('say-hello-to-my-little-friend', function(event) {
-							counter += (event.detail * 3);
-						});
-						$.broadcast('say-hello-to-my-little-friend', data);
-						assert.equal(counter, 6);
-					});
-
-					it('should add multiple event listeners using one method', function() {
-						var counter = 0;
-						var data = 1;
-						$('#first-broadcast-listener').on('click mousemove', function(event) {
+					$('#second-broadcast-listener').on(
+						'say-hello-to-my-little-friend say-hello-to-my-big-friend',
+						function (event) {
 							counter += (event.detail);
 						});
 
-						$('#second-broadcast-listener').on('say-hello-to-my-little-friend say-hello-to-my-big-friend', function(event) {
+					$.broadcast('click', data);
+					$.broadcast('mousemove', data);
+					$.broadcast('say-hello-to-my-little-friend', data);
+					$.broadcast('say-hello-to-my-big-friend', data);
+					assert.equal(counter, 4);
+				});
+
+				it('should add multiple event listeners after off', function () {
+					var counter = 0;
+					var data = 1;
+					$('#first-broadcast-listener').on('click', function (event) {
+						counter += (event.detail);
+					});
+
+					$('#first-broadcast-listener').off('click').on(
+						'say-hello-to-my-little-friend say-hello-to-my-big-friend',
+						function (event) {
 							counter += (event.detail);
 						});
 
-						$.broadcast('click', data);
-						$.broadcast('mousemove', data);
-						$.broadcast('say-hello-to-my-little-friend', data);
-						$.broadcast('say-hello-to-my-big-friend', data);
-						assert.equal(counter, 4);
-					});
+					$.broadcast('click', data);
+					$.broadcast('say-hello-to-my-little-friend', data);
+					$.broadcast('say-hello-to-my-big-friend', data);
+					assert.equal(counter, 2);
+				});
 
-					it('should add multiple event listeners after off', function() {
-						var counter = 0;
-						var data = 1;
-						$('#first-broadcast-listener').on('click', function(event) {
-							counter += (event.detail);
-						});
+				it('should handle HTMLCollection as an array of elements', function () {
+					var element = $('#find-element').first();
+					assert.equal($(element.children).size, 2);
+				});
 
-						$('#first-broadcast-listener').off('click').on('say-hello-to-my-little-friend say-hello-to-my-big-friend', function(event) {
-							counter += (event.detail);
-						});
+				it('should handle NodeList as an array of elements, filtering not elements', function () {
+					var element = $('#find-element').first();
+					assert.equal($(element.childNodes).size, 2);
+				});
 
-						$.broadcast('click', data);
-						$.broadcast('say-hello-to-my-little-friend', data);
-						$.broadcast('say-hello-to-my-big-friend', data);
-						assert.equal(counter, 2);
-					});
+				it('should handle an array of elements as an array of elements', function () {
+					var elements = [document.head, document.body];
+					assert.equal($(elements).size, 2);
+				});
 
-					it('should handle HTMLCollection as an array of elements', function() {
-						var element = $('#find-element').first();
-						assert.equal($(element.children).size, 2);
-					});
+				it('should insert element before all selected elements', function () {
+					var selector = '.insert-selected-element-before-me';
+					$('.insert-filler').insertBefore($(selector));
+					var expectedText = $('.insert-filler').els[0].outerHTML + $(selector).els[0]
+						.outerHTML;
+					assert.equal($(selector).parent().html()
+						.trim(), expectedText.trim());
+				});
 
-					it('should handle NodeList as an array of elements, filtering not elements', function() {
-						var element = $('#find-element').first();
-						assert.equal($(element.childNodes).size, 2);
-					});
+				it('should insert element after all selected elements', function () {
+					var selector = '.insert-selected-element-after-me';
+					$('.insert-filler').insertAfter($(selector));
+					var expectedText = $(selector).els[0].outerHTML + $('.insert-filler').els[0]
+						.outerHTML;
+					assert.equal($(selector).parent().html()
+						.trim(), expectedText.trim());
+				});
 
-					it('should handle an array of elements as an array of elements', function() {
-						var elements = [document.head, document.body];
-						assert.equal($(elements).size, 2);
-					});
+				it('should insert element before all matched elements', function () {
+					var selector = '.insert-matched-element-before-me';
+					$('.insert-filler').insertBefore(selector);
+					var expectedText = $('.insert-filler').els[0].outerHTML + $(selector).els[0]
+						.outerHTML;
+					assert.equal($(selector).parent().html()
+						.trim(), expectedText.trim());
+				});
 
-					it('should insert element before all selected elements', function() {
-						var selector = '.insert-selected-element-before-me';
-						$('.insert-filler').insertBefore($(selector));
-						var expectedText = $('.insert-filler').els[0].outerHTML + $(selector).els[0].outerHTML;
-						assert.equal($(selector).parent().html()
-							.trim(), expectedText.trim());
-					});
+				it('should insert element after all matched elements', function () {
+					var selector = '.insert-matched-element-after-me';
+					$('.insert-filler').insertAfter(selector);
+					var expectedText = $(selector).els[0].outerHTML + $('.insert-filler').els[0]
+						.outerHTML;
+					assert.equal($(selector).parent().html()
+						.trim(), expectedText.trim());
+				});
 
-					it('should insert element after all selected elements', function() {
-						var selector = '.insert-selected-element-after-me';
-						$('.insert-filler').insertAfter($(selector));
-						var expectedText = $(selector).els[0].outerHTML + $('.insert-filler').els[0].outerHTML;
-						assert.equal($(selector).parent().html()
-							.trim(), expectedText.trim());
-					});
+				it('should throw an error if trying to insert before an element without parent', function () {
+					var reference = $(document.createElement('div'));
+					assert.throws(function () {
+						$('.insert-filter').insertBefore(reference);
+					}, /without parent/);
+				});
 
-					it('should insert element before all matched elements', function() {
-						var selector = '.insert-matched-element-before-me';
-						$('.insert-filler').insertBefore(selector);
-						var expectedText = $('.insert-filler').els[0].outerHTML + $(selector).els[0].outerHTML;
-						assert.equal($(selector).parent().html()
-							.trim(), expectedText.trim());
-					});
+				it('should throw an error if trying to insert after an element without parent', function () {
+					var reference = $(document.createElement('div'));
+					assert.throws(function () {
+						$('.insert-filter').insertAfter(reference);
+					}, /without parent/);
+				});
 
-					it('should insert element after all matched elements', function() {
-						var selector = '.insert-matched-element-after-me';
-						$('.insert-filler').insertAfter(selector);
-						var expectedText = $(selector).els[0].outerHTML + $('.insert-filler').els[0].outerHTML;
-						assert.equal($(selector).parent().html()
-							.trim(), expectedText.trim());
-					});
+				it("should not throw error when off'ing an event that was not registered yet", function () {
+					var count = 0;
+					$('#off-count').val(count);
 
-					it('should throw an error if trying to insert before an element without parent', function() {
-						var reference = $(document.createElement('div'));
-						assert.throws(function() {
-							$('.insert-filter').insertBefore(reference);
-						}, /without parent/);
-					});
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 0);
 
-					it('should throw an error if trying to insert after an element without parent', function() {
-						var reference = $(document.createElement('div'));
-						assert.throws(function() {
-							$('.insert-filter').insertAfter(reference);
-						}, /without parent/);
-					});
+					$('#off-button').off('click');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 0);
 
-					it("should not throw error when off'ing an event that was not registered yet", function() {
+					$('#off-button').off('click', 'someName');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 0);
+				});
+
+				it("should not remove unnamed listeners when removing named listeners, even if they don't exist",
+					function () {
 						var count = 0;
-						$('#off-count').val(count);
-
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 0);
-
-						$('#off-button').off('click');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 0);
-
-						$('#off-button').off('click', 'someName');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 0);
-					});
-
-					it("should not remove unnamed listeners when removing named listeners, even if they don't exist", function() {
-						var count = 0;
-						$('#off-button').on('click', function() {
+						$('#off-button').on('click', function () {
 							$('#off-count').val(++count);
 						});
 
@@ -687,7 +776,7 @@
 						fireEvent($('#off-button').first(), 'click');
 						assert.equal($('#off-count').val(), 2);
 
-						$('#off-button').on('click', function() {
+						$('#off-button').on('click', function () {
 							$('#off-count').val(++count);
 						}, 'someName');
 
@@ -698,67 +787,67 @@
 						fireEvent($('#off-button').first(), 'click');
 						assert.equal($('#off-count').val(), 5);
 					});
-					it('should debounce click event', function(done) {
-						var time = 300;
-						$('#debounce-count').val('0');
-						$('#debounce-button').debounce('click', function() {
-							var value = parseInt($('#debounce-count').val());
-							$('#debounce-count').val(++value);
-						}, time);
+				it('should debounce click event', function (done) {
+					var time = 300;
+					$('#debounce-count').val('0');
+					$('#debounce-button').debounce('click', function () {
+						var value = parseInt($('#debounce-count').val());
+						$('#debounce-count').val(++value);
+					}, time);
 
-						fireEvent($('#debounce-button').first(), 'click');
-						fireEvent($('#debounce-button').first(), 'click');
-						fireEvent($('#debounce-button').first(), 'click');
-						assert.equal(parseInt($('#debounce-count').val()), 0);
-						setTimeout(function() {
-							assert.equal(parseInt($('#debounce-count').val()), 1);
-							done();
-						}, time);
+					fireEvent($('#debounce-button').first(), 'click');
+					fireEvent($('#debounce-button').first(), 'click');
+					fireEvent($('#debounce-button').first(), 'click');
+					assert.equal(parseInt($('#debounce-count').val()), 0);
+					setTimeout(function () {
+						assert.equal(parseInt($('#debounce-count').val()), 1);
+						done();
+					}, time);
+				});
+				it('should preserve this inside debounce callback', function (done) {
+					$('#debounce-button').debounce('click', function () {
+						assert.equal(this, $('#debounce-button').first());
+						done();
+					}, 10);
+					fireEvent($('#debounce-button').first(), 'click');
+				});
+				describe('with shadow DOM', function () {
+					before(function () {
+						if (!HTMLElement.prototype.createShadowRoot) {
+							this.skip();
+						}
 					});
-					it('should preserve this inside debounce callback', function(done) {
-						$('#debounce-button').debounce('click', function() {
-							assert.equal(this, $('#debounce-button').first());
-							done();
-						}, 10);
-						fireEvent($('#debounce-button').first(), 'click');
+					it('should find elements inside shadow root by tag name', function () {
+						var $root = $($('#shadow-root-test').first().createShadowRoot()),
+							div = document.createElement('div');
+						$root.append(div);
+						assert.equal($root.find('div').first(), div);
 					});
-					describe('with shadow DOM', function() {
-						before(function() {
-							if (!HTMLElement.prototype.createShadowRoot) {
-								this.skip();
-							}
-						});
-						it('should find elements inside shadow root by tag name', function() {
-							var $root = $($('#shadow-root-test').first().createShadowRoot()),
-								div = document.createElement('div');
-							$root.append(div);
-							assert.equal($root.find('div').first(), div);
-						});
-						it('should find elements inside shadow root by id', function() {
-							var $root = $($('#shadow-root-test').first().createShadowRoot()),
-								div = document.createElement('div');
-							div.id = 'mocha';
-							$root.append(div);
-							assert.equal($root.find('#mocha').first(), div);
-						});
-						it('should find elements inside shadow root by class name', function() {
-							var $root = $($('#shadow-root-test').first().createShadowRoot()),
-								div = document.createElement('div');
-							div.className = 'search-class-test';
-							$root.append(div);
-							assert.equal($root.find('.search-class-test').first(), div);
-						});
+					it('should find elements inside shadow root by id', function () {
+						var $root = $($('#shadow-root-test').first().createShadowRoot()),
+							div = document.createElement('div');
+						div.id = 'mocha';
+						$root.append(div);
+						assert.equal($root.find('#mocha').first(), div);
+					});
+					it('should find elements inside shadow root by class name', function () {
+						var $root = $($('#shadow-root-test').first().createShadowRoot()),
+							div = document.createElement('div');
+						div.className = 'search-class-test';
+						$root.append(div);
+						assert.equal($root.find('.search-class-test').first(), div);
 					});
 				});
 			});
-		</script>
-		<script>
-			if (window.mochaPhantomJS) {
-				window.mochaPhantomJS.run();
-			} else {
-				mocha.run();
-			}
+		});
+	</script>
+	<script>
+		if (window.mochaPhantomJS) {
+			window.mochaPhantomJS.run();
+		} else {
+			mocha.run();
+		}
+	</script>
+</body>
 
-		</script>
-	</body>
 </html>

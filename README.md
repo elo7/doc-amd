@@ -504,6 +504,23 @@ define(['doc'], function(doc) {
 });
 ```
 
+#### checked
+`.checked(value)`
+
+###### Description:
+Set or verify the checkbox or radio field checked state.
+
+###### Parameters:
+> value: boolean //To indicate whether the element should be checked or not
+
+###### Sample:
+``` js
+define(['doc'], function(doc) {
+	doc('input[type=checkbox]').checked(); //Get checked state
+	doc('input[type=checkbox]').checked(true); //Set checked state
+});
+```
+
 #### on
 `.on(event, callback [,eventCategory])` or
 `.on(event, callback [, { named: eventCategory, passive: passive } ])`
