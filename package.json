@@ -13,7 +13,8 @@
     "url": "git+ssh://git@github.com/elo7/doc-amd.git"
   },
   "scripts": {
-    "pretest": "npm run build",
+    "lint": "eslint doc.js test/*",
+    "pretest": "npm run lint && npm run build",
     "test": "bash test.sh",
     "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8"
   },
