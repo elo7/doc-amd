@@ -8,6 +8,9 @@
 	"globals": {
 		"define": "readonly"
 	},
+	"plugins": [
+		"html"
+	],
 	"extends": "eslint:recommended",
 	"rules": {
 		"accessor-pairs": ["error"],
