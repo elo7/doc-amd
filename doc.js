@@ -1,28 +1,30 @@
 define('doc', ['event'], function(event) {
+	'use strict';
+
 	var matcher = {
-		isTag : function(selector) {
-			return selector.match(/^\w+$/);
-		},
-		isClass : function(selector) {
+		isClass: function(selector) {
 			return selector.match(/^\.[\w-]+$/);
 		},
-		isId : function(selector) {
+		isId: function(selector) {
 			return selector.match(/^#[\w-]+$/);
 		},
-		isTagWithClass : function(selector) {
-			return selector.match(/[\w+\.\w+]+/)
-		}
+		isTag: function(selector) {
+			return selector.match(/^\w+$/);
+		},
+		isTagWithClass: function(selector) {
+			return selector.match(/(\w+\.\w+)+/);
+		},
 	};
 
 	var isFunction = function(obj) {
-	  return !!(obj && obj.call && obj.apply);
+		return !!(obj && obj.call && obj.apply);
 	};
 
 	var search = function(namespace, selector) {
-		var selector = selector.replace(/^\s+|\s+$/g, '');
+		selector = selector.replace(/^\s+|\s+$/g, '');
 		if (matcher.isTag(selector) && namespace.getElementsByTagName) {
 			return convertHtmlCollectionToArray(namespace.getElementsByTagName(selector));
-		} else if(matcher.isId(selector)) {
+		} else if (matcher.isId(selector)) {
 			selector = selector.replace('#', '');
 			if (namespace.getElementById) {
 				return namespace.getElementById(selector);
@@ -37,11 +39,11 @@ define('doc', ['event'], function(event) {
 
 	var convertHtmlCollectionToArray = function(htmlCollection) {
 		try {
-			return Array.prototype.slice.call(namespace.getElementsByTagName(selector));
-		} catch(e) {
+			return Array.prototype.slice.call(htmlCollection);
+		} catch (e) {
 			var array = [];
 			var length = htmlCollection.length;
-			for(var i = 0; i < length; i++) {
+			for (var i = 0; i < length; i++) {
 				array.push(htmlCollection[i]);
 			}
 			return array;
@@ -49,24 +51,24 @@ define('doc', ['event'], function(event) {
 	};
 
 	var triggerEvent = function(el, event, data) {
-		var hasNotBeenPrevented;
+		var hasNotBeenPrevented, htmlEvents;
 		if (!document.createEvent) {
-			if(!data) {
-				hasNotBeenPrevented = el.fireEvent("on" + event);
+			if (!data) {
+				hasNotBeenPrevented = el.fireEvent('on' + event);
 			} else {
 				// IE8 Pollyfill for custom events
-				var htmlEvents = document.createEventObject();
+				htmlEvents = document.createEventObject();
 				htmlEvents.detail = data;
 
-				var registeredEvents = el["_event"][event];
-				for(var namedEvents in registeredEvents) {
-					for(var i = 0; i < registeredEvents[namedEvents].length; i++) {
+				var registeredEvents = el._event[event];
+				for (var namedEvents in registeredEvents) {
+					for (var i = 0; i < registeredEvents[namedEvents].length; i++) {
 						registeredEvents[namedEvents][i](htmlEvents);
 					}
 				}
 			}
 		} else {
-			var htmlEvents = document.createEvent("Event");
+			htmlEvents = document.createEvent('Event');
 			htmlEvents.initEvent(event, false, true);
 			htmlEvents.detail = data;
 			hasNotBeenPrevented = el.dispatchEvent(htmlEvents);
@@ -86,7 +88,7 @@ define('doc', ['event'], function(event) {
 			}
 		}
 		return list;
-	}
+	};
 
 	var query = function(elements) {
 		var selectedElements = [];
@@ -104,60 +106,60 @@ define('doc', ['event'], function(event) {
 		}
 
 		return {
-			'els' : selectedElements,
-			'size' : selectedElements.length,
+			'els': selectedElements,
+			'size': selectedElements.length,
 
-			'each' : function(command) {
-				for(var i = 0; i < this.size; i++) {
+			'each': function(command) {
+				for (var i = 0; i < this.size; i++) {
 					command(this.els[i], i);
 				}
 			},
 
-			'data' : function(key, value) {
+			'data': function(key, value) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
-				if(value !== undefined) {
+				if (value !== undefined) {
 					this.each(function(el) {
-						el.setAttribute("data-" + key, value);
+						el.setAttribute('data-' + key, value);
 					});
 					return this;
 				}
-				if(this.first()) {
-					return this.first().getAttribute("data-" + key);
+				if (this.first()) {
+					return this.first().getAttribute('data-' + key);
 				}
-				return "";
+				return '';
 			},
 
-			'val' : function(newValue) {
+			'val': function(newValue) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
-				if(newValue !== undefined) {
+				if (newValue !== undefined) {
 					this.each(function(el) {
 						el.value = newValue;
 					});
 					return this;
 				}
-				if(this.first()) {
+				if (this.first()) {
 					return this.first().value;
 				}
-				return "";
+				return '';
 			},
 
-			'html' : function(newValue) {
-				if(newValue !== undefined) {
+			'html': function(newValue) {
+				if (newValue !== undefined) {
 					this.each(function(el) {
 						el.innerHTML = newValue;
 					});
 					return this;
 				}
-				if(this.first()) {
+				if (this.first()) {
 					return this.first().innerHTML;
 				}
-				return "";
+				return '';
 			},
 
-			'prepend' : function(value) {
+			'prepend': function(value) {
 				this.each(function(el) {
-					if(typeof value === 'object') {
-						if(value.els) {
+					if (typeof value === 'object') {
+						if (value.els) {
 							value.each(function(childElement) {
 								el.insertAdjacentElement('afterbegin', childElement);
 							});
@@ -172,7 +174,7 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'append' : function(value) {
+			'append': function(value) {
 				var appendElement;
 				this.each(function(el) {
 					appendElement = el.appendChild(value);
@@ -180,36 +182,34 @@ define('doc', ['event'], function(event) {
 				return query(appendElement);
 			},
 
-			'text' : function(val) {
-				var hasInnerText = (document.getElementsByTagName("body")[0].innerText != undefined) ? true : false;
+			'text': function(val) {
+				var hasInnerText = (document.getElementsByTagName('body')[0].innerText !== undefined);
 
-				var currentValue = "";
+				var currentValue = '';
 				this.each(function(el) {
 					if (typeof val === 'undefined') {
 						currentValue = el.textContent || el.innerText;
+					} else if (!hasInnerText) {
+						el.textContent = val;
 					} else {
-						if (!hasInnerText) {
-							el.textContent = val;
-						} else {
-							el.innerText = val;
-						}
+						el.innerText = val;
 					}
 				});
 				return currentValue.trim();
 			},
 
-			'attr' : function(key, newValue) {
+			'attr': function(key, newValue) {
 				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
-				if(newValue !== undefined) {
-					if(typeof key === "string") {
+				if (newValue !== undefined) {
+					if (typeof key === 'string') {
 						this.each(function(el) {
 							el.setAttribute(key, newValue);
 						});
 					}
 					return this;
 				}
-				if (typeof key === "object") {
-					for(k in key) {
+				if (typeof key === 'object') {
+					for (var k in key) {
 						this.each(function(el) {
 							el.setAttribute(k, key[k]);
 						});
@@ -219,7 +219,7 @@ define('doc', ['event'], function(event) {
 				return this.first().getAttribute(key);
 			},
 
-			'removeAttr' : function(attrName) {
+			'removeAttr': function(attrName) {
 				var attrList = attrName.split(' ');
 				this.each(function(el) {
 					attrList.forEach(function(attrName) {
@@ -229,17 +229,17 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'hasClass' : function(clazz) {
+			'hasClass': function(clazz) {
 				var containsClass = false;
-				this.each(function(el){
-					if(el.classList.contains(clazz)){
+				this.each(function(el) {
+					if (el.classList.contains(clazz)) {
 						containsClass = true;
 					}
 				});
 				return containsClass;
 			},
 
-			'addClass' : function(clazz) {
+			'addClass': function(clazz) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
@@ -249,7 +249,7 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'removeClass' : function(clazz) {
+			'removeClass': function(clazz) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
@@ -259,7 +259,7 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'toggleClass' : function(clazz) {
+			'toggleClass': function(clazz) {
 				var clazzList = clazz.split(' ');
 				this.each(function(el) {
 					clazzList.forEach(function(clazz) {
@@ -269,11 +269,11 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'removeItem' : function() {
-				this.each(function(el, i){
-					if(!el.remove){
+			'removeItem': function() {
+				this.each(function(el) {
+					if (!el.remove) {
 						el.parentNode.removeChild(el);
-					}else{
+					} else {
 						el.remove();
 					}
 					el = null;
@@ -283,11 +283,11 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'find' : function(selector) {
+			'find': function(selector) {
 				var list = [];
 				this.each(function(el) {
 					var newElement = search(el, selector);
-					if(list.indexOf(newElement) === -1) {
+					if (list.indexOf(newElement) === -1) {
 						list = list.concat(search(el, selector));
 					}
 				});
@@ -297,10 +297,10 @@ define('doc', ['event'], function(event) {
 			'filter': function(filter) {
 				var result = [];
 
-				for(var i = 0; i < this.size; i++) {
-					if(typeof filter === 'function' && filter(this.els[i])) {
+				for (var i = 0; i < this.size; i++) {
+					if (typeof filter === 'function' && filter(this.els[i])) {
 						result.push(this.els[i]);
-					} else if(typeof filter === 'string' && this.els[i][filter]) {
+					} else if (typeof filter === 'string' && this.els[i][filter]) {
 						result.push(this.els[i]);
 					}
 				}
@@ -309,18 +309,18 @@ define('doc', ['event'], function(event) {
 
 			'closest': function(selector) {
 				var result = [],
-						matches = HTMLElement.prototype.matches
-							|| HTMLElement.prototype.webkitMatchesSelector
-							|| HTMLElement.prototype.mozMatchesSelector
-							|| HTMLElement.prototype.msMatchesSelector
-							|| HTMLElement.prototype.oMatchesSelector;
+					matches = HTMLElement.prototype.matches ||
+							HTMLElement.prototype.webkitMatchesSelector ||
+							HTMLElement.prototype.mozMatchesSelector ||
+							HTMLElement.prototype.msMatchesSelector ||
+							HTMLElement.prototype.oMatchesSelector;
 
-				function lookupParent(el) {
-					if (!el || el instanceof Element && matches.call(el, selector)) {
+				var lookupParent = function(el) {
+					if (!el || (el instanceof Element && matches.call(el, selector))) {
 						return el;
 					}
 					return lookupParent(el.parentNode);
-				}
+				};
 
 				this.each(function(el) {
 					var parentFound = lookupParent(el.parentNode);
@@ -331,50 +331,54 @@ define('doc', ['event'], function(event) {
 				return query(result);
 			},
 
-			'first' : function() {
+			'first': function() {
 				return this.els[0];
 			},
 
-			'last' : function() {
+			'last': function() {
 				return this.els[this.size - 1];
 			},
 
-			'previous' : function() {
+			'previous': function() {
 				var el = this.els[0];
-			    if(el.previousElementSibling) {
-			        return query(el.previousElementSibling);
-			    } else {
-			        while(el = el.previousSibling) {
-			            if(el.nodeType === 1) return query(el);
-			        }
-			    }
-			},
-
-			'next' : function() {
-				var el = this.els[0];
-				if(el.nextElementSibling) {
-					return query(el.nextElementSibling);
+				if (el.previousElementSibling) {
+					return query(el.previousElementSibling);
 				} else {
-					while(el = el.nextSibling) {
-						if(el.nodeType === 1) return query(el);
+					while ((el = el.previousSibling)) {
+						if (el.nodeType === 1) {
+							return query(el);
+						}
 					}
 				}
 			},
 
-			'parent' : function() {
+			'next': function() {
+				var el = this.els[0];
+				if (el.nextElementSibling) {
+					return query(el.nextElementSibling);
+				} else {
+					while ((el = el.nextSibling)) {
+						if (el.nodeType === 1) {
+							return query(el);
+						}
+					}
+				}
+			},
+
+			'parent': function() {
 				var parents = [];
-				for(var i = 0; i < this.size; i++) {
+				for (var i = 0; i < this.size; i++) {
 					parents.push(this.els[i].parentElement);
 				}
 				return query(parents);
 			},
 
-			'isPresent' : function() {
+			'isPresent': function() {
 				return this.els !== undefined && this.els.length > 0;
 			},
 
 			/* Deprecated */
-			'isEmpty' : function() {
+			'isEmpty': function() {
 				return !this.isPresent();
 			},
 
@@ -390,7 +394,7 @@ define('doc', ['event'], function(event) {
 					});
 
 					event.boundEvents[name] = event.boundEvents[name] || [];
-					boundElements = event.boundEvents[name];
+					var boundElements = event.boundEvents[name];
 
 					this.each(function(el) {
 						if (boundElements.indexOf(el) === -1) {
@@ -401,22 +405,22 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'throttle' : function(eventName, command, throttleTime, named) {
+			'throttle': function(eventName, command, throttleTime, named) {
 				throttleTime = throttleTime || 1000;
 				var previous = 0;
 				var commandWithThrottle = function(event) {
 					var now = + new Date();
-					if(previous + throttleTime <= now) {
+					if (previous + throttleTime <= now) {
 						command.apply(this, arguments);
 						previous = + new Date();
 					}
 					event.preventDefault();
-				}
+				};
 
 				return this.on(eventName, commandWithThrottle, named);
 			},
 
-			'debounce' : function(eventName, command, debounceTime, named) {
+			'debounce': function(eventName, command, debounceTime, named) {
 				debounceTime = debounceTime || 1000;
 				var timer = 0;
 				var commandWithDebounce = function(event) {
@@ -427,14 +431,14 @@ define('doc', ['event'], function(event) {
 				return this.on(eventName, commandWithDebounce, named);
 			},
 
-			'off' : function(eventName, named) {
+			'off': function(eventName, named) {
 				this.each(function(el) {
 					event.removeEvent(el, eventName, named);
 				});
-				event.boundEvents = event.boundEvents || {},
-					event.boundEvents[eventName] = event.boundEvents[eventName] || [],
-					boundElements = event.boundEvents[eventName],
-					elementIndex = -1;
+				event.boundEvents = event.boundEvents || {};
+				event.boundEvents[eventName] = event.boundEvents[eventName] || [];
+				var boundElements = event.boundEvents[eventName];
+				var elementIndex = -1;
 
 				this.each(function(el) {
 					if ((elementIndex = boundElements.indexOf(el)) !== -1) {
@@ -445,81 +449,81 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'trigger' : function(event, data) {
+			'trigger': function(event, data) {
 				this.each(function(el) {
 					triggerEvent(el, event, data);
 				});
 			},
 
-			'selectedText' : function() {
+			'selectedText': function() {
 				var input = this.els[0];
 				var type = this.attr('type');
-				var validSelectionStart = type? type.match('(text|search|password|tel|url)') : false;
-				if(document.activeElement !== input) {
-					return;
-				} else if(validSelectionStart && typeof input.selectionStart !== 'undefined' && input.selectionEnd > 0) {
+				var validSelectionStart = type ? type.match('(text|search|password|tel|url)') : false;
+				if (document.activeElement !== input) {
+					return null;
+				} else if (validSelectionStart && typeof input.selectionStart !== 'undefined' && input.selectionEnd > 0) {
 					return input.value.substring(input.selectionStart, input.selectionEnd);
 				} else if (window.getSelection) {
 					return window.getSelection().toString();
 				} else if (document.getSelection) {
 					return document.getSelection().toString();
 				} else if (document.selection) {
-					if(document.selection.createRange().text) {
+					if (document.selection.createRange().text) {
 						return document.selection.createRange().text;
 					}
 					return document.selection.createRange().htmlText;
 				} else {
-					return;
+					return null;
 				}
 			},
 
-			'focus' : function() {
+			'focus': function() {
 				this.els[0].focus();
 				return this;
 			},
 
-			'scrollIntoView' : function(scrollIntoViewOptions) {
-				var scrollIntoViewOptions = (typeof scrollIntoViewOptions === "boolean") ? scrollIntoViewOptions : scrollIntoViewOptions || true;
+			'scrollIntoView': function(scrollIntoViewOptions) {
+				scrollIntoViewOptions = (typeof scrollIntoViewOptions === 'boolean') ? scrollIntoViewOptions : scrollIntoViewOptions || true;
 				this.els[0].scrollIntoView(scrollIntoViewOptions);
 				return this;
 			},
 
-			'insertBefore' : function(elements) {
-				if(typeof elements === 'string'){
+			'insertBefore': function(elements) {
+				if (typeof elements === 'string') {
 					elements = query(search(document, elements));
 				}
 
 				elements.each(function(el) {
 					if (!el.parentNode) {
-						throw Error("Trying to insert element before element without parent");
+						throw Error('Trying to insert element before element without parent');
 					}
 					el.insertAdjacentHTML('beforebegin', this.els[0].outerHTML);
 				}.bind(this));
 			},
 
-			'insertAfter' : function(elements) {
-				if(typeof elements === 'string'){
+			'insertAfter': function(elements) {
+				if (typeof elements === 'string') {
 					elements = query(search(document, elements));
 				}
 
 				elements.each(function(el) {
 					if (!el.parentNode) {
-						throw Error("Trying to insert element after element without parent");
+						throw Error('Trying to insert element after element without parent');
 					}
 					el.insertAdjacentHTML('afterend', this.els[0].outerHTML);
 				}.bind(this));
-			}
-		}
-	}
+			},
+		};
+	};
 
-	function DocSelector(selector) {
+	var DocSelector = function(selector) {
 		if (!selector) {
 			return selector;
-		} else if (typeof selector === "string") {
+		} else if (typeof selector === 'string') {
 			return query(search(document, selector));
 		}
 		return query(selector);
-	}
+	};
 
 	DocSelector.broadcast = function(eventName, data) {
 		var boundElements = event.boundEvents[eventName] || [];
