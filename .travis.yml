@@ -1,11 +1,7 @@
 language: node_js
 node_js:
  - "12"
-before_script:
- - bash setup.sh
 install:
  - npm install
-after_script:
- - bash tearDown.sh
 script:
  - bash test.sh
