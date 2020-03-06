@@ -249,25 +249,24 @@
 					assert.equal(count, 3);
 				});
 
-				it('should return the correct elements according to selector type and the correct number of elements on list',
-					function () {
-						var template = 'Teste seletor ';
-						assert.equal($('#search-id-test').size, 1);
-						assert.equal($('#search-id-test').first().innerHTML, template + '#ID');
+				it('should return the correct elements according to selector type and the correct number of elements on list', function () {
+					var template = 'Teste seletor ';
+					assert.equal($('#search-id-test').size, 1);
+					assert.equal($('#search-id-test').first().innerHTML, template + '#ID');
 
-						assert.equal($('.search-class-test').size, 2);
-						assert.equal($('.search-class-test').first().innerHTML, template + '.class');
+					assert.equal($('.search-class-test').size, 2);
+					assert.equal($('.search-class-test').first().innerHTML, template + '.class');
 
-						assert.equal($('div.search-class-test').size, 2);
-						assert.equal($('div.search-class-test').first().innerHTML, template + '.class');
+					assert.equal($('div.search-class-test').size, 2);
+					assert.equal($('div.search-class-test').first().innerHTML, template + '.class');
 
-						assert.equal($('center').size, 1);
-						assert.equal($('center').first().innerHTML, template + 'tag');
+					assert.equal($('center').size, 1);
+					assert.equal($('center').first().innerHTML, template + 'tag');
 
-						assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
-						assert.equal($('#find-element').find('.find').find('#sub-find-2')
-							.text(), 'Segundo elemento filho para ser encontrado');
-					});
+					assert.equal($('#find-element').find('.find').find('#sub-find-2').size, 1);
+					assert.equal($('#find-element').find('.find').find('#sub-find-2')
+						.text(), 'Segundo elemento filho para ser encontrado');
+				});
 
 				it('should have els and size on returned elements', function () {
 					var returnedObject = $('center');
@@ -325,7 +324,7 @@
 				it('should select text correctly', function () {
 					selectText('selected-text-test');
 					assert.equal($('body').selectedText(), $('#selected-text-test').first()
-					.innerHTML);
+						.innerHTML);
 				});
 
 				it('should return false if element is not present', function () {
@@ -374,8 +373,7 @@
 					}, /is not checkbox or radio/);
 
 					assert.throws(function () {
-						$('#throttle-button, #search-id-test, #input-checkbox-first').checked(
-							true);
+						$('#throttle-button, #search-id-test, #input-checkbox-first').checked(true);
 					}, /is not checkbox or radio/);
 				});
 
@@ -398,16 +396,15 @@
 				});
 
 				it('should be able to make fluent calls with checked method', function () {
-					assert.equal($('#input-checkbox-first').checked(false).checked(true).checked(),
-						true);
+					assert.equal($('#input-checkbox-first').checked(false).checked(true)
+						.checked(), true);
 				});
 
-				it('should return object with isEmpty true when not find any element with given selector',
-					function () {
-						var element = $('#this-element-should-not-exists');
-						assert.equal(typeof element, 'object');
-						assert.equal(element.isEmpty(), true);
-					});
+				it('should return object with isEmpty true when not find any element with given selector', function () {
+					var element = $('#this-element-should-not-exists');
+					assert.equal(typeof element, 'object');
+					assert.equal(element.isEmpty(), true);
+				});
 
 				it('should remove element from DOM tree', function () {
 					var element = $('#this-element-should-be-removed').removeItem();
@@ -476,8 +473,7 @@
 				it('should prepend a text return the given element', function () {
 					var prependDiv = $('#prepend-div');
 					prependDiv.prepend('Elo7');
-					assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g, ''),
-						'Elo7<div class="first">first</div>');
+					assert.equal(prependDiv.first().innerHTML.replace(/\s{2,}|\n/g, ''), 'Elo7<div class="first">first</div>');
 				});
 
 				it('should prepend a new element and return the given element', function () {
@@ -578,7 +574,7 @@
 					var element = $('#multiple-attr');
 					var returnElement = element.attr({
 						'href': '#test',
-						'target': '_blank'
+						'target': '_blank',
 					});
 					assert.equal(element.attr('href'), '#test');
 					assert.equal(element.attr('target'), '_blank');
@@ -596,7 +592,7 @@
 					element.attr({
 						'href': '#test',
 						'target': '_blank',
-						'download': true
+						'download': true,
 					});
 					element.removeAttr('href target');
 					assert.notEqual(element.attr('href'), '#test');
@@ -611,12 +607,11 @@
 					});
 				});
 
-				it('should scroll viewport until the first matched element is at the top of the viewport',
-					function () {
-						var elements = $('.checked');
-						elements.scrollIntoView();
-						assert.lessThan(Math.abs(elements.first().getBoundingClientRect().top), 1);
-					});
+				it('should scroll viewport until the first matched element is at the top of the viewport', function () {
+					var elements = $('.checked');
+					elements.scrollIntoView();
+					assert.lessThan(Math.abs(elements.first().getBoundingClientRect().top), 1);
+				});
 
 				it('should select an element with an id with dot', function () {
 					assert.equal($('#my\\.selector').text(), 'Id with dot');
@@ -626,16 +621,13 @@
 				it('should broadcast event to all listeners', function () {
 					var counter = 0;
 					var data = 1;
-					$('#first-broadcast-listener').on('say-hello-to-my-little-friend', function (
-						event) {
+					$('#first-broadcast-listener').on('say-hello-to-my-little-friend', function (event) {
 						counter += event.detail;
 					});
-					$('#second-broadcast-listener').on('say-hello-to-my-little-friend', function (
-						event) {
+					$('#second-broadcast-listener').on('say-hello-to-my-little-friend', function (event) {
 						counter += (event.detail * 2);
 					});
-					$('#third-broadcast-listener').on('say-hello-to-my-little-friend', function (
-						event) {
+					$('#third-broadcast-listener').on('say-hello-to-my-little-friend', function (event) {
 						counter += (event.detail * 3);
 					});
 					$.broadcast('say-hello-to-my-little-friend', data);
@@ -653,7 +645,8 @@
 						'say-hello-to-my-little-friend say-hello-to-my-big-friend',
 						function (event) {
 							counter += (event.detail);
-						});
+						}
+					);
 
 					$.broadcast('click', data);
 					$.broadcast('mousemove', data);
@@ -673,7 +666,8 @@
 						'say-hello-to-my-little-friend say-hello-to-my-big-friend',
 						function (event) {
 							counter += (event.detail);
-						});
+						}
+					);
 
 					$.broadcast('click', data);
 					$.broadcast('say-hello-to-my-little-friend', data);
@@ -762,31 +756,31 @@
 					assert.equal($('#off-count').val(), 0);
 				});
 
-				it("should not remove unnamed listeners when removing named listeners, even if they don't exist",
-					function () {
-						var count = 0;
-						$('#off-button').on('click', function () {
-							$('#off-count').val(++count);
-						});
-
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 1);
-
-						$('#off-button').off('click', 'someName');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 2);
-
-						$('#off-button').on('click', function () {
-							$('#off-count').val(++count);
-						}, 'someName');
-
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 4);
-
-						$('#off-button').off('click', 'someName');
-						fireEvent($('#off-button').first(), 'click');
-						assert.equal($('#off-count').val(), 5);
+				it("should not remove unnamed listeners when removing named listeners, even if they don't exist", function () {
+					var count = 0;
+					$('#off-button').on('click', function () {
+						$('#off-count').val(++count);
 					});
+
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 1);
+
+					$('#off-button').off('click', 'someName');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 2);
+
+					$('#off-button').on('click', function () {
+						$('#off-count').val(++count);
+					}, 'someName');
+
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 4);
+
+					$('#off-button').off('click', 'someName');
+					fireEvent($('#off-button').first(), 'click');
+					assert.equal($('#off-count').val(), 5);
+				});
+
 				it('should debounce click event', function (done) {
 					var time = 300;
 					$('#debounce-count').val('0');
@@ -804,6 +798,7 @@
 						done();
 					}, time);
 				});
+
 				it('should preserve this inside debounce callback', function (done) {
 					$('#debounce-button').debounce('click', function () {
 						assert.equal(this, $('#debounce-button').first());
@@ -811,6 +806,7 @@
 					}, 10);
 					fireEvent($('#debounce-button').first(), 'click');
 				});
+
 				describe('with shadow DOM', function () {
 					before(function () {
 						if (!HTMLElement.prototype.createShadowRoot) {

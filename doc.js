@@ -117,10 +117,10 @@ define('doc', ['event'], function(event) {
 				return this;
 			},
 
-			'data' : function(key, value) {
-				if(value !== undefined) {
+			'data': function(key, value) {
+				if (value !== undefined) {
 					return this.each(function(el) {
-						el.setAttribute("data-" + key, value);
+						el.setAttribute('data-' + key, value);
 					});
 				}
 				if (this.first()) {
@@ -129,8 +129,8 @@ define('doc', ['event'], function(event) {
 				return '';
 			},
 
-			'val' : function(newValue) {
-				if(newValue !== undefined) {
+			'val': function(newValue) {
+				if (newValue !== undefined) {
 					return this.each(function(el) {
 						el.value = newValue;
 					});
@@ -141,8 +141,8 @@ define('doc', ['event'], function(event) {
 				return '';
 			},
 
-			'html' : function(newValue) {
-				if(newValue !== undefined) {
+			'html': function(newValue) {
+				if (newValue !== undefined) {
 					return this.each(function(el) {
 						el.innerHTML = newValue;
 					});
@@ -153,10 +153,10 @@ define('doc', ['event'], function(event) {
 				return '';
 			},
 
-			'prepend' : function(value) {
+			'prepend': function(value) {
 				return this.each(function(el) {
-					if(typeof value === 'object') {
-						if(value.els) {
+					if (typeof value === 'object') {
+						if (value.els) {
 							value.each(function(childElement) {
 								el.insertAdjacentElement('afterbegin', childElement);
 							});
@@ -194,9 +194,9 @@ define('doc', ['event'], function(event) {
 				return currentValue.trim();
 			},
 
-			'attr' : function(key, newValue) {
-				if(newValue !== undefined) {
-					if(typeof key === "string") {
+			'attr': function(key, newValue) {
+				if (newValue !== undefined) {
+					if (typeof key === 'string') {
 						this.each(function(el) {
 							el.setAttribute(key, newValue);
 						});
@@ -368,15 +368,14 @@ define('doc', ['event'], function(event) {
 				return this.els !== undefined && this.els.length > 0;
 			},
 
-			'checked' : function(value) {
-				if(value !== undefined && typeof value !== 'boolean') {
+			'checked': function(value) {
+				if (value !== undefined && typeof value !== 'boolean') {
 					throw Error('Parameter type is not valid');
 				}
-
-				if(typeof value === 'boolean') {
+				if (typeof value === 'boolean') {
 					return this.each(function (el) {
 						var type = el.getAttribute('type');
-						if(!type || !type.match('(checkbox|radio)')) {
+						if (!type || !type.match('(checkbox|radio)')) {
 							throw Error('Element ' + el + ' is not checkbox nor radio');
 						}
 						el.checked = value;
@@ -456,7 +455,7 @@ define('doc', ['event'], function(event) {
 				});
 			},
 
-			'trigger' : function(event, data) {
+			'trigger': function(event, data) {
 				return this.each(function(el) {
 					triggerEvent(el, event, data);
 				});
