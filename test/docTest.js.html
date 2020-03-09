@@ -44,9 +44,9 @@
 
 		<div id="append-div"></div>
 
-		<input class="checked" type="checkbox" checked>
-		<input class="checked" type="checkbox">
-		<input class="checked" type="checkbox">
+		<input id="input-checkbox-first" class="checked" type="checkbox" checked>
+		<input id="input-checkbox-second" class="checked" type="checkbox">
+		<input id="input-checkbox-third" class="checked" type="checkbox">
 
 		<input type="button" id="throttle-button">
 		<input type="hidden" id="throttle-count" value="0">
@@ -145,6 +145,7 @@
 				'next',
 				'parent',
 				'isPresent',
+				'checked',
 				'isEmpty',
 				'on',
 				'throttle',
@@ -366,15 +367,15 @@
 				it('should throw error if element type is not checkbox or radio', function () {
 					assert.throws(function () {
 						$('#search-id-test').checked(true);
-					}, /is not checkbox or radio/);
+					}, /is not checkbox nor radio/);
 
 					assert.throws(function () {
 						$('#throttle-button').checked(true);
-					}, /is not checkbox or radio/);
+					}, /is not checkbox nor radio/);
 
 					assert.throws(function () {
 						$('#throttle-button, #search-id-test, #input-checkbox-first').checked(true);
-					}, /is not checkbox or radio/);
+					}, /is not checkbox nor radio/);
 				});
 
 				it('should set checked state to all elements', function () {

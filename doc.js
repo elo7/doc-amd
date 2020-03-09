@@ -376,7 +376,7 @@ define('doc', ['event'], function(event) {
 					return this.each(function (el) {
 						var type = el.getAttribute('type');
 						if (!type || !type.match('(checkbox|radio)')) {
-							throw Error('Element ' + el + ' is not checkbox nor radio');
+							throw Error('Element "' + el.outerHTML + '" is not checkbox nor radio');
 						}
 						el.checked = value;
 					});
