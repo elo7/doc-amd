@@ -113,15 +113,15 @@ define('doc', ['event'], function(event) {
 				for (var i = 0; i < this.size; i++) {
 					command(this.els[i], i);
 				}
+
+				return this;
 			},
 
 			'data': function(key, value) {
-				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if (value !== undefined) {
-					this.each(function(el) {
+					return this.each(function(el) {
 						el.setAttribute('data-' + key, value);
 					});
-					return this;
 				}
 				if (this.first()) {
 					return this.first().getAttribute('data-' + key);
@@ -130,12 +130,10 @@ define('doc', ['event'], function(event) {
 			},
 
 			'val': function(newValue) {
-				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if (newValue !== undefined) {
-					this.each(function(el) {
+					return this.each(function(el) {
 						el.value = newValue;
 					});
-					return this;
 				}
 				if (this.first()) {
 					return this.first().value;
@@ -145,10 +143,9 @@ define('doc', ['event'], function(event) {
 
 			'html': function(newValue) {
 				if (newValue !== undefined) {
-					this.each(function(el) {
+					return this.each(function(el) {
 						el.innerHTML = newValue;
 					});
-					return this;
 				}
 				if (this.first()) {
 					return this.first().innerHTML;
@@ -157,7 +154,7 @@ define('doc', ['event'], function(event) {
 			},
 
 			'prepend': function(value) {
-				this.each(function(el) {
+				return this.each(function(el) {
 					if (typeof value === 'object') {
 						if (value.els) {
 							value.each(function(childElement) {
@@ -171,7 +168,6 @@ define('doc', ['event'], function(event) {
 						el.insertAdjacentHTML('afterbegin', value);
 					}
 				});
-				return this;
 			},
 
 			'append': function(value) {
@@ -199,7 +195,6 @@ define('doc', ['event'], function(event) {
 			},
 
 			'attr': function(key, newValue) {
-				// Precisa ser assim, pois pode vir string vazia e deve entrar nesse if
 				if (newValue !== undefined) {
 					if (typeof key === 'string') {
 						this.each(function(el) {
@@ -221,12 +216,11 @@ define('doc', ['event'], function(event) {
 
 			'removeAttr': function(attrName) {
 				var attrList = attrName.split(' ');
-				this.each(function(el) {
+				return this.each(function(el) {
 					attrList.forEach(function(attrName) {
 						el.removeAttribute(attrName);
 					});
 				});
-				return this;
 			},
 
 			'hasClass': function(clazz) {
@@ -241,32 +235,29 @@ define('doc', ['event'], function(event) {
 
 			'addClass': function(clazz) {
 				var clazzList = clazz.split(' ');
-				this.each(function(el) {
+				return this.each(function(el) {
 					clazzList.forEach(function(clazz) {
 						el.classList.add(clazz);
 					});
 				});
-				return this;
 			},
 
 			'removeClass': function(clazz) {
 				var clazzList = clazz.split(' ');
-				this.each(function(el) {
+				return this.each(function(el) {
 					clazzList.forEach(function(clazz) {
 						el.classList.remove(clazz);
 					});
 				});
-				return this;
 			},
 
 			'toggleClass': function(clazz) {
 				var clazzList = clazz.split(' ');
-				this.each(function(el) {
+				return this.each(function(el) {
 					clazzList.forEach(function(clazz) {
 						el.classList.toggle(clazz);
 					});
 				});
-				return this;
 			},
 
 			'removeItem': function() {
@@ -377,6 +368,23 @@ define('doc', ['event'], function(event) {
 				return this.els !== undefined && this.els.length > 0;
 			},
 
+			'checked': function(value) {
+				if (value !== undefined && typeof value !== 'boolean') {
+					throw Error('Parameter type is not valid');
+				}
+				if (typeof value === 'boolean') {
+					return this.each(function (el) {
+						var type = el.getAttribute('type');
+						if (!type || !type.match('(checkbox|radio)')) {
+							throw Error('Element "' + el.outerHTML + '" is not checkbox nor radio');
+						}
+						el.checked = value;
+					});
+				}
+
+				return this.first().checked;
+			},
+
 			/* Deprecated */
 			'isEmpty': function() {
 				return !this.isPresent();
@@ -440,17 +448,15 @@ define('doc', ['event'], function(event) {
 				var boundElements = event.boundEvents[eventName];
 				var elementIndex = -1;
 
-				this.each(function(el) {
+				return this.each(function(el) {
 					if ((elementIndex = boundElements.indexOf(el)) !== -1) {
 						boundElements.splice(elementIndex, 1);
 					}
 				});
-
-				return this;
 			},
 
 			'trigger': function(event, data) {
-				this.each(function(el) {
+				return this.each(function(el) {
 					triggerEvent(el, event, data);
 				});
 			},
