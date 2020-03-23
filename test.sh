@@ -1,4 +1,10 @@
 #!/bin/bash
+
+function finish {
+  ./tearDown.sh
+}
+
+trap finish EXIT
+
 ./setup.sh
-./node_modules/mocha-phantomjs/bin/mocha-phantomjs -p ./node_modules/.bin/phantomjs -R spec "http://localhost:8888/test/docTest.js.html";
-./tearDown.sh
+./node_modules/.bin/mocha-chrome --reporter spec "http://localhost:8888/test/docTest.js.html";

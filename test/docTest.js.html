@@ -1,10 +1,15 @@
 <html>
-
 <head>
 	<title>Tests doc.js</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta charset="utf-8">
 	<link href="/css/mocha.css" type="text/css" rel="stylesheet" />
+	<style>
+		body {
+			/* para ajudar o teste de scrollIntoView */
+			min-height: 2000px;
+		}
+	</style>
 </head>
 
 <body>
@@ -808,43 +813,34 @@
 					fireEvent($('#debounce-button').first(), 'click');
 				});
 
-				describe('with shadow DOM', function () {
-					before(function () {
+				describe('with shadow DOM', function() {
+					var $root, div;
+
+					before(function() {
 						if (!HTMLElement.prototype.createShadowRoot) {
 							this.skip();
 						}
-					});
-					it('should find elements inside shadow root by tag name', function () {
-						var $root = $($('#shadow-root-test').first().createShadowRoot()),
-							div = document.createElement('div');
+						$root = $($('#shadow-root-test').first().createShadowRoot());
+						div = document.createElement('div');
 						$root.append(div);
+					});
+					it('should find elements inside shadow root by tag name', function() {
 						assert.equal($root.find('div').first(), div);
 					});
-					it('should find elements inside shadow root by id', function () {
-						var $root = $($('#shadow-root-test').first().createShadowRoot()),
-							div = document.createElement('div');
+					it('should find elements inside shadow root by id', function() {
 						div.id = 'mocha';
-						$root.append(div);
 						assert.equal($root.find('#mocha').first(), div);
 					});
-					it('should find elements inside shadow root by class name', function () {
-						var $root = $($('#shadow-root-test').first().createShadowRoot()),
-							div = document.createElement('div');
+					it('should find elements inside shadow root by class name', function() {
 						div.className = 'search-class-test';
-						$root.append(div);
 						assert.equal($root.find('.search-class-test').first(), div);
 					});
 				});
 			});
-		});
-	</script>
-	<script>
-		if (window.mochaPhantomJS) {
-			window.mochaPhantomJS.run();
-		} else {
+
 			mocha.run();
-		}
+		});
+
 	</script>
 </body>
-
 </html>
