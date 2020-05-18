@@ -28,7 +28,7 @@
     "eslint": "6.8.0",
     "eslint-plugin-html": "6.0.2",
     "http-server": "0.12.3",
-    "mocha": "7.1.1",
+    "mocha": "7.1.2",
     "mocha-chrome": "2.2.0",
     "proclaim": "3.6.0",
     "uglify-js": "3.8.0"
