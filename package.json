@@ -31,6 +31,6 @@
     "mocha": "7.1.2",
     "mocha-chrome": "2.2.0",
     "proclaim": "3.6.0",
-    "uglify-js": "3.8.0"
+    "uglify-js": "3.9.3"
   }
 }
