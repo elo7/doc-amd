@@ -766,6 +766,15 @@ define(['doc'], function(doc) {
 });
 ```
 
+### Script Commands
+
+| | |
+|-|-|
+| `npm start` | Install all dependencies and start the server. |
+| `npm run start:dev` | Run all it exists at the start script and run the watch script. |
+| `npm run test` | Run test local. |
+| `npm run test:ci` | Run test with together server for to continuous integration. |
+
 ## License
 
 Doc-amd is released under the [BSD](https://github.com/elo7/doc-amd/blob/master/LICENSE). Have at it.

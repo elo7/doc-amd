@@ -14,12 +14,13 @@
   },
   "scripts": {
     "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8",
-    "server": "http-server -p 8888 ",
+    "server": "http-server -p 8888",
     "start:dev": "run-p -l start watch",
-    "start": "run-p -l build server",
+    "start": "npm isntall && run-s -l build server",
+    "test:ci": "run-p -lnr server test",
     "test:lint": "eslint doc.js test/*",
     "test:report": "mocha-chrome --reporter spec 'http://localhost:8888/test/docTest.js.html'",
-    "test": "run-p -l test:*",
+    "test": "run-p -l test:lint test:report",
     "watch": "nodemon -e js --ignore 'doc.min.js' --exec 'npm run build'"
   },
   "author": "Elo7",
