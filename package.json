@@ -15,8 +15,11 @@
   "scripts": {
     "lint": "eslint doc.js test/*",
     "pretest": "npm run lint && npm run build",
-    "test": "bash test.sh",
-    "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8"
+    "test": "mocha-chrome --reporter spec 'http://localhost:8888/test/docTest.js.html'",
+    "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8",
+    "start:dev": "npm run dev-server & npm run watch:js",
+    "dev-server": "http-server -p 8888 & sleep 3",
+    "watch:js": "nodemon -e js --ignore 'doc.min.js' --exec 'npm run build'"
   },
   "author": "Elo7",
   "dependencies": {
@@ -30,6 +33,7 @@
     "http-server": "0.12.3",
     "mocha": "7.1.2",
     "mocha-chrome": "2.2.0",
+    "nodemon": "^2.0.4",
     "proclaim": "3.6.0",
     "uglify-js": "3.8.0"
   }
