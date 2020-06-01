@@ -13,12 +13,13 @@
     "url": "git+ssh://git@github.com/elo7/doc-amd.git"
   },
   "scripts": {
-    "lint": "eslint doc.js test/*",
-    "pretest": "npm run lint && npm run build",
-    "test": "mocha-chrome --reporter spec 'http://localhost:8888/test/docTest.js.html'",
     "build": "uglifyjs doc.js -o doc.min.js --compress drop_console=true --mangle --screw-ie8",
-    "start:dev": "npm run dev-server & npm run watch:js",
-    "server": "http-server -p 8888 & sleep 3",
+    "server": "http-server -p 8888 ",
+    "start:dev": "run-p -l start watch",
+    "start": "run-p -l build server",
+    "test:lint": "eslint doc.js test/*",
+    "test:report": "mocha-chrome --reporter spec 'http://localhost:8888/test/docTest.js.html'",
+    "test": "run-p -l test:*",
     "watch": "nodemon -e js --ignore 'doc.min.js' --exec 'npm run build'"
   },
   "author": "Elo7",
@@ -34,6 +35,7 @@
     "mocha": "7.1.2",
     "mocha-chrome": "2.2.0",
     "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
     "proclaim": "3.6.0",
     "uglify-js": "3.8.0"
   }
