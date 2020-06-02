@@ -768,7 +768,7 @@ define(['doc'], function(doc) {
 
 ### Script Commands
 
-| | |
+|Script|Description|
 |-|-|
 | `npm start` | Install all dependencies and start the server. |
 | `npm run start:dev` | Run the start script and then the watch script. |
