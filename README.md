@@ -770,7 +770,7 @@ define(['doc'], function(doc) {
 
 |Script|Description|
 |-|-|
-| `npm start` | Install all dependencies and start the server. |
+| `npm start` | Start the server. |
 | `npm run start:dev` | Run the start script and then the watch script. |
 | `npm run test` | Run test locally. |
 | `npm run test:ci` | Run the server and the tests. Useful for a quick local check and for CI environment. |
