@@ -4,4 +4,4 @@ node_js:
 install:
  - npm install
 script:
- - bash test.sh
+ - npm run test:ci
